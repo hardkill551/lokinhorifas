@@ -6,7 +6,7 @@ import ImagemRifaPrata from '../../images/Homepage/ServicesRaffles/imagemRifaPra
 
 import cn from 'classnames'
 import Image from 'next/image'
-import style from '../../pages/homepage.module.css'
+import style from '../homepage.module.css'
 
 import BGRIFAS from '../../assets/bgRIFAS.svg'
 import BGRIFASTABLET from '../../assets/bgRIFASTablet.svg'

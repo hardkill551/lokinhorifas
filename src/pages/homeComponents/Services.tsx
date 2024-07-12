@@ -1,5 +1,5 @@
 import ServicesCardGroup from "./ServicesCardGroup";
-import style from '../../pages/homepage.module.css'
+import style from '../homepage.module.css'
 
 const Services = () => {
 

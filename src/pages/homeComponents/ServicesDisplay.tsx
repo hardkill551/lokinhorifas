@@ -7,7 +7,7 @@ import Background from '../../images/Homepage/ServicesDisplay/Services.png'
 import Background2 from '../../images/Homepage/ServicesDisplay/ServicesBackground.png'
 import BackgroundLines from '../../images/Homepage/ServicesDisplay/Services-1.png'
 import Image from 'next/image'
-import style from '../../pages/homepage.module.css'
+import style from '../homepage.module.css'
 
 const ServicesDisplay = () => {
   return (

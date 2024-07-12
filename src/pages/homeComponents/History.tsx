@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Retrato from '../../images/Homepage/History/THIAGO\ 1.png'
-import style from '../../pages/homepage.module.css'
+import style from '../homepage.module.css'
 
 const History = () => {
   return (

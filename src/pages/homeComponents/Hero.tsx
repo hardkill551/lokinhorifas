@@ -2,7 +2,7 @@ import Image from 'next/image';
 import ExternalSVG from '../../assets/ExternalLink.svg'
 import Background from '../../images/Homepage/Hero/HERO.png'
 import Faixas from './Faixa'
-import style from '../../pages/homepage.module.css'
+import style from '../homepage.module.css'
 
 import cn from 'classnames'
 

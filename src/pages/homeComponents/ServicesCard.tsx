@@ -1,5 +1,5 @@
 import Image from "next/image";
-import style from '../../pages/homepage.module.css';
+import style from '../homepage.module.css';
 import { ServicesCardType } from "utils/interfaces";
 
 const ServicesCard = ({ props }: { props: ServicesCardType }) => {
