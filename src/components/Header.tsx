@@ -10,7 +10,7 @@ const Header = () => {
   useEffect(() => {
     const htmlElement = document.querySelector('html')
   
-    htmlElement?.classList.toggle('SidebarOn')
+    htmlElement?.classList.toggle('SidebarOn', sidebarView)
   }, [sidebarView])
   // * O código acima adiciona e retira scroll da página quando a Sidebar está visível
 
