@@ -25,10 +25,10 @@ const Footer = () => {
               <h2>Links úteis</h2>
 
               <ul>
-                <a href="#" target='_blank'><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Facebook</li></a>
+                {/* <a href="#" target='_blank'><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Facebook</li></a> */}
                 <a target='_blank' href="https://instagram.com/lokinhoskins"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Instagram</li></a>
                 <a target='_blank' href="https://api.whatsapp.com/send?phone=5586981088012"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Whatsapp</li></a>
-                <a target='_blank' href="#"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Discord</li></a>
+                {/* <a target='_blank' href="#"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Discord</li></a> */}
               </ul>
             </div>
             <div className="ContactInfo">

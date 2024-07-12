@@ -2,9 +2,18 @@ import Image from 'next/image';
 import { useSidebarState } from '../contexts/SidebarContext';
 import logo from '../images/Logo.png';
 import Xmark from '../assets/xmark.svg';
+import { useEffect } from 'react';
 
 const Header = () => {
   const { sidebarView, toggleSidebar }:any = useSidebarState()
+
+  useEffect(() => {
+    const htmlElement = document.querySelector('html')
+  
+    htmlElement?.classList.toggle('SidebarOn')
+  }, [sidebarView])
+  // * O código acima adiciona e retira scroll da página quando a Sidebar está visível
+
 
   return (
     <header className={sidebarView ? 'no-background' : ''}>
