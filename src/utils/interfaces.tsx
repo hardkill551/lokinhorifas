@@ -71,3 +71,21 @@ export type LastEarnedPrizeType = {
   ItemType: string;
   ItemValue: string;
 }
+
+export type PersonInfoCard = {
+  name: string; 
+  number: number;
+  picture: string;
+}
+
+export type Participant = {
+  color: string;
+  profilePicture: string;
+  personName: string;
+  nickName: string;
+}
+
+export type PersonCardContextType = {
+  participants: PersonInfoCard[];
+  setNewParticipants: (dataArray: Participant[]) => void;
+}
