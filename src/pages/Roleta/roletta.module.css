@@ -10,6 +10,106 @@
   color: white;
 
   position: relative;
+
+  margin-bottom: 83px;
+  margin-top: 90px;
+
+  z-index: 2;
+
+  /* outline: 2px solid rgba(255, 166, 0, 0.2); */
+}
+
+.Roleta > .background {
+  display: flex;
+
+  position: absolute;
+  top: 0;
+
+  width: 1920px;
+  height: 100%;
+
+  /* outline: 2px solid red; */
+}
+
+
+.Roleta .glowGroup {
+  display: flex;
+
+  justify-content: center;
+
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  height: 140%;
+
+  /* outline: 5px solid purple;
+  background-color: rgba(255, 166, 0, 0.287); */
+
+  overflow: hidden;
+}
+
+.Roleta .growGroupWrapper {
+  position: absolute;
+  bottom: 0;
+
+  /* outline: 5px solid purple;
+  background-color: rgba(255, 166, 0, 0.287); */
+
+  width: 1920px;
+  height: 100%;
+}
+
+.Roleta .glowGroup .glow-0 {
+  width: 791px;
+  height: 791px;
+
+  background-color: #E21A1A;
+
+  border-radius: 50%;
+
+  position: absolute;
+  top: 25%;
+  right: -20%;
+
+  z-index: 1;
+
+  filter: blur(315px);
+}
+
+/* .Roleta > .background img:first-child {
+  outline: 2px solid yellow;
+} */
+
+.Roleta > img:last-child {
+  
+  /* z-index: 2; */
+  
+  width: 100%;
+  height: 50%;
+  
+  /* outline: 2px solid green; */
+  /* background-color: red; */
+
+  position: absolute;
+  bottom: 5%;
+}
+
+.Roleta > .background::after {
+  content: '';
+
+  position: absolute;
+  bottom: 160px;
+  right: -50vw;
+
+  width: 200vw;
+  height: 90%;
+
+  background: linear-gradient(0deg, black 10%, transparent);
+
+  filter: blur(10px);
+
+  /* outline: 2px solid orange; */
 }
 
 .RoletaWrapper {
@@ -20,13 +120,20 @@
   align-items: center;
 
   width: 1335px;
-  height: 100%;
+  height: 1253px;
 
   gap: 83px;
+
+  z-index: 3;
   
   padding: 0 var(--content-padding);
 
-  /* outline: 2px solid green; */
+  /* outline: 2px solid rgba(0, 128, 0, 0.2); */
+}
+
+.Roleta .HeroFrontImage {
+  width: 1268px;
+  height: 476px;
 }
 
 .RewardsList {
@@ -41,6 +148,19 @@
 .RewardsAd {
   display: flex;
 
+  position: relative;
+
+  border-radius: 20px 0 0 20px;
+
+  width: 110px;
+  height: 117px;
+
+  overflow: hidden;
+}
+
+.RewardsAdContent {
+  display: flex;
+
   flex-direction: column;
 
   align-items: center;
@@ -51,15 +171,8 @@
 
   font-weight: bold;
 
-  width: 110px;
-  height: 117px;
-
   text-align: center;
-  overflow: hidden;
-
-  position: relative;
-
-  border-radius: 20px 0 0 20px;
+  z-index: 1;
 }
 
 .RewardsAd::after {
@@ -75,8 +188,6 @@
 
   background: linear-gradient(135deg, black, #555, transparent);
 
-  z-index: -1;
-
   opacity: .35;
 
   filter: blur(1px);
@@ -89,8 +200,6 @@
   font-weight: bold;
 
   white-space: nowrap;
-
-  /* TODO: Trazer estilização dos botões */
 
   display: flex;
 
@@ -122,12 +231,6 @@
 .Reward {
   display: flex;
 
-  flex-direction: column;
-
-  justify-content: space-between;
-
-  gap: 10px;
-
   width: 257px;
   height: 150px;
 
@@ -142,9 +245,19 @@
   position: absolute;
   top: 0;
 
-  z-index: -1;
-
   opacity: .8;
+}
+
+.RewardItemWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  z-index: 2;
 }
 
 .Reward.Gold {
@@ -213,6 +326,9 @@
 
 .Reward .RewardContent img {
   font-size: 12px;
+
+  width: 103px;
+  height: 73px;
 }
 
 .Reward .RewardContent h2 {
@@ -245,9 +361,7 @@
   width: 1335px;
   height: 300px;
 
-  overflow: hidden;
-
-  outline: 1px solid grey;
+  outline: 2px solid grey;
 
   border-radius: 10px;
 
@@ -261,7 +375,7 @@
   
   position: absolute;
 
-  background: linear-gradient(180deg, #ffffff10 10%, #E21A1A, #A30006 , #ffffff08 90%);
+  background: linear-gradient(180deg, #ffffff00 10%, #E21A1A, #A30006 , #ffffff00 90%);
 
   z-index: 3;
 }
@@ -285,7 +399,20 @@
   gap: 2px;
 }
 
+.Roulette .RouletteBox {
+  width: 100%;
+
+  overflow: hidden;
+  border-radius: 10px;
+}
+
 .Roulette .PersonCard {
+  display: flex;
+
+  position: relative;
+}
+
+.PersonCardWrapper {
   display: flex;
 
   flex-direction: column;
@@ -295,10 +422,11 @@
 
   gap: 50px;
 
+  z-index: 1;
+
   width: 230px;
   height: 300px;
 
-  position: relative;
 }
 
 .Roulette .PersonCard.Blue {
@@ -331,8 +459,6 @@
 
   /* background: linear-gradient(180deg, transparent, #15A7D5); */
   opacity: .5;
-
-  z-index: -1;
 }
 
 .Roulette .PersonCard.Blue::after {
@@ -368,6 +494,13 @@
   
   background-color: #fff;
   color: black;
+
+  overflow: hidden;
+}
+
+.Roulette .ProfilePicture img {
+  width: 100%;
+  height: 100%;
 }
 
 .Roulette .ProfileInfo {
@@ -390,7 +523,13 @@
   color: #A5A4A4;
 }
 
-.RoletaWrapper > button {
+.RoletaWrapper .ButtonGroup {
+  display: flex;
+
+  gap: 53px;
+}
+
+.RoletaWrapper .ButtonGroup button {
   display: flex;
 
   justify-content: center;
@@ -440,12 +579,16 @@
 .Roulette .shadeLeft {
   background: linear-gradient(90deg, #00000075, #00000000);
 
+  border-radius: 10px 0 0 10px;
+
   left: 0;
   top: 0;
 }
 
 .Roulette .shadeRight {
   background: linear-gradient(-90deg, #00000075, #00000000);
+
+  border-radius: 0 10px 10px 0;
 
   right: 0;
   top: 0;
@@ -462,7 +605,20 @@
 
   background-color: #FFA800;
 
+  /* outline: 10px solid purple; */
+
   z-index: 3;
+}
+
+.Roulette .pin img {
+
+  width: 21px;
+  height: 18px;
+
+  position: absolute;
+  top: -21px;
+
+  translate: -8px;
 }
 
 
@@ -483,6 +639,89 @@
   width: 100%;
 
   padding-bottom: 50px;
+
+  position: relative;
+
+  color: white;
+
+  background-color: #000;
+
+  z-index: 1;
+}
+
+.LastPrizes .background {
+  position: absolute;
+  bottom: 0;
+}
+
+.LastPrizes .glowGroup {
+  display: flex;
+
+  justify-content: center;
+
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+  height: 140%;
+
+  /* outline: 5px solid purple;
+  background-color: rgba(255, 166, 0, 0.287); */
+
+  overflow: hidden;
+}
+
+.LastPrizes .growGroupWrapper {
+  position: absolute;
+  bottom: 0;
+
+  /* outline: 5px solid purple;
+  background-color: rgba(255, 166, 0, 0.287); */
+
+  width: 1920px;
+  height: 100%;
+}
+
+.LastPrizes .glowGroup .glow-0 {
+  width: 650px;
+  height: 650px;
+
+  background-color: #E21A1A;
+
+  border-radius: 50%;
+
+  position: absolute;
+  right: -10%;
+  bottom: -20%;
+
+  z-index: 1;
+
+  filter: blur(315px);
+}
+
+.LastPrizes .background::after {
+  content: '';
+
+  position: absolute;
+  left: -30%;
+
+  width: 200vw;
+  height: 1122px;
+
+  background-color: black;
+
+  z-index: -1;
+}
+
+.LastPrizes .background img {
+  height: 1222px;
+  width: auto;
+
+  /* translate: 0 -180px; */
+  
+  filter: brightness(130%);
+
+  /* border: 5px solid purple; */
 }
 
 .LastPrizesWrapper {
@@ -497,6 +736,8 @@
 
   width: var(--content-width);
   height: 100%;
+
+  z-index: 3;
 }
 
 .LastPrizes .title {
@@ -517,18 +758,14 @@
 
   width: fit-content;
 
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   
   gap: 28px;
 }
 
 .EarnedPrizeItem {
   display: flex;
-
-  flex-direction: column;
-
-  justify-content: space-between;
 
   width: 255px;
   height: 300px;
@@ -538,6 +775,32 @@
   position: relative;
 
   overflow: hidden;
+}
+
+.EarnedPrizeItemWrapper {
+  display: flex;
+
+  width: 100%;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  z-index: 1;
+}
+
+.EarnedPrizeItemWrapper .ImageWrapperBox {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.EarnedPrizeItemWrapper .ImageWrapperBox img {
+  width: 165px;
+  height: 135px;
 }
 
 .EarnedPrizeItem::after {
@@ -550,7 +813,7 @@
   left: 0;
   top: 0;
 
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .EarnedPrizeItem.Gold::after {

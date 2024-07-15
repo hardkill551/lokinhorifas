@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from "next/router";
 import { useSidebarState } from '../contexts/SidebarContext';
 import logo from '../images/Logo.png';
 import Xmark from '../assets/xmark.svg';
@@ -14,6 +15,8 @@ const Header = () => {
   }, [sidebarView])
   // * O código acima adiciona e retira scroll da página quando a Sidebar está visível
 
+  const router = useRouter()
+
 
   return (
     <header className={sidebarView ? 'no-background' : ''}>
@@ -22,10 +25,10 @@ const Header = () => {
           <Image className={sidebarView ? 'Logo SidebarOn' : 'Logo'} src={logo} alt="Logo de Lokinho Rifas" />
           <nav className='desktop'>
             <ul>
-              <li>Home</li>
-              <li>Vantagens</li>
-              <li>Grupos</li>
-              <li>Sobre Nós</li>
+            <li onClick={() => router.push('/#Home')}>Home</li>
+            <li onClick={() => router.push('/#Vantagens')}>Vantagens</li>
+            <li onClick={() => router.push('/#Grupos')}>Grupos</li>
+            <li onClick={() => router.push('/#SobreNos')}>Sobre Nós</li>
             </ul>
           </nav>
         </div>

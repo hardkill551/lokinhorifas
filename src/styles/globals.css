@@ -46,7 +46,7 @@ html {
 
   overflow-x: hidden;
 
-  flex-direction: column;
+  flex-direction: column;scroll-behavior: smooth;
 }
 
 header {
@@ -63,7 +63,7 @@ header {
   width: 100vw;
 
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, .5);
   backdrop-filter: blur(4px);
 }
 
@@ -112,7 +112,7 @@ header {
   white-space: nowrap;
 }
 
-.MainHeader li:hover {
+.MainHeader li:hover a, .MainHeader li:hover {
   cursor: pointer;
 
   color: red;

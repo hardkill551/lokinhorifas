@@ -4,7 +4,7 @@ import style from '../homepage.module.css'
 
 const History = () => {
   return (
-    <section className={style.History}>
+    <section id='SobreNos' className={style.History}>
         <div className={style.HistoryWrapper}>
           <div className={style.col1}>
             <Image className={style?.['background-0']} src={Retrato} alt="Imagem do Thiago" />
