@@ -3,8 +3,6 @@ import style from '../roletta.module.css'
 import RewardList from './RewardList';
 import Roulette from './Roulette';
 
-// import HEROFRONTBG from '../../../images/Roleta/Hero/HEROFRONTBG.png'
-// import HEROBACKBG from '../../../images/Roleta/Hero/HEROBACKBG.png'
 import HEROBACK from '../../../images/Roleta/Hero/HEROBACKGROUND.png'
 import LINES from '../../../images/Roleta/Hero/Lines.png'
 

@@ -18,7 +18,7 @@ const RouletteArray = () => {
 
   return (
     <div className={style.RouletteArray}>
-      {participants && participants.map((item, index) => <RouletteItem key={index} props={item}/>)}
+      {participants && participants.map(item => <RouletteItem key={item.id} props={item}/>)}
     </div>
   );
 }

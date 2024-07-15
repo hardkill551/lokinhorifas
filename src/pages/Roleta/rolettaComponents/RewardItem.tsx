@@ -19,7 +19,6 @@ const RewardItem = ({ props }: { props: RewardItemType }) => {
   const {
     type,
     itemImageUrl,
-    itemImageAlt,
     itemName,
     itemType,
     itemValue,
@@ -37,14 +36,14 @@ const RewardItem = ({ props }: { props: RewardItemType }) => {
           <h3>RIFA {type == 'Gold' ? 'GOLD' : 'SILVER'}</h3>
         </div>
         <div className={style.RewardContent}>
-          <Image src={itemImageUrl ? itemImageUrl : defaultGunPic} alt={itemImageAlt} />
+          <Image src={itemImageUrl ? itemImageUrl : defaultGunPic} alt={`Imagem de ${itemName}`} />
           <div className={style.RewardDescription}>
             <h2>{itemName}</h2>
             <p>{itemType}</p>
           </div>
         </div>
         <div className={style.RewardValue}>
-          <h3>R$ {itemValue}</h3>
+          <h3>R$ {itemValue}.00</h3>
         </div>
       </div>
     </div>

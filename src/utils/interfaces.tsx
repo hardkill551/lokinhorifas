@@ -56,7 +56,6 @@ export type CardItemType = {
 export type RewardItemType = {
   type: string;
   itemImageUrl: string;
-  itemImageAlt: string;
   itemName: string;
   itemType: string;
   itemValue: string;
@@ -79,6 +78,7 @@ export type PersonInfoCard = {
 }
 
 export type Participant = {
+  id: number, 
   color: string;
   profilePicture: string;
   personName: string;
@@ -88,4 +88,48 @@ export type Participant = {
 export type PersonCardContextType = {
   participants: PersonInfoCard[];
   setNewParticipants: (dataArray: Participant[]) => void;
+}
+
+export type SkinType = {
+  id: number;
+  name: string;
+  picture: string;
+  value: number;
+}
+
+export type RewardItemContextType = {
+  rewards: RewardItemType[];
+  setNewRewards: (dataArray: SkinType[]) => void;
+}
+
+export type LastEarnedWinnerType = {
+  winner: WinnerType;
+  raffle: RaffleType;
+}
+
+export type WinnerType = {
+  id: number;
+  email: string;
+  name: string;
+  phoneNumber: null | string;
+  picture: string;
+  tradeLink: string | null;
+  isAdmin: boolean;
+}
+
+export type RaffleType = {
+  id: number;
+  value: number;
+  is_active: boolean;
+  skin: SkinType;
+}
+
+export type LastEarnFrontEndType = {
+  itemImageUrl: string;
+  TimeOfEarning: string;
+  ChanceOfEarning: string;
+  PoolType: string;
+  ItemName: string;
+  ItemType: string;
+  ItemValue: string;
 }
