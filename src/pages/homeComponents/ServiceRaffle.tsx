@@ -20,7 +20,7 @@ const ServiceRaffle = () => {
         <ServicesRaffleGroup />
         
       </div>
-      <div className={style.background}>
+      <div id='Grupos' className={style.background}>
         <Image className={cn(style?.['background-0'], style?.['desktop'])} src={BGRIFAS} alt="Fundo da seção de Rifas" />
         <Image className={cn(style?.['background-0'], style?.['tablet'])} src={BGRIFASTABLET} alt="Fundo da seção de Rifas" />
         <Image className={cn(style?.['background-0'], style?.['mobile'])} src={BGRIFASMOBILE} alt="Fundo da seção de Rifas" />

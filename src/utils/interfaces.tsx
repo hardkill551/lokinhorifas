@@ -63,6 +63,7 @@ export type RewardItemType = {
 }
 
 export type LastEarnedPrizeType = {
+  itemImageUrl: string;
   TimeOfEarning: string;
   ChanceOfEarning: string;
   PoolType: string;

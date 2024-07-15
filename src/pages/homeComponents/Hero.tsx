@@ -8,7 +8,7 @@ import style from '../homepage.module.css'
 
 const Hero = () => {
   return (
-    <section className={style.Hero}>
+    <section id='Home' className={style.Hero}>
       <div className={style.HeroWrapper}>
         <div className={style.ColGroup}>
           <div className={style.col1}>
