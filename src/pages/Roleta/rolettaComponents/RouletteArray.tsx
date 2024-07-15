@@ -1,133 +1,24 @@
+import { useEffect } from 'react';
 import style from '../roletta.module.css'
 import RouletteItem from './RouletteItem';
+import axios from 'axios';
+import { usePersonCardState } from 'contexts/PersonCardContext';
+import { Participant } from 'utils/interfaces';
 
 const RouletteArray = () => {
-  const items = [
-    {
-      color: 'Blue',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Red',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Yellow',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Purple',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Green',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Blue',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Red',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Yellow',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Purple',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Green',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Blue',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Red',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Yellow',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Purple',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Green',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Blue',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Red',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Yellow',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Purple',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-    {
-      color: 'Green',
-      profilePicture: '',
-      personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
-    },
-  ]
+  const { participants, setNewParticipants } = usePersonCardState() as { participants: Participant[], setNewParticipants: Function }
+
+  useEffect(() => {
+        axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/roulette/participants", {}).then((res: any) => { 
+          setNewParticipants(res.data)
+        }).catch((err: any) => {
+          console.log(err.response)
+        })
+      }, [])
 
   return (
     <div className={style.RouletteArray}>
-      {items.map((item, index) => <RouletteItem key={index} props={item}/>)}
+      {participants && participants.map((item, index) => <RouletteItem key={index} props={item}/>)}
     </div>
   );
 }
