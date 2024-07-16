@@ -8,9 +8,9 @@ import defaultGunPic from '../../../images/Roleta/Prizes/defaultGunPic.png'
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
 
 import Image from 'next/image';
-import { LastEarnedPrizeType } from 'utils/interfaces';
+import { LastEarnFrontEndType } from 'utils/interfaces';
 
-const LastEarnedPrizes = ({ props }: { props: LastEarnedPrizeType }) => {
+const LastEarnedPrizes = ({ props }: { props: LastEarnFrontEndType }) => {
   if (!props) {
     return <div>Error: No props provided</div>;
   }

@@ -390,6 +390,7 @@
   top: 0;
 }
 
+/* ? ANIMAÇÃO DE ROLAMENTO AQUI */
 .Roulette .RouletteArray {
   display: flex;
 
@@ -429,23 +430,23 @@
 
 }
 
-.Roulette .PersonCard.Blue {
+.Roulette .PersonCard:nth-child(5n + 1) {
   border-bottom: 5px solid #15A7D5;
 }
 
-.Roulette .PersonCard.Green {
+.Roulette .PersonCard:nth-child(5n + 2) {
   border-bottom: 5px solid #75D515;
 }
 
-.Roulette .PersonCard.Red {
+.Roulette .PersonCard:nth-child(5n + 3) {
   border-bottom: 5px solid #E21A1A;
 }
 
-.Roulette .PersonCard.Purple {
+.Roulette .PersonCard:nth-child(5n + 4) {
   border-bottom: 5px solid #AF15D5;
 }
 
-.Roulette .PersonCard.Yellow {
+.Roulette .PersonCard:nth-child(5n) {
   border-bottom: 5px solid #D1D515;
 }
 
@@ -461,23 +462,23 @@
   opacity: .5;
 }
 
-.Roulette .PersonCard.Blue::after {
+.Roulette .PersonCard:nth-child(5n + 1)::after {
   background: linear-gradient(180deg, transparent, #15A7D5);
 }
 
-.Roulette .PersonCard.Green::after {
+.Roulette .PersonCard:nth-child(5n + 2)::after {
   background: linear-gradient(180deg, transparent, #75D515);
 }
 
-.Roulette .PersonCard.Red::after {
+.Roulette .PersonCard:nth-child(5n + 3)::after {
   background: linear-gradient(180deg, transparent, #E21A1A);
 }
 
-.Roulette .PersonCard.Purple::after {
+.Roulette .PersonCard:nth-child(5n + 4)::after {
   background: linear-gradient(180deg, transparent, #AF15D5);
 }
 
-.Roulette .PersonCard.Yellow::after {
+.Roulette .PersonCard:nth-child(5n)::after {
   background: linear-gradient(180deg, transparent, #D1D515);
 }
 

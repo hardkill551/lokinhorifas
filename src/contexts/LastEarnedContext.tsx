@@ -9,15 +9,18 @@ export const useLastEarnedState = () => {
 
 export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => {
   //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
-  const items = [
+  const items: LastEarnedPrizeType[] = [
     {
       itemImageUrl: '',
       TimeOfEarning: '21 horas',
       ChanceOfEarning: '25%',
-      PoolType: 'Gold',
+      PoolType: 'Silver',
       ItemName: 'Nome da Skin',
       ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
     },
     {
       itemImageUrl: '',
@@ -26,16 +29,10 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
       PoolType: 'Silver',
       ItemName: 'Nome da Skin',
       ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
-    },
-    {
-      itemImageUrl: '',
-      TimeOfEarning: '21 horas',
-      ChanceOfEarning: '25%',
-      PoolType: 'Gold',
-      ItemName: 'Nome da Skin',
-      ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
     },
     {
       itemImageUrl: '',
@@ -44,16 +41,10 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
       PoolType: 'Silver',
       ItemName: 'Nome da Skin',
       ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
-    },
-    {
-      itemImageUrl: '',
-      TimeOfEarning: '21 horas',
-      ChanceOfEarning: '25%',
-      PoolType: 'Gold',
-      ItemName: 'Nome da Skin',
-      ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
     },
     {
       itemImageUrl: '',
@@ -62,16 +53,10 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
       PoolType: 'Silver',
       ItemName: 'Nome da Skin',
       ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
-    },
-    {
-      itemImageUrl: '',
-      TimeOfEarning: '21 horas',
-      ChanceOfEarning: '25%',
-      PoolType: 'Gold',
-      ItemName: 'Nome da Skin',
-      ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
     },
     {
       itemImageUrl: '',
@@ -80,16 +65,46 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
       PoolType: 'Silver',
       ItemName: 'Nome da Skin',
       ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
     },
     {
       itemImageUrl: '',
       TimeOfEarning: '21 horas',
       ChanceOfEarning: '25%',
-      PoolType: 'Gold',
+      PoolType: 'Silver',
       ItemName: 'Nome da Skin',
       ItemType: 'Tipo da Skin',
-      ItemValue: '1,000'
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
+    },
+    {
+      itemImageUrl: '',
+      TimeOfEarning: '21 horas',
+      ChanceOfEarning: '25%',
+      PoolType: 'Silver',
+      ItemName: 'Nome da Skin',
+      ItemType: 'Tipo da Skin',
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
+    },
+    {
+      itemImageUrl: '',
+      TimeOfEarning: '21 horas',
+      ChanceOfEarning: '25%',
+      PoolType: 'Silver',
+      ItemName: 'Nome da Skin',
+      ItemType: 'Tipo da Skin',
+      ItemValue: '1,000',
+      WinnerID: 1,
+      WinnerName: 'Alison Sousa',
+      WinnerPicture: '',
     },
   ]
 
@@ -103,18 +118,17 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
     dataArray.map((item: LastEarnedWinnerType) => {
       const { raffle, winner } = item
 
-      console.log(raffle, winner)
-
-      const type = Math.floor(Math.random() * 2)
-
       const newItem = {
         itemImageUrl: '',
         TimeOfEarning: '21 horas',
         ChanceOfEarning: '25%',
-        PoolType: type ? 'Gold' : 'Silver',
+        PoolType: raffle.skin.value >= 1500 ? 'Gold' : 'Silver',
         ItemName: raffle.skin.name,
         ItemType: raffle.skin.name,
-        ItemValue: String(raffle.skin.value)
+        ItemValue: String(raffle.skin.value),
+        WinnerID: winner.id,
+        WinnerName: winner.name,
+        WinnerPicture: winner.picture,
       }
 
       tempArray.push(newItem)

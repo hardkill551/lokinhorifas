@@ -20,7 +20,7 @@ const LastEarnedPrizeGrid = () => {
       params: { page: 1 }
     }).then((res: any) => { 
       setNewLastEarnedList(res.data)
-    }).catch((err: any) => console.log(err))
+    }).catch((err: any) => console.error(err))
   }, [])
 
   return (

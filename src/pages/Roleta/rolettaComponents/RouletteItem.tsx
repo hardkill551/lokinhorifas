@@ -1,7 +1,7 @@
 import style from '../roletta.module.css'
 import Image from 'next/image';
-import cn from 'classnames';
 import { CardItemType } from 'utils/interfaces';
+import cn from 'classnames'
 
 import defaultPicture from '../../../assets/defaultProfilePic.svg'
 
@@ -10,10 +10,10 @@ const RouletteItem = ({ props }: { props: CardItemType }) => {
     return <div>Error: No props provided</div>;
   }
 
-  const { color = 'Blue', profilePicture = '/default.png', personName = 'Anonymous', nickName = 'User' } = props;
+  const { profilePicture = '/default.png', personName = 'Anonymous', nickName = 'User', isWinner = false, number = 0 } = props;
 
   return (
-    <div className={cn(style.PersonCard, style?.[color])}>
+    <div className={cn(style.PersonCard)} id={isWinner ? `winner` : ''} data-number={number}>
       <div className={style.PersonCardWrapper}>
         <div className={style.ProfilePicture}>
           <Image src={profilePicture ? profilePicture : defaultPicture} alt={`Foto de perfil de ${personName}`} />

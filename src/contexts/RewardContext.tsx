@@ -10,14 +10,14 @@ export const useRewardState = () => {
 export const RewardContextProvider = ({children}:{children: ReactNode} ) => {
   const items = [
     {
-      type: 'Gold',
+      type: 'Silver',
       itemImageUrl: '',
       itemName: 'Nome da Skin',
       itemType: 'Tipo de Skin',
       itemValue: '1000'
     },
     {
-      type: 'Silver',
+      type: 'Gold',
       itemImageUrl: '',
       itemName: 'Nome da Skin',
       itemType: 'Tipo de Skin',
@@ -31,28 +31,28 @@ export const RewardContextProvider = ({children}:{children: ReactNode} ) => {
       itemValue: '3000'
     },
     {
-      type: 'Silver',
+      type: 'Gold',
       itemImageUrl: '',
       itemName: 'Nome da Skin',
       itemType: 'Tipo de Skin',
       itemValue: '2000'
     },
     {
-      type: 'Silver',
+      type: 'Gold',
       itemImageUrl: '',
       itemName: 'Nome da Skin',
       itemType: 'Tipo de Skin',
       itemValue: '2000'
     },
     {
-      type: 'Silver',
+      type: 'Gold',
       itemImageUrl: '',
       itemName: 'Nome da Skin',
       itemType: 'Tipo de Skin',
       itemValue: '2000'
     },
     {
-      type: 'Silver',
+      type: 'Gold',
       itemImageUrl: '',
       itemName: 'Nome da Skin',
       itemType: 'Tipo de Skin',
@@ -68,10 +68,8 @@ export const RewardContextProvider = ({children}:{children: ReactNode} ) => {
     const tempArray: RewardItemType[] = []
 
     dataArray.map((item: SkinType) => {
-      const type = Math.floor(Math.random() * 2)
-      
       const newItem = {
-        type: type == 1 ? 'Gold' : 'Silver',
+        type: item.value >= 1500 ? 'Gold' : 'Silver',
         itemImageUrl: '',
         itemName: item.name,
         itemType: item.name,

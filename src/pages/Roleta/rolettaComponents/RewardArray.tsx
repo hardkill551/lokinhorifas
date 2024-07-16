@@ -10,7 +10,7 @@ const RewardsArray = () => {
   const { rewards, setNewRewards } = useRewardState() as { rewards: RewardItemType[], setNewRewards: Function }
 
   useEffect(() => {
-    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/skin", {}).then((res: any) => setNewRewards(res.data)).catch((err: any) => console.log('error: ', err))
+    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/skin", {}).then((res: any) => setNewRewards(res.data)).catch((err: any) => console.error('error: ', err))
   }, [])
 
   return (

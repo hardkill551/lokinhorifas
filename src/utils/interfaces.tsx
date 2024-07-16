@@ -47,10 +47,11 @@ export type ServicesCardType = {
 }
 
 export type CardItemType = {
-  color: string;
   profilePicture: string;
   personName: string;
   nickName: string;
+  isWinner: boolean;
+  number: number;
 }
 
 export type RewardItemType = {
@@ -69,6 +70,9 @@ export type LastEarnedPrizeType = {
   ItemName: string;
   ItemType: string;
   ItemValue: string;
+  WinnerID: number;
+  WinnerName: string;
+  WinnerPicture: string;
 }
 
 export type PersonInfoCard = {
@@ -78,11 +82,12 @@ export type PersonInfoCard = {
 }
 
 export type Participant = {
-  id: number, 
-  color: string;
+  id: number;
   profilePicture: string;
   personName: string;
   nickName: string;
+  number: number;
+  isWinner: boolean;
 }
 
 export type PersonCardContextType = {

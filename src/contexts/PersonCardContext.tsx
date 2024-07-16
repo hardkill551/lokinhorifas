@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
-import { Participant, PersonInfoCard } from "utils/interfaces"
+import { Participant, PersonInfoCard, RewardItemType } from "utils/interfaces"
+import { useRewardState } from "./RewardContext"
 
 const PersonCardContext = createContext({})
 
@@ -8,152 +9,211 @@ export const usePersonCardState = () => {
 }
 
 export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
-  const items = [
+  const items: Participant[] = [
     {
       id: 0,
-      color: 'Blue',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 0,
+      isWinner: false
     },
     {
       id: 1,
-      color: 'Red',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 1,
+      isWinner: false
     },
     {
       id: 2,
-      color: 'Yellow',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 2,
+      isWinner: false
     },
     {
       id: 3,
-      color: 'Purple',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 3,
+      isWinner: false
     },
     {
       id: 4,
-      color: 'Green',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 4,
+      isWinner: false
     },
     {
       id: 5,
-      color: 'Blue',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 5,
+      isWinner: false
     },
     {
       id: 6,
-      color: 'Red',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 6,
+      isWinner: false
     },
     {
       id: 7,
-      color: 'Yellow',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 7,
+      isWinner: false
     },
     {
       id: 8,
-      color: 'Purple',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 9,
-      color: 'Green',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 10,
-      color: 'Blue',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 11,
-      color: 'Red',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 12,
-      color: 'Yellow',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 13,
-      color: 'Purple',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 14,
-      color: 'Green',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 15,
-      color: 'Blue',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 16,
-      color: 'Red',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 17,
-      color: 'Yellow',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 18,
-      color: 'Purple',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
     {
       id: 19,
-      color: 'Green',
       profilePicture: '',
       personName: 'Alison Sousa',
-      nickName: 'nome_de_usuário'
+      nickName: 'nome_de_usuário',
+      number: 8,
+      isWinner: false
     },
   ]
 
   const [participants, setParticipants] = useState(items);
+  const { rewards } = useRewardState() as { rewards: RewardItemType[] }
 
-  const colors = ['Blue', 'Green', 'Yellow', 'Red', 'Purple']
+  const shuffleArray = (array: Participant[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [array[i], array[j]] = [array[j], array[i]]
+    }
+    return array;
+  }
+
+  const getUniqueWinners = (participantsArray: Participant[]) => {
+    if(!participantsArray) return
+
+    const tempArray: Participant[] = []
+
+    let tempParticipantArray = participantsArray
+
+    for(let i = 0; i < rewards.length; i++) {
+      let random = Math.floor(Math.random() * tempParticipantArray.length)
+      const tempParticipant = tempParticipantArray[random]
+
+      if(!tempParticipant) return
+
+      
+      const finalParticipant = {...tempParticipant, isWinner: true}
+
+      if(tempArray.filter(item => item.number == tempParticipant.number).length == 0) {
+        tempArray.push(finalParticipant)
+      }
+      
+
+      tempParticipantArray = tempParticipantArray.filter(item => item.number != tempParticipant.number)
+    }
+
+    if(tempArray.length > 7) tempArray.splice(7, 2)
+
+    const finalArray = tempArray.concat(participantsArray.filter(item => !tempArray.some(originalItem => originalItem.id == item.id)))
+
+    setParticipants(shuffleArray(finalArray))
+  }
 
   const setNewParticipants = (dataArray: PersonInfoCard[]) => {
     if(!dataArray) return
@@ -165,15 +225,20 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   
       tempArray.push({
         id: index,
-        color: colors[Math.floor(Math.random() * colors.length)],
         profilePicture: picture == 'default' ? '' : picture,
         personName: name,
-        nickName: name + '_' + name + '_' + number
+        nickName: (name).toLowerCase() + '#' + number,
+        number: number,
+        isWinner: false
       })
     })
 
-    setParticipants(tempArray)
+    getUniqueWinners(tempArray)
   }
+
+  useEffect(() => {
+    // console.log(participants)
+  }, [participants])
 
   const value = {
     participants,
