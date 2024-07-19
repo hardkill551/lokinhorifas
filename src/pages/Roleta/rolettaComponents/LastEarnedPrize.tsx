@@ -30,7 +30,7 @@ const LastEarnedPrizes = ({ props }: { props: LastEarnFrontEndType }) => {
       <div className={style.EarnedPrizeItemWrapper}>
         <div className={style.ItemMetaInfo}>
           <p>Foi sorteado há<br />{TimeOfEarning}</p>
-          <p>Chance<br />{ChanceOfEarning}</p>
+          <p>Chance<br />{ChanceOfEarning}%</p>
         </div>
         <div className={style.ImageWrapperBox}>
           <Image src={itemImageUrl ? itemImageUrl : defaultGunPic} alt={`Imagem de ${ItemName}`} />

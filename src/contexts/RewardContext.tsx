@@ -37,30 +37,13 @@ export const RewardContextProvider = ({children}:{children: ReactNode} ) => {
       itemType: 'Tipo de Skin',
       itemValue: '2000'
     },
-    {
-      type: 'Gold',
-      itemImageUrl: '',
-      itemName: 'Nome da Skin',
-      itemType: 'Tipo de Skin',
-      itemValue: '2000'
-    },
-    {
-      type: 'Gold',
-      itemImageUrl: '',
-      itemName: 'Nome da Skin',
-      itemType: 'Tipo de Skin',
-      itemValue: '2000'
-    },
-    {
-      type: 'Gold',
-      itemImageUrl: '',
-      itemName: 'Nome da Skin',
-      itemType: 'Tipo de Skin',
-      itemValue: '2000'
-    },
   ]
 
   const [ rewards, setRewards ] = useState(items)
+
+  const removeReward = () => {
+    setRewards(rewards.toSpliced(0, 1))
+  }
 
   const setNewRewards = (dataArray: SkinType[]) => {
     if(!dataArray) return
@@ -79,13 +62,16 @@ export const RewardContextProvider = ({children}:{children: ReactNode} ) => {
       tempArray.push(newItem)
     })
 
+    tempArray.splice(4, 1000)
+
     setRewards(tempArray)
 
   }
 
   const value = {
     rewards,
-    setNewRewards
+    setNewRewards,
+    removeReward
   }
 
   // ! PARA DEBUGGING

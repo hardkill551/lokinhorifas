@@ -397,6 +397,8 @@
   width: fit-content;
   height: 100%;
 
+  translate: -140px;
+
   gap: 2px;
 }
 
@@ -557,7 +559,210 @@
 
   transition: 200ms ease-out;
 
+  position: relative;
+
   white-space: nowrap;
+}
+
+.WinnerPopup {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 11;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  opacity: 0;
+
+  animation: 800ms ease-out 0s
+  1 forwards fadeIn;
+}
+
+.WinnerPopupWrapper {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+
+  color: white;
+}
+
+.WinnerPopup .SkinImageBox {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 776px;
+  height: fit-content;
+
+  position: relative;
+
+  /* outline: 2px solid orange; */
+}
+
+.WinnerPopup .SkinImageBox img:first-child {
+  width: 100%;
+  height: auto;
+
+  translate: 0 -1100px;
+  rotate: -45deg;
+
+  animation: 800ms ease-out 800ms 1 forwards spinIntoView;
+
+  z-index: 2;
+}
+
+.WinnerPopup .SkinImageBox img:last-of-type {
+  position: absolute;
+
+  opacity: 0;
+  
+  animation: 800ms ease-out 1400ms
+  1 forwards fadeIn;
+
+  z-index: 1;
+}
+
+@keyframes spinIntoView {
+  0% {
+    translate: 0 -1100px;
+    rotate: -45deg;
+  }
+  100% {
+    translate: 0 0;
+    rotate: 10deg;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    translate: 0 30px;
+    opacity: 0;
+  }
+  100% {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+.WinnerPopup h2 {
+  font-size: 48px;
+  font-weight: 600;
+
+  z-index: 2;
+}
+
+.WinnerPopup h3 {
+  font-size: 30px;
+  font-weight: normal;
+
+  opacity: .5;
+
+  text-transform: lowercase;
+  
+  z-index: 2;
+}
+
+.WinnerPopup p {
+  font-size: 20px;
+  font-weight: normal;
+
+  opacity: .5;
+
+  z-index: 2;
+}
+
+.WinnerPopup button {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 19px 86px;
+  
+  width: 313px;
+  height: 58px;
+  
+  font-size: 24px;
+  font-weight: bold;
+
+  border-radius: 8px;
+
+  border: none;
+
+  outline: 1px solid #E21A1A;
+
+  background: linear-gradient(90deg, #E21A1A, #A30006);
+  color: white;
+
+  margin-top: 60px;
+
+  cursor: pointer;
+
+  transition: 200ms ease-out;
+
+  position: relative;
+
+  white-space: nowrap;
+}
+
+.WinnerPopup button:hover {
+  translate: 5px 5px;
+
+  box-shadow: 0 0 50px red;
+}
+
+.WinnerPopup .glowGroup {
+  position: absolute;
+
+  width: 591px;
+  height: 591px;
+
+  z-index: -1;
+}
+
+.WinnerPopup .glow-0 {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 140%;
+  height: 140%;
+
+  background-color: #A30006;
+
+  filter: blur(235px);
+
+  position: relative;
+  bottom: 40%;
+  right: 40%;
+
+  border-radius: 50%;
+}
+
+.WinnerPopup .glow-1 {
+  width: 233px;
+  height: 233px;
+
+  background-color: #E21A1A;
+
+  position: absolute;
+  right: 90px;
+
+  border-radius: 50%;
 }
 
 .Roulette .background {
@@ -922,4 +1127,8 @@
 
 .highlight {
   color: #E21A1A;
+}
+
+.Roleta button:disabled {
+  filter: grayscale(100%);
 }

@@ -76,6 +76,7 @@ export type LastEarnedPrizeType = {
 }
 
 export type PersonInfoCard = {
+  id: number;
   name: string; 
   number: number;
   picture: string;
@@ -127,6 +128,7 @@ export type RaffleType = {
   value: number;
   is_active: boolean;
   skin: SkinType;
+  item_chance: string;
 }
 
 export type LastEarnFrontEndType = {

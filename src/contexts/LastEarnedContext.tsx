@@ -118,10 +118,13 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
     dataArray.map((item: LastEarnedWinnerType) => {
       const { raffle, winner } = item
 
+      // TODO alterar TimeOfEarning
+      // TODO alterar imagem do item
+
       const newItem = {
         itemImageUrl: '',
         TimeOfEarning: '21 horas',
-        ChanceOfEarning: '25%',
+        ChanceOfEarning: raffle.item_chance,
         PoolType: raffle.skin.value >= 1500 ? 'Gold' : 'Silver',
         ItemName: raffle.skin.name,
         ItemType: raffle.skin.name,
