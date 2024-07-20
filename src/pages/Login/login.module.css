@@ -1,0 +1,187 @@
+.LogIn {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: fit-content;
+
+  color: white;
+
+  position: relative;
+}
+
+.LogInWrapper {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  
+  margin-bottom: 160px;
+  margin-top: 180px;
+
+  width: 1920px;
+  height: 100%;
+}
+
+.LogInWrapper .col1, .LogInWrapper .col2 {
+  width: 50%;
+}
+
+.LogIn form {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 30px;
+
+  width: 560px;
+  height: fit-content;
+
+  padding: 50px 20px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, transparent 0% 5%, #77777730 15% 85%, transparent 95% 100%);
+}
+
+.LogIn hr {
+  width: 50%;
+
+  align-self: center;
+}
+
+.LogIn h2 {
+  font-size: 40px;
+
+  text-align: center;
+}
+
+.LogIn form label {
+  width: 100%;
+
+  font-size: 27px;
+}
+
+.LogIn form input {
+  margin-top: 16px;
+}
+
+.LogIn button {
+  display: flex;
+
+  flex-direction: row-reverse;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 5px;
+
+  font-size: 24px;
+
+  width: 100%;
+  height: 48px;
+
+  padding: 7px 35px;
+
+  border-radius: 8px;
+
+  border: none;
+
+  outline: 1px solid #E21A1A;
+
+  background: linear-gradient(90deg, #E21A1A, #A30006);
+  color: white;
+
+  cursor: pointer;
+
+  transition: 200ms ease-out;
+
+  white-space: nowrap;
+}
+
+.LogIn button:hover {
+  translate: 2px 2px;
+
+  box-shadow: 0 0 20px red;
+}
+
+.LogIn a {
+  text-decoration: underline;
+
+  margin-left: auto;
+
+  font-size: 20px;
+}
+
+.LogIn a:last-of-type {
+  margin-right: auto;
+}
+
+.LogIn input[type="email"], .LogIn input[type="password"], .LogIn input[type="tel"] {
+  display: block;
+
+  font-size: 18px;
+
+  width: 100%;
+  height: 65px;
+  
+  outline: none;
+  border: none;
+  border-radius: 10px;
+
+  padding: 5px 10px;
+}
+
+.LogIn input:focus-within {
+  outline: 4px solid red;
+}
+
+.LogIn .background {
+  display: flex;
+
+  flex-direction: column;
+
+  position: absolute;
+  top: 0;
+
+  z-index: -1;
+
+  width: 1920px;
+  height: 100%;
+}
+
+.LogIn .background-0, .LogIn .background-1 {
+  position: absolute;
+}
+
+.LogIn .background-0 {
+  width: 100%;
+  height: auto;
+}
+
+.LogIn .background-1 {
+  bottom: 0;
+  left: -50vw;
+
+  width: 300vw;
+
+  z-index: 1;
+}
+
+.LogIn .errorBox {
+  width: 100%;
+  height: fit-content;
+
+  background-color: rgba(255, 0, 0, 0.5);
+  outline: 2px solid red;
+
+  border-radius: 4px;
+
+  padding: 15px;
+
+  font-size: 20px;
+}

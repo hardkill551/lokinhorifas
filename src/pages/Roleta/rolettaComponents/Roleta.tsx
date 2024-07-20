@@ -29,8 +29,8 @@ const Hero = () => {
       <Roulette />
 
       <div className={style.ButtonGroup}>
-        <button disabled={isButtonActive} onClick={() => manageMockWinner()} >Giro Teste</button>
-        <button disabled={isButtonActive || rewards.length == 0} onClick={() => manageWinner()} >Girar Roleta</button>
+        <button disabled={isButtonActive || participants.length == 0} onClick={() => manageMockWinner()} >Giro Teste</button>
+        <button disabled={isButtonActive || rewards.length == 0 || participants.length == 0} onClick={() => manageWinner()} >Girar Roleta</button>
       </div>
     </div>
 

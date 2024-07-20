@@ -10,11 +10,13 @@ export const usePersonCardState = () => {
   return useContext(PersonCardContext)
 }
 
-    // TODO Separar o giro teste do Girar Roleta
-    // TODO Criar método para girar para uma pessoa aleatória quando em giro teste
+    // * Separar o giro teste do Girar Roleta
+    // * Criar método para girar para uma pessoa aleatória quando em giro teste
     // TODO Adicionar modo responsivo para até mobile
     // TODO Terminar fluxo de envios de vencedores para o back
+    // TODO Utilizar tokens autenticados localmente
     // TODO Pegar os dados de retorno do back e disponibilizar no componente LastEarned
+    // TODO Alterar imagem de Glitter e imagem temporária das skins
 
 export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   // ? Default/Fallback values used to keep operations
@@ -188,6 +190,7 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   const { rewards, removeReward } = useRewardState() as { rewards: RewardItemType[], removeReward: Function }
   const [ winnerPopupVisible, setWinnerPopupVisible ] = useState(false)
   const [ animationState, setAnimationState ] = useState() as [ animationState: Animation, setAnimationState: Function ]
+  const [ isMockWin, setIsMockWin ] = useState(false)
   
   const toggleIsButtonActive = () => setIsButtonActive(oldValue => !oldValue)
 
@@ -267,6 +270,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   const manageWinner = () => {
     if(!winner) return
 
+    setIsMockWin(false)
+
     addLatestWinnerToTable()
     
     setAnimationState(playAnimation())
@@ -274,6 +279,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
   const manageMockWinner = () => {
     if(!winner) return
+
+    setIsMockWin(true)
     
     setAnimationState(playAnimation())
   }
@@ -291,6 +298,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
     animationState.cancel()
 
     toggleWinnerPopupVisibility()
+
+    if(isMockWin) return
     removeWinnerAndRaffleFromRoulette()
   }
 
@@ -317,7 +326,7 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   const loadFillerCards = (position: number) => {
     const numberOfParticipants = participants.length
 
-    const numberOfFillerCards = (200 - numberOfParticipants) / 2
+    const numberOfFillerCards = (600 - numberOfParticipants) / 2
 
     if(numberOfFillerCards <= 0) return
     
@@ -348,7 +357,7 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
     const winnerCardCenter = (Math.round(winner.getBoundingClientRect().right) - Math.round(winner.getBoundingClientRect().left)) / 2 + Math.round(winner.getBoundingClientRect().left) - (window.innerWidth / 2)
 
-    const timing = 500
+    const timing = 60000
     
     
     const randomSide = Math.floor(Math.random() * 2) == 1 ? -1 : 1
@@ -360,16 +369,16 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
     if(randomSide == -1) {
       // * Variável que segura animação
+      const random = Math.floor(Math.random() * 55)
+
       const spinAnimation = new Animation(new KeyframeEffect(roulette, [
         { transform: `translateX(0px)`, offset: 0 },
-        { transform: `translateX(80px)`, offset: 0.01 },
-        { transform: `translateX(${winnerCardCenter * -1 - (randomSide * -115)}px)`, offset: 0.85 },
-        { transform: `translateX(${winnerCardCenter * -1 - (randomSide * (115 + Math.floor(Math.random() * 10)))}px)`, offset: 0.95 },
-        { transform: `translateX(${winnerCardCenter * -1}px)`, offset: 1 }
+        { transform: `translateX(80px)`, offset: 0.009 },
+        { transform: `translateX(${winnerCardCenter * -1 -(115 - random)}px)`, offset: 1 }
       ], 
       {
         duration: timing,
-        easing: "ease-out",
+        easing: "cubic-bezier(.04,.97,.81,.99)",
         fill: 'forwards'
       }), document.timeline)
 
@@ -380,16 +389,16 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
       return spinAnimation
     } else {
       // * Variável que segura animação
+      const random = Math.floor(Math.random() * 115)
+
       const spinAnimation = new Animation(new KeyframeEffect(roulette, [
         { transform: `translateX(0px)`, offset: 0 },
-        { transform: `translateX(80px)`, offset: 0.01 },
-        { transform: `translateX(${(winnerCardCenter * -1) + 460}px)`, offset: 0.85 },
-        { transform: `translateX(${(winnerCardCenter * -1) + (157 + Math.floor(Math.random() * 10))}px)`, offset: 0.95 },
-        { transform: `translateX(${winnerCardCenter * -1}px)`, offset: 1 }
+        { transform: `translateX(80px)`, offset: 0.009 },
+        { transform: `translateX(${winnerCardCenter * -1 +(115 - random)}px)`, offset: 1 }
       ], 
       {
         duration: timing,
-        easing: "ease-out",
+        easing: "cubic-bezier(.04,.97,.81,.99)",
         fill: 'forwards'
       }), document.timeline)
       
@@ -417,7 +426,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
     manageWinner,
     manageCloseResult,
     winnerPopupVisible,
-    toggleWinnerPopupVisibility
+    toggleWinnerPopupVisibility,
+    isMockWin
   }
 
   // ! PARA DEBUGGING

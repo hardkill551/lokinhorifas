@@ -62,6 +62,7 @@ export const RewardContextProvider = ({children}:{children: ReactNode} ) => {
       tempArray.push(newItem)
     })
 
+    // ! Comentar o código abaixo para ter mais de 4 prêmios, opção para DEBUGGING
     tempArray.splice(4, 1000)
 
     setRewards(tempArray)
