@@ -23,6 +23,8 @@ export default function Login() {
     const [token, setToken] = useState<string | null>(null); // Tipando token como string | null
     const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType;
     const [error, setError] = useState("");
+
+    // ? USAR COMO BASE PARA FAZER RENDERIZAÇÃO DOS TOKENS
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const storedToken = localStorage.getItem("token");
@@ -41,6 +43,7 @@ export default function Login() {
         }
 
     }, [])
+    // ? USAR COMO BASE PARA FAZER RENDERIZAÇÃO DOS TOKENS
 
     
     function twitchAuth(): void {

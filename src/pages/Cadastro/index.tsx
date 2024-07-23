@@ -17,7 +17,8 @@ import MaskedInput from "react-text-mask";
 
 
 const SignUp = () => {
-  const { push } = useRouter()
+  const { push, query } = useRouter()
+  const { emailParams } = query
 
   const [ formDataValue, setFormDataValue ] = useState<FormDataType>({
     email: '',
@@ -35,6 +36,12 @@ const SignUp = () => {
   
   const addStep = () => setStep(oldValue => oldValue += 1)
   const removeStep = () => setStep(oldValue => oldValue -= 1)
+
+  useEffect(() => {
+    if(!emailParams) return
+  
+      setFormDataValue(oldValue => {return {...oldValue, email: String(emailParams)}})
+  }, [emailParams])
   
   const checkEmail = async () => {
     let tempBool = await axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/verify", { name: formDataValue.name, email: formDataValue.email }).then((res) => {
@@ -44,7 +51,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log(error)
-        if(error.response.data.name = "DuplicatedEmailError" && step == 0) return push(`./login?email=${formDataValue.email}`)
+        if(error.response.data.name = "DuplicatedEmailError" && step == 0) return setError('Este e-mail já foi cadastrado!')
           return false
       })
       
@@ -55,31 +62,16 @@ const SignUp = () => {
     const { name, email, password, confirmPassword, tradeLink, phoneNumber, picture } = formDataValue
     
     if(step == 0) {
-      if (!email || !name) {
+      if (!email || !name || !password || !confirmPassword) {
         return setError("Todos os campos são obrigatórios!");
       }
-      
+
       else if (name.length < 3) {
         return setError("O nome de usuário deve ter pelo menos 3 caracteres!");
       }
       
-      if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
-        return setError("Por favor, insira um endereço de e-mail válido.");
-      }
-      return checkEmail()
-    }
-    
-    else if(step == 1) {
-      if (!email || !name || !password || !confirmPassword) {
-        return setError("Todos os campos são obrigatórios!");
-      }
-      
       else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
         return setError("Por favor, insira um endereço de e-mail válido.");
-      }
-      
-      else if(await checkEmail() == false) {
-        return setError("Este e-mail já está sendo usado.");
       }
       
       else if (name.length < 3) {
@@ -92,11 +84,13 @@ const SignUp = () => {
       else if (password.length < 6) {
         return setError("A senha tem que ter no minimo 6 caracteres");
       }
-      
-      addStep()
+
+      else if(await checkEmail() == false) {
+        return setError("Este e-mail já está sendo usado.");
+      }
     }
     
-    else if(step == 2) {
+    else if(step == 1) {
       if (!name || !email || !password || !confirmPassword || !tradeLink || !phoneNumber) {
         return setError("Todos os campos são obrigatórios!");
       }
@@ -112,7 +106,7 @@ const SignUp = () => {
       addStep()
     }
     
-    else if(step == 3) {
+    else if(step == 2) {
       if (!name || !email || !password || !confirmPassword || !tradeLink || !phoneNumber) {
         return setError("Todos os campos são obrigatórios!");
       }
@@ -120,8 +114,11 @@ const SignUp = () => {
       else if(await checkEmail() == false) {
         return setError("Este e-mail já está sendo usado.");
       }
+      
+      else if (!/^https:\/\/steamcommunity\.com\/tradeoffer\/new\/\?partner=\d+&token=\w+$/.test(tradeLink)) {
+        return setError("Por favor, insira um trade link da Steam válido.");
+      }
     }
-    
     
     return true
   }
@@ -162,8 +159,8 @@ const SignUp = () => {
   }
   
   const checkStep = () => {
-    if(step == 2) return 'steps-3'
-    else if(step == 3) return 'steps-4'
+    if(step == 1) return 'steps-3'
+    else if(step == 2) return 'steps-4'
     
     return ''
   }
@@ -203,8 +200,8 @@ const SignUp = () => {
   //   console.log(formDataValue.picture)
   // }, [formDataValue])
     
-  // TODO Enviar cadastros novos para o back
-  // TODO Salvar dados importantes no front usando userContext
+  // * Enviar cadastros novos para o back
+  // // TODO Salvar dados importantes no front usando userContext
 
   return (
     <>
@@ -219,12 +216,12 @@ const SignUp = () => {
 
               <div className={style.LinkGroup}>
                 {step > 0 && <Link href={''} onClick={() => removeStep()}>&lt;- Voltar</Link>}
-                <Link className={style.LastAnchor} href={''}>Já tem uma conta?</Link>
+                <Link className={style.LastAnchor} href={'/login'}>Já tem uma conta?</Link>
               </div>
 
               <div className={style.steps}>
                 <div className={cn(style.stepsWrapper, style?.[checkStep()])}>
-                  <div className={cn(style?.['step-1'], step == 1 ? style?.['step-2'] : '')}>
+                  <div className={step == 0 ? style?.['step-2'] : style?.['step-1']}>
                     <div className={style.stepWrapper}>
                       <label>
                         E-mail:
@@ -272,12 +269,12 @@ const SignUp = () => {
                       </button>
                     </div>
 
-                      {step == 3 && <label className={style.checkboxLabel}>
+                      {step == 2 && <label className={style.checkboxLabel}>
                         <input type="checkbox" name="tos" id="tos" required/>
                         <p>Declaro que li e aceito os <Link href={'/'}>termos de serviço</Link></p>
                       </label>}
 
-                      {step == 3 && <label className={style.checkboxLabel}>
+                      {step == 2 && <label className={style.checkboxLabel}>
                         <input type="checkbox" name="privacy" id="privacy" required/>
                         <p>Declaro que li e aceito os <Link href={'/'}>termos de privacidade</Link></p>
                       </label>}

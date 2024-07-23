@@ -17,6 +17,7 @@ const NavBar = ({ setPopUpInfo }:any) => {
   const [sideBar, setSideBar] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  // ? USAR COMO BASE PARA SALVAR LOCALMENTE O ESTADO DO USUÁRIO
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedToken = localStorage.getItem("token");
@@ -44,6 +45,7 @@ const NavBar = ({ setPopUpInfo }:any) => {
       }
     }
   }, [setUserInfo, userInfo.picture]);
+  // ? USAR COMO BASE PARA SALVAR LOCALMENTE O ESTADO DO USUÁRIO
 
   const router = useRouter();
 
