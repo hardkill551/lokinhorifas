@@ -155,12 +155,12 @@ export type LastEarnFrontEndType = {
   ItemValue: string;
 }
 
-export type formDataValueType = {
-  email: string,
-  password: string,
-  confirmPassword: string,
-  tradeLink: string,
-  phoneNumber: string,
-  name: string,
-  profilePicture: null
+export interface FormDataType {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  tradeLink: string;
+  phoneNumber: string;
+  name: string;
+  picture: null | File | string;
 }

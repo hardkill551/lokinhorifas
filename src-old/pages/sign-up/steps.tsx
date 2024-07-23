@@ -162,6 +162,7 @@ const Steps = () => {
             const pictureFile = e.target.elements['picture'].files[0]
 
             const { confirmPassword, ...signUpData } = signUp;
+            console.log(pictureFile)
             if(!pictureFile){
                 formData.append('picture', "default");
                 signUpData.picture = "default"

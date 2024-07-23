@@ -12,19 +12,21 @@ import SingUpBG from '../../images/Cadastro/CADASTROBG.png'
 import Lines from '../../images/Cadastro/Lines.png'
 import defaultProfilePic from '../../assets/defaultProfilePic.svg'
 import editPencil from '../../assets/editPencil.svg'
+import { FormDataType } from "utils/interfaces";
+import MaskedInput from "react-text-mask";
 
 
 const SignUp = () => {
   const { push } = useRouter()
 
-  const [ formDataValue, setFormDataValue ] = useState({
+  const [ formDataValue, setFormDataValue ] = useState<FormDataType>({
     email: '',
     password: '',
     confirmPassword: '',
     tradeLink: '',
     phoneNumber: '',
     name: '',
-    profilePicture: null
+    picture: null
   })
   
   const [ step, setStep ] = useState(0)
@@ -42,7 +44,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log(error)
-        if(error.response.data.name = "DuplicatedEmailError" && step == 0) return push(`./Login?email=${formDataValue.email}`)
+        if(error.response.data.name = "DuplicatedEmailError" && step == 0) return push(`./login?email=${formDataValue.email}`)
           return false
       })
       
@@ -50,7 +52,7 @@ const SignUp = () => {
   }
   
   const validateForm = async () => {
-    const { name, email, password, confirmPassword, tradeLink, phoneNumber, profilePicture } = formDataValue
+    const { name, email, password, confirmPassword, tradeLink, phoneNumber, picture } = formDataValue
     
     if(step == 0) {
       if (!email || !name) {
@@ -64,7 +66,6 @@ const SignUp = () => {
       if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
         return setError("Por favor, insira um endereço de e-mail válido.");
       }
-      
       return checkEmail()
     }
     
@@ -107,6 +108,8 @@ const SignUp = () => {
       else if (!/^https:\/\/steamcommunity\.com\/tradeoffer\/new\/\?partner=\d+&token=\w+$/.test(tradeLink)) {
         return setError("Por favor, insira um trade link da Steam válido.");
       }
+
+      addStep()
     }
     
     else if(step == 3) {
@@ -117,22 +120,45 @@ const SignUp = () => {
       else if(await checkEmail() == false) {
         return setError("Este e-mail já está sendo usado.");
       }
-      
-      if(profilePicture != null) {
-        console.log(profilePicture)
-      }
     }
     
     
     return true
   }
   
-  const sendForm = () => {
-    setError('')
-    if(!validateForm()) return
+  const sendForm = async (e: any) => {
+    e.preventDefault();
+  
+    setError('');
+    if(!await validateForm()) return;
+  
+    const formData = new FormData();
+    const pictureFile = e.currentTarget?.elements['picture'].files[0];
     
-    // axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/", { name: formDataValue.name, email: formDataValue.email }).then((res) => addStep)
-    // .catch((error) => setError(error.response.data.message))
+    const { confirmPassword, ...signUpData } = formDataValue;
+  
+    if (!pictureFile) {
+      signUpData.picture = "default";
+    } else {
+      signUpData.picture = pictureFile.name;
+      formData.append('picture', pictureFile);
+    }
+  
+    formData.append('signUpData', JSON.stringify(signUpData)); // Envie os outros dados do formulário como JSON
+  
+    try {
+      const response = await axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      console.log(response.data); // Log da resposta do servidor
+      push("/cadastro");
+    } catch (error) {
+      console.error(error);
+      setError("Ocorreu um erro ao enviar o formulário.");
+    }
   }
   
   const checkStep = () => {
@@ -143,14 +169,16 @@ const SignUp = () => {
   }
   
   const changeProfilePic = () => {
-    if(!inputRef.current) return
-    
-    inputRef.current.click()
+    if(!inputRef.current) return;
+    inputRef.current.click();
   }
   
-  const handleImageChange = (e:any) => {
-    const file = e.target.files[0]
-    setFormDataValue(oldValue => {return {...oldValue, profilePicture: file}})
+  const handleImageChange = (e: any) => {
+    const file = e.target.files[0];
+    setFormDataValue(prevState => ({
+      ...prevState,
+      picture: file ? file.name : null,
+    }));
   }
   
   const twitchAuth = () => {
@@ -171,8 +199,8 @@ const SignUp = () => {
   }
     
   // useEffect(() => {
-  //   if(formDataValue.profilePicture == null) return
-  //   console.log(formDataValue.profilePicture)
+  //   if(formDataValue.picture == null) return
+  //   console.log(formDataValue.picture)
   // }, [formDataValue])
     
   // TODO Enviar cadastros novos para o back
@@ -184,7 +212,7 @@ const SignUp = () => {
         <div className={style.SignUpWrapper}>
           <div className={style.col1}></div>
           <div className={style.col2}>
-            <form onSubmit={e => e.preventDefault()}>
+            <form onSubmit={sendForm}>
               <h2>Seja bem-vindo!</h2>
 
               { error && <div className={style.errorBox}>{error}</div> }
@@ -224,25 +252,25 @@ const SignUp = () => {
                       </label>
                       <label>
                         Celular:
-                        <input type="tel" onChange={e => setFormDataValue(oldValue => {return {...oldValue, phoneNumber: String(e.target.value)}})} value={formDataValue.phoneNumber}/>
+                        <MaskedInput defaultValue={""} mask={['(', /[0-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]} type="tel" onChange={e => setFormDataValue(oldValue => {return {...oldValue, phoneNumber: String(e.target.value)}})} value={formDataValue.phoneNumber}/>
                       </label>
                     </div>
                   </div>
                   <div className={style?.["step-4"]}>
                     <div className={style.stepWrapper}>
 
-                      <div className={style.ImageBox}>
-                        <Image 
-                        src={formDataValue.profilePicture != null ? URL.createObjectURL(formDataValue.profilePicture) : defaultProfilePic} 
+                    <div className={style.ImageBox}>
+                      <Image 
+                        src={formDataValue.picture && formDataValue.picture !== 'default' ? URL.createObjectURL(formDataValue.picture as File) : defaultProfilePic} 
                         alt="Definir imagem de perfil"
                         width={300}
                         height={300}
-                        />
-                        <button type="button" onClick={() => changeProfilePic()}>
-                          <Image src={editPencil} alt={'Editar foto de perfil'}/>
-                          <input type="file" onChange={e => handleImageChange(e)} name="profilePic" id="profilePic" ref={inputRef} />
-                        </button>
-                      </div>
+                      />
+                      <button type="button" onClick={changeProfilePic}>
+                        <Image src={editPencil} alt={'Editar foto de perfil'}/>
+                        <input type="file" onChange={handleImageChange} name="picture" id="picture" ref={inputRef} />
+                      </button>
+                    </div>
 
                       {step == 3 && <label className={style.checkboxLabel}>
                         <input type="checkbox" name="tos" id="tos" required/>
@@ -261,11 +289,11 @@ const SignUp = () => {
 
 
 
-              <button onClick={() => sendForm()}>{step > 2 ? 'Enviar' : 'Próximo'}</button>
+              <button type={step == 3 ? 'submit' : 'button'} onClick={() => validateForm()}>{step > 2 ? 'Enviar' : 'Próximo'}</button>
 
               <hr />
 
-              <button className={style.TwitchButton} onClick={() => twitchAuth()}>Entrar com Twitch</button>
+              <button type='button' className={style.TwitchButton} onClick={() => twitchAuth()}>Entrar com Twitch</button>
             </form>
           </div>
         </div>
