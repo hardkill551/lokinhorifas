@@ -3,12 +3,23 @@ import style from '../roletta.module.css'
 import RewardList from './RewardList';
 import Roulette from './Roulette';
 
-// import HEROFRONTBG from '../../../images/Roleta/Hero/HEROFRONTBG.png'
-// import HEROBACKBG from '../../../images/Roleta/Hero/HEROBACKBG.png'
 import HEROBACK from '../../../images/Roleta/Hero/HEROBACKGROUND.png'
 import LINES from '../../../images/Roleta/Hero/Lines.png'
+import { usePersonCardState } from 'contexts/PersonCardContext';
+import { useRewardState } from 'contexts/RewardContext';
+import { Participant, RewardItemType } from 'utils/interfaces';
+import { useEffect } from 'react';
 
 const Hero = () => {
+  const { manageMockWinner, isButtonActive, manageWinner, participants } = usePersonCardState() as { manageMockWinner: Function, isButtonActive: boolean, manageWinner: Function, participants: Participant[] }
+  
+  const { rewards } = useRewardState() as { rewards:RewardItemType[] }
+
+  // useEffect(() => {
+  //   console.log(participants.filter(item => item.isWinner))
+  // }, [participants])
+
+
   return (
   <section className={style.Roleta}>
     <div className={style.RoletaWrapper}>
@@ -18,8 +29,8 @@ const Hero = () => {
       <Roulette />
 
       <div className={style.ButtonGroup}>
-        <button>Giro Teste</button>
-        <button>Girar Roleta</button>
+        <button disabled={isButtonActive || participants.length == 0} onClick={() => manageMockWinner()} >Giro Teste</button>
+        <button disabled={isButtonActive || rewards.length == 0 || participants.length == 0} onClick={() => manageWinner()} >Girar Roleta</button>
       </div>
     </div>
 

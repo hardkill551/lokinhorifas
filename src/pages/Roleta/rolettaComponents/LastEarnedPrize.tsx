@@ -8,9 +8,9 @@ import defaultGunPic from '../../../images/Roleta/Prizes/defaultGunPic.png'
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
 
 import Image from 'next/image';
-import { LastEarnedPrizeType } from 'utils/interfaces';
+import { LastEarnFrontEndType } from 'utils/interfaces';
 
-const LastEarnedPrizes = ({ props }: { props: LastEarnedPrizeType }) => {
+const LastEarnedPrizes = ({ props }: { props: LastEarnFrontEndType }) => {
   if (!props) {
     return <div>Error: No props provided</div>;
   }
@@ -30,7 +30,7 @@ const LastEarnedPrizes = ({ props }: { props: LastEarnedPrizeType }) => {
       <div className={style.EarnedPrizeItemWrapper}>
         <div className={style.ItemMetaInfo}>
           <p>Foi sorteado há<br />{TimeOfEarning}</p>
-          <p>Chance<br />{ChanceOfEarning}</p>
+          <p>Chance<br />{ChanceOfEarning}%</p>
         </div>
         <div className={style.ImageWrapperBox}>
           <Image src={itemImageUrl ? itemImageUrl : defaultGunPic} alt={`Imagem de ${ItemName}`} />
@@ -48,7 +48,7 @@ const LastEarnedPrizes = ({ props }: { props: LastEarnedPrizeType }) => {
             <p>{ItemType}</p>
           </div>
           <div className={style.ItemValue}>
-            <h3>R$ {ItemValue}</h3>
+            <h3>R$ {ItemValue}.00</h3>
           </div>
         </div>
       </div>

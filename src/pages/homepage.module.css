@@ -1540,3 +1540,11 @@
 .highlight {
   color: #E21A1A;
 }
+
+.Hero button:disabled {
+  filter: grayscale(100%);
+}
+
+.ServicesRaffles button:disabled {
+  filter: grayscale(100%);
+}

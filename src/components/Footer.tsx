@@ -15,7 +15,9 @@ const Footer = () => {
     <footer>
         <div className="FooterWrapper">
           <div className="CompanyInfo">
-            <Image className='Logo' src={Logo} alt="Logo da empresa Lokinho Skins" />
+            <div className="LogoBox">
+              <Image className='Logo' src={Logo} alt="Logo da empresa Lokinho Skins" />
+            </div>
             <p>Loquinho Skins Ltda © 2024.<br />Todos os Direitos Reservados<br />CNPJ: 50.278.011/0001-06</p>
           </div>
 

@@ -29,7 +29,21 @@ export default interface UserContextType {
       phoneNumber: string;
       tradeLink: string;
     }>>;
-  }
+    logOut: Function
+}
+
+export type UserSettingsType = { 
+  profile: {
+    name: string;
+    email: string;
+    picture: string;
+    budget: string | undefined;
+  };
+  showSettings: boolean;
+  setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
+  image: File | null;
+  setImage: React.Dispatch<React.SetStateAction<File | null>>;
+}
 
 export type UserData = {
     tradeLink: string;
@@ -47,16 +61,16 @@ export type ServicesCardType = {
 }
 
 export type CardItemType = {
-  color: string;
   profilePicture: string;
   personName: string;
   nickName: string;
+  isWinner: boolean;
+  number: number;
 }
 
 export type RewardItemType = {
   type: string;
   itemImageUrl: string;
-  itemImageAlt: string;
   itemName: string;
   itemType: string;
   itemValue: string;
@@ -70,22 +84,83 @@ export type LastEarnedPrizeType = {
   ItemName: string;
   ItemType: string;
   ItemValue: string;
+  WinnerID: number;
+  WinnerName: string;
+  WinnerPicture: string;
 }
 
 export type PersonInfoCard = {
+  id: number;
   name: string; 
   number: number;
   picture: string;
 }
 
 export type Participant = {
-  color: string;
+  id: number;
   profilePicture: string;
   personName: string;
   nickName: string;
+  number: number;
+  isWinner: boolean;
 }
 
 export type PersonCardContextType = {
   participants: PersonInfoCard[];
   setNewParticipants: (dataArray: Participant[]) => void;
+}
+
+export type SkinType = {
+  id: number;
+  name: string;
+  picture: string;
+  value: number;
+}
+
+export type RewardItemContextType = {
+  rewards: RewardItemType[];
+  setNewRewards: (dataArray: SkinType[]) => void;
+}
+
+export type LastEarnedWinnerType = {
+  winner: WinnerType;
+  raffle: RaffleType;
+}
+
+export type WinnerType = {
+  id: number;
+  email: string;
+  name: string;
+  phoneNumber: null | string;
+  picture: string;
+  tradeLink: string | null;
+  isAdmin: boolean;
+}
+
+export type RaffleType = {
+  id: number;
+  value: number;
+  is_active: boolean;
+  skin: SkinType;
+  item_chance: string;
+}
+
+export type LastEarnFrontEndType = {
+  itemImageUrl: string;
+  TimeOfEarning: string;
+  ChanceOfEarning: string;
+  PoolType: string;
+  ItemName: string;
+  ItemType: string;
+  ItemValue: string;
+}
+
+export type formDataValueType = {
+  email: string,
+  password: string,
+  confirmPassword: string,
+  tradeLink: string,
+  phoneNumber: string,
+  name: string,
+  profilePicture: null
 }

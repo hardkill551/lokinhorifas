@@ -42,6 +42,7 @@ export default function Login() {
 
     }, [])
 
+    
     function twitchAuth(): void {
         const TWITCH_URL = "https://id.twitch.tv/oauth2/authorize"
         const CLIENT_ID = process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID
