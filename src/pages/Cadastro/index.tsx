@@ -27,7 +27,7 @@ const SignUp = () => {
     profilePicture: null
   })
   
-  const [ step, setStep ] = useState(3)
+  const [ step, setStep ] = useState(0)
   const [ error, setError ] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   
@@ -119,7 +119,7 @@ const SignUp = () => {
       }
       
       if(profilePicture != null) {
-        // console.log(profilePicture)
+        console.log(profilePicture)
       }
     }
     
@@ -271,7 +271,9 @@ const SignUp = () => {
         </div>
 
         <div className={style.background}>
-          <Image className={style?.['background-0']} src={SingUpBG} alt="Imagem de fundo"/>
+          <div className={style?.['background-0Wrapper']}>
+            <Image className={style?.['background-0']} src={SingUpBG} alt="Imagem de fundo"/>
+          </div>
           <Image className={style?.['background-1']} src={Lines} alt="Linhas de fundo"/>
         </div>
         <div className={style.glowGroup}>

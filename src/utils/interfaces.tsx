@@ -29,7 +29,21 @@ export default interface UserContextType {
       phoneNumber: string;
       tradeLink: string;
     }>>;
-  }
+    logOut: Function
+}
+
+export type UserSettingsType = { 
+  profile: {
+    name: string;
+    email: string;
+    picture: string;
+    budget: string | undefined;
+  };
+  showSettings: boolean;
+  setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
+  image: File | null;
+  setImage: React.Dispatch<React.SetStateAction<File | null>>;
+}
 
 export type UserData = {
     tradeLink: string;

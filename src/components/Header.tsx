@@ -4,9 +4,15 @@ import { useSidebarState } from '../contexts/SidebarContext';
 import logo from '../images/Logo.png';
 import Xmark from '../assets/xmark.svg';
 import { useEffect } from 'react';
+import { useUserStateContext } from 'contexts/UserContext';
+import UserContextType  from '../utils/interfaces'
+import HeaderProfile from './HeaderProfile';
 
 const Header = () => {
   const { sidebarView, toggleSidebar }:any = useSidebarState()
+  const { userInfo } = useUserStateContext() as UserContextType
+
+  const { token } = userInfo
 
   useEffect(() => {
     const htmlElement = document.querySelector('html')
@@ -17,12 +23,13 @@ const Header = () => {
 
   const router = useRouter()
 
-
   return (
     <header className={sidebarView ? 'no-background' : ''}>
       <div className="HeaderWrapper">
         <div className="MainHeader">
-          <Image className={sidebarView ? 'Logo SidebarOn' : 'Logo'} src={logo} alt="Logo de Lokinho Rifas" />
+          <div className="LogoBox" onClick={() => router.push('/')} >
+            <Image className={sidebarView ? 'Logo SidebarOn' : 'Logo'} src={logo} alt="Logo de Lokinho Rifas" />
+          </div>
           <nav className='desktop'>
             <ul>
             <li onClick={() => router.push('/#Home')}>Home</li>
@@ -32,7 +39,7 @@ const Header = () => {
             </ul>
           </nav>
         </div>
-        <button className='desktop'>Faça Parte!</button>
+        {token == '' ? <button className='desktop'>Faça Parte!</button> : <HeaderProfile />}
         <button onClick={() => toggleSidebar()} className='mobile tablet'>{sidebarView ? <Image src={Xmark} alt="Fechar sidebar" /> : '|||'}</button>
       </div>
     </header>

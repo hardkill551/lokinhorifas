@@ -15,11 +15,20 @@ const Login = () => {
   const { setUserInfo } = useUserStateContext() as UserContextType
   const { query, push } = useRouter()
   const { email } = query
+  const [ token, setToken ] = useState('')
 
-  const token = localStorage.getItem('token')
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const value = localStorage.getItem('token');
 
-  if(token) push('/')
-  else localStorage.setItem('token', '')
+      if(!value) return
+      setToken(value);
+
+      if(token) push('/')
+      else localStorage.setItem('token', '')
+    }
+  }, []);
+
   
   const [ formDataValue, setFormDataValue ] = useState({
     email: '',
@@ -69,11 +78,11 @@ const Login = () => {
 
               <label>
                 E-mail:
-                <input type="email" name="email" id="email" value={formDataValue.email} onChange={e => setFormDataValue(oldValue => {return {...oldValue, email: e.target.value}})}/>
+                <input type="email" name="email" id="email" value={formDataValue.email} onChange={e => setFormDataValue(oldValue => {return {...oldValue, email: e.target.value}})} required/>
               </label>
               <label>
                 Senha:
-                <input type="password" name="password" id="password" value={formDataValue.password} onChange={e => setFormDataValue(oldValue => {return {...oldValue, password: e.target.value}})}/>
+                <input type="password" name="password" id="password" value={formDataValue.password} onChange={e => setFormDataValue(oldValue => {return {...oldValue, password: e.target.value}})} required/>
               </label>
               <Link href={'/RecuperacaoDeSenha'}>Esqueceu a senha?</Link>
 
@@ -83,7 +92,9 @@ const Login = () => {
           </div>
         </div>
         <div className={style.background}>
-          <Image className={style?.['background-0']} src={SingUpBG} alt="Imagem de fundo"/>
+          <div className={style?.['background-0Wrapper']}>
+            <Image className={style?.['background-0']} src={SingUpBG} alt="Imagem de fundo"/>
+          </div>
           <Image className={style?.['background-1']} src={Lines} alt="Linhas de fundo"/>
         </div>
         <div className={style.glowGroup}>
