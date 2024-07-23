@@ -18,7 +18,7 @@ import MaskedInput from "react-text-mask";
 
 const SignUp = () => {
   const { push, query } = useRouter()
-  const { emailParams } = query
+  const { email } = query
 
   const [ formDataValue, setFormDataValue ] = useState<FormDataType>({
     email: '',
@@ -38,10 +38,10 @@ const SignUp = () => {
   const removeStep = () => setStep(oldValue => oldValue -= 1)
 
   useEffect(() => {
-    if(!emailParams) return
+    if(!email) return
   
-      setFormDataValue(oldValue => {return {...oldValue, email: String(emailParams)}})
-  }, [emailParams])
+      setFormDataValue(oldValue => {return {...oldValue, email: String(email)}})
+  }, [email])
   
   const checkEmail = async () => {
     let tempBool = await axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/verify", { name: formDataValue.name, email: formDataValue.email }).then((res) => {

@@ -280,6 +280,12 @@
   transition: height 400ms ease-in;
 }
 
+.SignUp .stepWrapper {
+  width: 530px;
+
+  padding: 0 5px;
+}
+
 .SignUp .step-2 .stepWrapper {
   display: flex;
   
