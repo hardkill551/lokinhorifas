@@ -7,21 +7,44 @@ import { useEffect } from 'react';
 import { useUserStateContext } from 'contexts/UserContext';
 import UserContextType  from '../utils/interfaces'
 import HeaderProfile from './HeaderProfile';
+import axios from 'axios';
 
 const Header = () => {
   const { sidebarView, toggleSidebar }:any = useSidebarState()
-  const { userInfo } = useUserStateContext() as UserContextType
+  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
 
-  const { token } = userInfo
+  const router = useRouter()
 
   useEffect(() => {
     const htmlElement = document.querySelector('html')
   
     htmlElement?.classList.toggle('SidebarOn', sidebarView)
-  }, [sidebarView])
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth", {}, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`
+          }
+        }).then((res) => {
+          setUserInfo({
+            id: res.data.user.id,
+            name: res.data.user.name,
+            email: res.data.user.email,
+            picture: res.data.user.picture,
+            token: res.data.user.token,
+            isAdmin: res.data.user.isAdmin,
+            phoneNumber: res.data.user.phoneNumber,
+            tradeLink: res.data.user.tradeLink
+          });
+        }).catch((err) => {
+          localStorage.setItem("token", "");
+          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+        });
+      }
+    }
+  }, [sidebarView, setUserInfo, userInfo.picture])
   // * O código acima adiciona e retira scroll da página quando a Sidebar está visível
-
-  const router = useRouter()
 
   return (
     <header className={sidebarView ? 'no-background' : ''}>
@@ -39,7 +62,7 @@ const Header = () => {
             </ul>
           </nav>
         </div>
-        {token == '' ? <button onClick={() => router.push('/login')} className='desktop'>Faça Parte!</button> : <HeaderProfile />}
+        {userInfo.token == '' ? <button onClick={() => router.push('/login')} className='desktop'>Faça Parte!</button> : <HeaderProfile />}
         <button onClick={() => toggleSidebar()} className='mobile tablet'>{sidebarView ? <Image src={Xmark} alt="Fechar sidebar" /> : '|||'}</button>
       </div>
     </header>
