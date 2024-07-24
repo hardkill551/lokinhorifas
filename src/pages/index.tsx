@@ -11,6 +11,7 @@ import UserContextType  from '../utils/interfaces'
 const Homepage = () => {
   const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType
 
+  
   useEffect(() => {
     (async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -27,6 +28,7 @@ const Homepage = () => {
 
     })();
   }, []);
+  
   return (
     <>
       <Hero />

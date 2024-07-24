@@ -272,20 +272,21 @@
 }
 
 .SignUp .step-1 {
-  /* ? label box = 113px */
-  /* ? gap = 30px */
-  /* ? heigh = # of label box * label box + gap if # of label boxes > 1 */
-  /* ? Ex.: if # of label boxes = 2, label box * 2 + 30px */
-
   width: 520px;
-  height: 256px;
+  height: 280px;
 
   overflow: hidden;
 
   transition: height 400ms ease-in;
 }
 
-.SignUp .step-1 .stepWrapper {
+.SignUp .stepWrapper {
+  width: 530px;
+
+  padding: 0 5px;
+}
+
+.SignUp .step-2 .stepWrapper {
   display: flex;
   
   flex-direction: column;
@@ -299,6 +300,16 @@
 }
 
 .SignUp .step-2 {
+  /* ? label box = 113px */
+  /* ? gap = 30px */
+  /* ? heigh = # of label box * label box + gap if # of label boxes > 1 */
+  /* ? Ex.: if # of label boxes = 2, label box * 2 + 30px */
+
+  width: 520px;
+
+  overflow: hidden;
+
+  transition: height 400ms ease-in;
   height: 572px;
 }
 

@@ -60,6 +60,31 @@
   text-align: center;
 }
 
+.box {
+  height: 308px;
+  width: calc(100% + 5px);
+
+  overflow: hidden;
+  transition: height 400ms ease-in;
+}
+
+.box.step-1 {
+  height: 117px;
+}
+
+.boxWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 30px;
+
+  height: 308px;
+  width: 100%;
+
+  padding: 0 5px;
+}
+
 .LogIn form label {
   width: 100%;
 
@@ -117,7 +142,7 @@
   font-size: 20px;
 }
 
-.LogIn a:last-of-type {
+.LogIn form > a:last-of-type {
   margin-right: auto;
 }
 
@@ -208,4 +233,14 @@
   padding: 15px;
 
   font-size: 20px;
+}
+
+.LogIn .TwitchButton {
+  background: linear-gradient(90deg, #8d5ce8, #442c71);
+
+  outline: 1px solid #8d5ce8;
+}
+
+.LogIn .TwitchButton:hover {
+  box-shadow: 0 0 20px #8d5ce8;
 }

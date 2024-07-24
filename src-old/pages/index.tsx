@@ -14,6 +14,7 @@ export default function Home() {
   const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType
   const [PopUp, setPopUp] = useState(false);
 
+  // ? SEGUNDA PARTE LOGIN PELA TWITCH
   useEffect(() => {
     (async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -30,6 +31,7 @@ export default function Home() {
 
     })();
   }, []);
+  // ? SEGUNDA PARTE LOGIN PELA TWITCH
 
 
   return (

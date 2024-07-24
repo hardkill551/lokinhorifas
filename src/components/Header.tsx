@@ -62,7 +62,7 @@ const Header = () => {
             </ul>
           </nav>
         </div>
-        {userInfo.token == '' ? <button className='desktop'>Faça Parte!</button> : <HeaderProfile />}
+        {userInfo.token == '' ? <button onClick={() => router.push('/login')} className='desktop'>Faça Parte!</button> : <HeaderProfile />}
         <button onClick={() => toggleSidebar()} className='mobile tablet'>{sidebarView ? <Image src={Xmark} alt="Fechar sidebar" /> : '|||'}</button>
       </div>
     </header>

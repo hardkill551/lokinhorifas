@@ -16,7 +16,9 @@ import { FormDataType } from "utils/interfaces";
 import MaskedInput from "react-text-mask";
 
 const SignUp = () => {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
+  const { email } = query
+  
   const [fileName, setFileName] = useState(defaultProfilePic);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -33,6 +35,7 @@ const SignUp = () => {
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
         const storedToken = localStorage.getItem("token");
@@ -48,8 +51,14 @@ const SignUp = () => {
             })
         }
     }
+  }, [])
 
-}, [])
+  useEffect(() => {
+    if(!email) return
+  
+      setFormDataValue(oldValue => {return {...oldValue, email: String(email)}})
+  }, [email])
+
   const addStep = () => setStep((oldValue) => (oldValue += 1));
   const removeStep = () => setStep((oldValue) => (oldValue -= 1));
 
@@ -75,35 +84,30 @@ const SignUp = () => {
   };
 
   const validateForm = async () => {
-    const {
-      name,
-      email,
-      password,
-      confirmPassword,
-      tradeLink,
-      phoneNumber,
-      picture,
-    } = formDataValue;
-
-    if (step == 0) {
-      if (!email || !name) {
-        return setError("Todos os campos são obrigatórios!");
-      } else if (name.length < 3) {
-        return setError("O nome de usuário deve ter pelo menos 3 caracteres!");
-      }
-
-      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-        return setError("Por favor, insira um endereço de e-mail válido.");
-      }
-      return checkEmail();
-    } else if (step == 1) {
+    const { 
+      name, 
+      email, 
+      password, 
+      confirmPassword, 
+      tradeLink, 
+      phoneNumber, 
+      picture 
+    } = formDataValue
+    
+    if(step == 0) {
       if (!email || !name || !password || !confirmPassword) {
         return setError("Todos os campos são obrigatórios!");
-      } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      }
+
+      else if (name.length < 3) {
+        return setError("O nome de usuário deve ter pelo menos 3 caracteres!");
+      }
+      
+      else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
         return setError("Por favor, insira um endereço de e-mail válido.");
-      } else if ((await checkEmail()) == false) {
-        return setError("Este e-mail já está sendo usado.");
-      } else if (name.length < 3) {
+      }
+      
+      else if (name.length < 3) {
         return setError("O nome de usuário deve ter pelo menos 3 caracteres!");
       } else if (password !== confirmPassword) {
         return setError("As senhas não coincidem!");
@@ -111,16 +115,13 @@ const SignUp = () => {
         return setError("A senha tem que ter no minimo 6 caracteres");
       }
 
-      addStep();
-    } else if (step == 2) {
-      if (
-        !name ||
-        !email ||
-        !password ||
-        !confirmPassword ||
-        !tradeLink ||
-        !phoneNumber
-      ) {
+      else if(await checkEmail() == false) {
+        return setError("Este e-mail já está sendo usado.");
+      }
+    }
+    
+    else if(step == 1) {
+      if (!name || !email || !password || !confirmPassword || !tradeLink || !phoneNumber) {
         return setError("Todos os campos são obrigatórios!");
       } else if ((await checkEmail()) == false) {
         return setError("Este e-mail já está sendo usado.");
@@ -132,25 +133,24 @@ const SignUp = () => {
         return setError("Por favor, insira um trade link da Steam válido.");
       }
 
-      addStep();
-    } else if (step == 3) {
-      if (
-        !name ||
-        !email ||
-        !password ||
-        !confirmPassword ||
-        !tradeLink ||
-        !phoneNumber
-      ) {
+      addStep()
+    }
+    
+    else if(step == 2) {
+      if (!name || !email || !password || !confirmPassword || !tradeLink || !phoneNumber) {
         return setError("Todos os campos são obrigatórios!");
       } else if ((await checkEmail()) == false) {
         return setError("Este e-mail já está sendo usado.");
       }
+      
+      else if (!/^https:\/\/steamcommunity\.com\/tradeoffer\/new\/\?partner=\d+&token=\w+$/.test(tradeLink)) {
+        return setError("Por favor, insira um trade link da Steam válido.");
+      }
     }
-
-    return true;
-  };
-
+    
+    return true
+  }
+  
   const sendForm = async (e: any) => {
     e.preventDefault();
 
@@ -191,12 +191,12 @@ const SignUp = () => {
   };
 
   const checkStep = () => {
-    if (step == 2) return "steps-3";
-    else if (step == 3) return "steps-4";
-
-    return "";
-  };
-
+    if(step == 1) return 'steps-3'
+    else if(step == 2) return 'steps-4'
+    
+    return ''
+  }
+  
   const changeProfilePic = () => {
     if (!inputRef.current) return;
     inputRef.current.click();
@@ -254,19 +254,14 @@ const SignUp = () => {
                     &lt;- Voltar
                   </Link>
                 )}
-                <Link className={style.LastAnchor} href={""}>
+                <Link className={style.LastAnchor} href={"/login"}>
                   Já tem uma conta?
                 </Link>
               </div>
 
               <div className={style.steps}>
                 <div className={cn(style.stepsWrapper, style?.[checkStep()])}>
-                  <div
-                    className={cn(
-                      style?.["step-1"],
-                      step == 1 ? style?.["step-2"] : ""
-                    )}
-                  >
+                  <div className={step == 0 ? style?.['step-2'] : style?.['step-1']}>
                     <div className={style.stepWrapper}>
                       <label>
                         E-mail:
@@ -415,7 +410,7 @@ const SignUp = () => {
                         </button>
                       </div>
 
-                      {step == 3 && (
+                      {step == 2 && (
                         <label className={style.checkboxLabel}>
                           <input type="checkbox" name="tos" id="tos" required />
                           <p>
@@ -425,7 +420,7 @@ const SignUp = () => {
                         </label>
                       )}
 
-                      {step == 3 && (
+                      {step == 2 && (
                         <label className={style.checkboxLabel}>
                           <input
                             type="checkbox"
@@ -445,7 +440,7 @@ const SignUp = () => {
               </div>
 
               <button
-                type={step == 3 ? "submit" : "button"}
+                type={step == 2 ? "submit" : "button"}
                 onClick={() => validateForm()}
               >
                 {step > 2 ? "Enviar" : "Próximo"}
