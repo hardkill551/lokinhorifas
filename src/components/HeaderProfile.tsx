@@ -33,7 +33,9 @@ const HeaderProfile = () => {
   const profile = {
     name: name != '' ? name : 'notloggedinuser',
     email: email != '' ? email : 'notloggedinuser@gmail.com',
-    picture: picture != '' ? picture : defaultProfilePicture,
+    picture: picture === "default" ? defaultProfilePicture :
+    (picture).startsWith('https://static-cdn.jtvnw.net') ?
+    picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`,
     budget: budgetString
   }
 

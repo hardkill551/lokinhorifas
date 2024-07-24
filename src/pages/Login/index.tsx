@@ -12,22 +12,27 @@ import Lines from '../../images/Cadastro/Lines.png'
 import Image from "next/image"
 
 const Login = () => {
-  const { setUserInfo } = useUserStateContext() as UserContextType
+  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
   const { query, push } = useRouter()
   const { email } = query
-  const [ token, setToken ] = useState('')
-
+  const router = useRouter()
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const value = localStorage.getItem('token');
-
-      if(!value) return
-      setToken(value);
-
-      if(token) push('/')
-      else localStorage.setItem('token', '')
+    if (typeof window !== 'undefined') {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth", {}, {
+                headers: {
+                    Authorization: `Bearer ${storedToken}`
+                }
+            }).then((res: any) => {
+                router.push("/")
+            }).catch((err: any) => {
+                localStorage.setItem("token", "")
+            })
+        }
     }
-  }, []);
+
+}, [])
 
   
   const [ formDataValue, setFormDataValue ] = useState({
@@ -59,9 +64,12 @@ const Login = () => {
       return setError("Por favor, insira um endereço de e-mail válido.");
     }
 
-    // TODO conectar ao banco para verificar se o email existe
-    // axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/", { name: formDataValue.password, email: formDataValue.email }).then((res) => console.log('ok'))
-    // .catch((error) => setError(error.response.data.message))
+    //   TODO conectar ao banco para verificar se o email existe
+    axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth/sign-in", { email: formDataValue.email, password: formDataValue.password, }).then((res) => {
+      localStorage.setItem("token", res.data.token);
+      router.push('/')}
+    )
+    .catch((error) => setError(error.response.data.message))
 
   }
 
