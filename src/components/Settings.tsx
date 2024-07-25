@@ -3,63 +3,105 @@ import xmark from '../assets/xmark.svg'
 import editPencil from '../assets/editPencil.svg'
 import { UserSettingsType } from 'utils/interfaces';
 import { useRef, useState } from 'react';
+import { useUserStateContext } from 'contexts/UserContext';
+import UserContextType  from '../utils/interfaces'
+import axios from 'axios';
 
 const Settings = ({ props }: { props: UserSettingsType }) => {
   const { profile, setShowSettings, image, setImage } = props
   const inputRef = useRef<HTMLInputElement>(null)
+  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
 
-  const [ Email, setEmail ] = useState({
-    email: '',
-    confirmEmail: ''
-  })
-  const [ Password, setPassword ] = useState({
-    password: '',
-    confirmPassword: ''
-  })
-  const [ Nickname, setNickname ] = useState({
-    nickname: '',
-    confirmNickname: ''
-  })
+  const [userData, setUserData] = useState<any>({
+    tradeLink: profile.tradeLink,
+    newTradeLink: "",
+    phoneNumber: profile.phoneNumber,
+    newPhoneNumber: "",
+    oldPassword: "",
+    newPassword: "",
+    picture: null
+});
 
-  const changeProfilePic = () => {
-    if(!inputRef.current) return
-    
-    inputRef.current.click()
-  }
+  // const changeProfilePic = () => {
+  //   if(!inputRef.current) return
+  // TODO Não sei o que essa função faz, então comentei
+  //   inputRef.current.click()
+  // }
   
-  const handleImageChange = () => {
-    if(!inputRef.current) return
-    if(!inputRef.current.files) return
-    const file = inputRef.current.files[0]
 
-    setImage(file)
+  const handleChange = (e:any) => {
+    const { name, value } = e.target;
+    if (name === "picture") {
+        if(!inputRef.current) return
+        if(!inputRef.current.files) return
+        const file = inputRef.current.files[0]
     
-    // caminho axios para alterar imagem de perfil
-  }
+        setImage(file)
+        setUserData((prevState:any) => ({
+            ...prevState,
+            picture: e.target.files[0]
+        }));
+    } else {
+        setUserData((prevState:any) => ({
+            ...prevState,
+            [name]: value
+        }));
+    }
+};
 
-  const handleEmailChange = () => {
-    const { email, confirmEmail } = Email
-
-    if(email != confirmEmail) return console.log('wrong')
-
-    // Caminho Axios para alterar Email
-  }
-
-  const handlePasswordChange = () => {
-    const { password, confirmPassword } = Password
-
-    if(password != confirmPassword) return console.log('wrong')
-
-    // Caminho Axios para alterar senha
-  }
-
-  const handleNicknameChange = () => {
-    const { nickname, confirmNickname } = Nickname
+  const updateUser = async (object:string) => {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    let signUpData:any = {}
+    if(userData.newTradeLink !== ""){
+      signUpData.tradeLink = userData.newTradeLink
+    }
+    if(userData.newPhoneNumber !== ""){
+      signUpData.phoneNumber = userData.newPhoneNumber
+    }
+    console.log(object)
     
-    if(nickname != confirmNickname) return console.log('wrong')
+    if(userData.newPassword && userData.oldPassword){
+        signUpData.newPassword = userData.newPassword;
+        signUpData.oldPassword = userData.oldPassword
+    }
 
-      // Caminho Axios para alterar Apelido
-  }
+
+    formData.append('signUpData', JSON.stringify(signUpData));
+
+    if (userData.picture) {
+        formData.append('picture', userData.picture);
+    } else {
+        formData.append('picture', "Default");
+    }
+    
+    try {
+        const response = await axios.put(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users/update/${userInfo.id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (response.status === 200) {
+            // TODO setSuccess(true);
+            if(object === "newTradeLink"){
+              setUserData({tradeLink: userData.newTradeLink, newTradeLink:""})
+            } else if(object === "password"){
+              setUserData({oldPassword: "", newPassword: ""})
+            } else if(object === "Image"){
+              setUserData({picture: null})
+            } else if (object === "phoneNumber"){
+              setUserData({phoneNumber: userData.newPhoneNumber, newPhoneNumber: ""})
+            }
+            
+        } else {
+            throw new Error('Erro ao atualizar os dados');
+        }
+    } catch (err: any) {
+        // TODO setError(true);
+        console.log(err.response.data);
+    }
+};
 
   return (
     <div className="config">
@@ -70,9 +112,9 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
           <div className="accountInfo">
             <div className="imageBox">
               <Image width={200} height={200} src={image ? URL.createObjectURL(image) : profile.picture} alt="Imagem de perfil"/>
-              <button type="button" onClick={() => changeProfilePic()}>
+              <button type="button" onClick={() => updateUser("Image")}>
                 <Image width={18} height={18} src={editPencil} alt={'Editar foto de perfil'}/>
-                <input type="file" onChange={() => handleImageChange()} name="profilePic" id="profilePic" ref={inputRef} />
+                <input type="file" onChange={(e) => handleChange(e)} name="profilePic" id="profilePic" ref={inputRef} />
               </button>
             </div>
             <div className="accountContent">
@@ -83,40 +125,40 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
           </div>
           <div className="boxGroup">
             <div className="box">
-              <h3>Alterar e-mail</h3>
+              <h3>Alterar Trade Link</h3>
               <label>
-                Novo e-mail:
-                <input type="email" name="" id="" value={Email.email} onChange={e => setEmail(oldValue => {return {...oldValue, email: e.target.value}})} />
+                Trade Link Atual:
+                <input  disabled={true} name="tradeLink" id="2" value={userData.tradeLink} onChange={e => handleChange(e)} />
               </label>
               <label>
-                Confirmar novo e-mail:
-                <input type="email" name="" id="" value={Email.confirmEmail}  onChange={e => setEmail(oldValue => {return {...oldValue, confirmEmail: e.target.value}})}/>
+                Novo Trade Link:
+                <input  name="newTradeLink" id="3" value={userData.newTradeLink}  onChange={e => handleChange(e)}/>
               </label>
-              <button onClick={() => handleEmailChange()}>Enviar código</button>
+              <button onClick={() => updateUser("newTradeLink")}>Enviar código</button>
             </div>
             <div className="box">
-              <h3>Alterar apelido</h3>
+              <h3>Alterar telefone</h3>
               <label>
-                Novo apelido:
-                <input type="text" name="" id="" value={Nickname.nickname} onChange={e => setNickname(oldValue => {return {...oldValue, nickname: e.target.value}})}/>
+                Número de celular antigo:
+                <input type="text" disabled={true} name="phoneNumber" id="" value={userData.phoneNumber} onChange={(e=> handleChange(e))}/>
               </label>
               <label>
-                Confirmar novo apelido:
-                <input type="text" name="" id="" value={Nickname.confirmNickname} onChange={e => setNickname(oldValue => {return {...oldValue, confirmNickname: e.target.value}})} />
+                Novo número:
+                <input type="text" name="newPhoneNumber" id="" value={userData.newPhoneNumber} onChange={(e=> handleChange(e))} />
               </label>
-              <button onClick={() => handleNicknameChange()}>Alterar</button>
+              <button onClick={() => updateUser("phoneNumber")}>Alterar</button>
             </div>
             <div className="box">
               <h3>Alterar senha</h3>
               <label>
-                Nova senha:
-                <input type="password" name="" id="" value={Password.password} onChange={e => setPassword(oldValue => {return {...oldValue, password: e.target.value}})} />
+                Senha antiga:
+                <input type="password" name="oldPassword" id="1" value={userData.oldPassword} onChange={(e=> handleChange(e))} />
               </label>
               <label>
-                Confirmar nova senha:
-                <input type="password" name="" id="" value={Password.confirmPassword} onChange={e => setPassword(oldValue => {return {...oldValue, confirmPassword: e.target.value}})} />
+                Nova senha:
+                <input type="password" name="newPassword" id="" value={userData.newPassword} onChange={(e=> handleChange(e))} />
               </label>
-              <button onClick={() => handlePasswordChange()}>Enviar código</button>
+              <button onClick={() => updateUser("password")}>Enviar código</button>
             </div>
             <div className="box">
               <h3><span className="highlight">Deletar</span> minha conta</h3>

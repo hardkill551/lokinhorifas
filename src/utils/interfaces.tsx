@@ -35,6 +35,8 @@ export default interface UserContextType {
 export type UserSettingsType = { 
   profile: {
     name: string;
+    tradeLink: string;
+    phoneNumber: string;
     email: string;
     picture: string;
     budget: string | undefined;

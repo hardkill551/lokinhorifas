@@ -5,9 +5,10 @@ import Image from "next/image";
 import defaultProfilePicture from '../assets/defaultProfilePic.svg'
 import { useEffect, useState } from "react";
 import Settings from "./Settings";
+import { useRouter } from "next/router";
 
 const HeaderProfile = () => {
-  const { userInfo, logOut } = useUserStateContext() as UserContextType
+  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
   const [ budget, setBudget ] = useState<number>(0)
   const [ budgetString, setBudgetString ] = useState<string>()
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
@@ -28,11 +29,13 @@ const HeaderProfile = () => {
     setBudgetString(budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ",00")
   }, [])
 
-  const { name, email, picture } = userInfo
-
+  const { name, email, picture, tradeLink, phoneNumber } = userInfo
+  const router = useRouter()
   const profile = {
     name: name != '' ? name : 'notloggedinuser',
     email: email != '' ? email : 'notloggedinuser@gmail.com',
+    tradeLink: tradeLink != '' ? tradeLink : 'Sem Trade Link',
+    phoneNumber: phoneNumber != '' ? phoneNumber : 'Sem Trade Link',
     picture: picture === "default" ? defaultProfilePicture :
     (picture).startsWith('https://static-cdn.jtvnw.net') ?
     picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`,
@@ -68,9 +71,11 @@ const HeaderProfile = () => {
     setShowSettings(true)
   }
 
-  const handleLogout = () => {
-    logOut()
-  }
+  function handleLogout() {
+    localStorage.setItem("token", "");
+    setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+    router.push('/cadastro');
+  };
 
   return (
     <div className="Profile desktop">
