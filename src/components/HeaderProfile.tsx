@@ -35,7 +35,7 @@ const HeaderProfile = () => {
     name: name != '' ? name : 'notloggedinuser',
     email: email != '' ? email : 'notloggedinuser@gmail.com',
     tradeLink: tradeLink != '' ? tradeLink : 'Sem Trade Link',
-    phoneNumber: phoneNumber != '' ? phoneNumber : 'Sem Trade Link',
+    phoneNumber: phoneNumber != '' ? phoneNumber : 'Sem número cadastrado',
     picture: picture === "default" ? defaultProfilePicture :
     (picture).startsWith('https://static-cdn.jtvnw.net') ?
     picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`,
@@ -82,7 +82,7 @@ const HeaderProfile = () => {
       <div className="ProfileWrapper">
         <div className="ProfileContent" onClick={() => toggleOnDropdownVisibility()}>
           <div className="ProfilePicture">
-            <Image width={20} height={20} src={image ? URL.createObjectURL(image) : profile.picture} alt="Imagem de perfil"/>
+            <Image width={40} height={40} src={image ? URL.createObjectURL(image) : profile.picture} alt="Imagem de perfil"/>
           </div>
           <div className="ProfileText">
             <h2>{profile.name}</h2>

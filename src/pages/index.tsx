@@ -11,6 +11,41 @@ import UserContextType  from '../utils/interfaces'
 const Homepage = () => {
   const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType
 
+  const [ isVisible, setIsVisible ] = useState<boolean>(false)
+
+  useEffect(() => {
+    const htmlElement = document.querySelector('html')
+    
+    htmlElement?.classList.toggle('scrollOff', isVisible)
+  }, [isVisible])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem("token");
+      if (storedToken) {
+        axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth", {}, {
+          headers: {
+            Authorization: `Bearer ${storedToken}`
+          }
+        }).then((res) => {
+          setUserInfo({
+            id: res.data.user.id,
+            name: res.data.user.name,
+            email: res.data.user.email,
+            picture: res.data.user.picture,
+            token: res.data.user.token,
+            isAdmin: res.data.user.isAdmin,
+            phoneNumber: res.data.user.phoneNumber,
+            tradeLink: res.data.user.tradeLink
+          });
+        }).catch((err) => {
+          localStorage.setItem("token", "");
+          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+        });
+      }
+    }
+  }, [setUserInfo, userInfo.picture])
+
   
   useEffect(() => {
     (async () => {

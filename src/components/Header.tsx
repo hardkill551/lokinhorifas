@@ -17,8 +17,9 @@ const Header = () => {
 
   useEffect(() => {
     const htmlElement = document.querySelector('html')
-  
+    
     htmlElement?.classList.toggle('SidebarOn', sidebarView)
+
     if (typeof window !== 'undefined') {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {

@@ -75,7 +75,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log(error);
-        if ((error.response.data.name = "DuplicatedEmailError" && step == 0))
+        if ((error.response.data.name == "DuplicatedEmailError" && step == 0))
           return push(`./login?email=${formDataValue.email}`);
         return false;
       });

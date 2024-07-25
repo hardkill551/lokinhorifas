@@ -12,9 +12,13 @@ export const UserProvider = ({children} : {children: ReactNode}) =>{
     const [userInfo, setUserInfo] = useState({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:""})
 
     const logOut = () => {
+        if (typeof window !== 'undefined') {
+            const storedToken = localStorage.getItem("token");
+            if(storedToken) localStorage.setItem('token', '')
+        }
         setUserInfo({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:""})
 
-        router.push('/Login')
+        router.push('/login')
     }
 
     const value = {

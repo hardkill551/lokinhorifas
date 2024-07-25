@@ -9,27 +9,20 @@ export default interface TextContextType{
 }
 
 export default interface UserContextType {
-    userInfo: {
-      name: string;
-      id: string;
-      email: string;
-      picture: string;
-      token: string;
-      isAdmin: boolean;
-      phoneNumber: string;
-      tradeLink: string;
-    };
-    setUserInfo: React.Dispatch<React.SetStateAction<{
-      name: string;
-      id: string;
-      email: string;
-      picture: string;
-      token: string;
-      isAdmin: boolean;
-      phoneNumber: string;
-      tradeLink: string;
-    }>>;
+    userInfo: UserInfoType;
+    setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
     logOut: Function
+}
+
+export type UserInfoType = {
+      name: string;
+      id: string;
+      email: string;
+      picture: string;
+      token: string;
+      isAdmin: boolean;
+      phoneNumber: string;
+      tradeLink: string;
 }
 
 export type UserSettingsType = { 

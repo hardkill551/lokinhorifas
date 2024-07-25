@@ -98,7 +98,6 @@ const Login = () => {
       }
     }
 
-    //   TODO conectar ao banco para verificar se o email existe
     axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth/sign-in", { email: formDataValue.email, password: formDataValue.password, }).then((res) => {
       localStorage.setItem("token", res.data.token);
       router.push('/')}

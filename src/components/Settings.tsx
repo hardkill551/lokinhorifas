@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 import { useUserStateContext } from 'contexts/UserContext';
 import UserContextType  from '../utils/interfaces'
 import axios from 'axios';
+import MaskedInput from 'react-text-mask';
 
 const Settings = ({ props }: { props: UserSettingsType }) => {
   const { profile, setShowSettings, image, setImage } = props
@@ -20,7 +21,10 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
     oldPassword: "",
     newPassword: "",
     picture: null
-});
+  });
+
+  const [ error, setError ] = useState('')
+  const [ success, setSuccess ] = useState('')
 
   // const changeProfilePic = () => {
   //   if(!inputRef.current) return
@@ -47,9 +51,12 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
             [name]: value
         }));
     }
-};
+  };
 
   const updateUser = async (object:string) => {
+    setError('')
+    setSuccess('')
+
     const token = localStorage.getItem("token");
     const formData = new FormData();
     let signUpData:any = {}
@@ -83,7 +90,9 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
             }
         });
         if (response.status === 200) {
-            // TODO setSuccess(true);
+          // TODO setSuccess(true);
+            setSuccess(`Alterou ${object} com sucesso!`)
+
             if(object === "newTradeLink"){
               setUserData({tradeLink: userData.newTradeLink, newTradeLink:""})
             } else if(object === "password"){
@@ -99,15 +108,28 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
         }
     } catch (err: any) {
         // TODO setError(true);
+        setError(`Falha em alterar ${object}!`)
+
         console.log(err.response.data);
     }
-};
+  };
+
+  const resolveToast = () => {
+    setError('')
+    setSuccess('')
+  }
 
   return (
     <div className="config">
+      <div className="statusWrapper">
+        { success && <div onClick={() => resolveToast()} className="success">Alterou object com sucesso!</div> }
+        {error && <div onClick={() => resolveToast()} className="error">Falha em alterar object!</div> }
+      </div>
       <div className="configWrapper">
         <div className="configWrapperContent">
           <button onClick={() => setShowSettings(false)}><Image src={xmark} alt="Fechar menu"/></button>
+
+
           <h2>Configurações de usuário</h2>
           <div className="accountInfo">
             <div className="imageBox">
@@ -140,11 +162,58 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
               <h3>Alterar telefone</h3>
               <label>
                 Número de celular antigo:
-                <input type="text" disabled={true} name="phoneNumber" id="" value={userData.phoneNumber} onChange={(e=> handleChange(e))}/>
+                <MaskedInput
+                  defaultValue={""}
+                  mask={[
+                    "(",
+                    /[0-9]/,
+                    /\d/,
+                    ")",
+                    " ",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  type="tel"
+                  onChange={((e:any) => handleChange(e))}
+                  value={userData.phoneNumber}
+                  disabled={true}
+                  name="phoneNumber"
+                />
               </label>
               <label>
                 Novo número:
-                <input type="text" name="newPhoneNumber" id="" value={userData.newPhoneNumber} onChange={(e=> handleChange(e))} />
+                <MaskedInput
+                  defaultValue={""}
+                  mask={[
+                    "(",
+                    /[0-9]/,
+                    /\d/,
+                    ")",
+                    " ",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    "-",
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                    /\d/,
+                  ]}
+                  type="tel"
+                  onChange={(e => handleChange(e))}
+                  value={userData.newPhoneNumber}
+                  name="newPhoneNumber"
+                />
               </label>
               <button onClick={() => updateUser("phoneNumber")}>Alterar</button>
             </div>
