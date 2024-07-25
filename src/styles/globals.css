@@ -552,6 +552,194 @@ header {
   background-color: black;
 }
 
+.Profile .budget {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+}
+
+.Profile .budget .statusBar {
+  position: absolute;
+
+  height: 685px;
+
+  width: 705px;
+
+  /* outline: 2px solid orange; */
+
+  overflow: hidden;
+}
+
+.Profile .budget .background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .4;
+
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(#333, black);
+
+  z-index: -1;
+
+  cursor: pointer;
+}
+
+.Profile .budgetViewport {
+  width: 712px;
+
+  overflow: hidden;
+
+  border: 5px solid #222;
+
+  border-radius: 11px;
+}
+
+.Profile .budgetWrapper {
+  display: flex;
+
+  /* width: 712px; */
+  width: 1424px;
+  /* height: 600px; */
+  height: 100%;
+
+  align-items: center;
+
+  background-color: white;
+
+  color: black;
+  overflow-y: auto;
+  
+  position: relative;
+
+  transition: translate 600ms ease-in;
+}
+
+.Profile .budgetWrapper.step-2 {
+  translate: -712px;
+}
+
+.Profile .thanksScreen {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 712px;
+  height: 100%;
+
+  gap: 30px;
+
+  padding: 16px 63px;
+}
+
+.Profile .thanksScreen h2 {
+  font-size: 36px;
+
+  width: fit-content;
+}
+
+.Profile .thanksScreen p {
+  font-size: 14px;
+
+  width: fit-content;
+}
+
+.Profile .thanksScreen button {
+
+  padding: 15px 65px;
+}
+
+.budgetRecharge {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 30px;
+
+  width: 712px;
+  height: fit-content;
+
+  padding: 16px 63px;
+}
+
+.Profile .budgetWrapper label {
+  font-size: 20px;
+}
+
+.Profile .budgetWrapper input, .Profile .budgetWrapper select {
+  display: block;
+
+  margin-top: 5px;
+
+  width: 590px;
+  height: 48px;
+
+  padding: 14px;
+
+  font-size: 20px;
+
+  border-radius: 4px;
+  border: none;
+  outline: 2px solid;
+
+  color: grey;
+}
+
+.Profile .budgetWrapper input:focus-within, .Profile .budgetWrapper select:focus-within {
+  outline: 2px solid #ff1c1c;
+}
+
+.budgetWrapper button {
+  background: linear-gradient(90deg, #1AE22295, #00A31095);
+  background-color: #000;
+  font-size: 24px;
+
+  outline: #1AE222;
+
+  width: fit-content;
+
+  padding: 15px;
+}
+
+.budgetWrapper button:hover {
+  box-shadow: 0 0 15px #1AE222;
+}
+
+.budgetWrapper .titleWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  width: 100%;
+
+  gap: 10px;
+
+}
+
+.budgetWrapper h2 {
+  font-size: 36px;
+  width: 100%;
+}
+
+.budgetWrapper p {
+  font-size: 14px;
+  width: 100%;
+}
+
 .Profile .accountContent {
   display: flex;
 
@@ -791,6 +979,360 @@ footer nav div {
 
   text-decoration: underline;
 }
+
+.PopupBuy {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  z-index: 10;
+}
+
+.PopupBuy .background {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(#000, transparent);
+
+  backdrop-filter: blur(2px);
+
+  z-index: -1;
+
+  cursor: pointer;
+}
+
+.PopupBuy.not-show {
+  display: none;
+}
+
+.PopupBuyWrapper {
+  width: 712px;
+
+  color: white;
+}
+
+.PopupBuy h2 {
+  font-size: 36px;
+}
+
+.PopupBuy h3 {
+  font-size: 18px;
+
+  margin-top: 5px;
+}
+
+.PopupBuyContent {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  background-color: #d9d9d9;
+  color: black;
+
+  overflow: hidden;
+
+  height: 800px;
+
+  border-radius: 20px;
+
+  margin-top: 25px;
+}
+
+.PopupBuy .bottomSection a {
+  display: block;
+  color: black;
+
+  font-size: 24px;
+}
+
+.PopupBuy .bottomSection button {
+  background: linear-gradient(90deg, #1AE22295, #00A31095);
+  background-color: #000;
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 24px;
+  font-weight: 500;
+
+  padding: 14px 94px;
+
+  cursor: pointer;
+
+  transition: 400ms ease-out;
+
+  white-space: nowrap;
+}
+
+.PopupBuy .bottomSection button.step-2 {
+  padding: 14px;
+}
+
+.PopupBuy .bottomSection button.step-3 {
+  translate: 0 -20px;
+}
+
+.PopupBuy .bottomSection button:disabled {
+  filter: grayscale(100%);
+}
+
+.PopupBuy .bottomSection button:hover {
+  translate: 4px 4px;
+  box-shadow: 0 0 15px #1AE222;
+}
+
+.PopupBuyContentWrapper {
+  display: flex;
+
+  flex-direction: row;
+
+  height: 692px;
+  width: 2136px;
+
+  transition: translate 400ms ease-in;
+}
+
+.PopupBuyContentWrapper.step-1 {
+  translate: 0;
+}
+
+.PopupBuyContentWrapper.step-2 {
+  translate: -712px;
+}
+
+.PopupBuyContentWrapper.step-3 {
+  translate: -1424px;
+}
+
+.NumberGroupWrapper {
+  width: fit-content;
+  height: 692px;
+
+  overflow: scroll;
+}
+
+.PopupBuyRequest, .PopupThanksScreen {
+  width: 712px;
+  height: 692px;
+
+  padding: 20px 25px;
+
+  background-color: white;
+}
+
+.PopupBuyRequest .header {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-bottom: 24px;
+}
+
+.PopupBuyRequest h3 {
+  font-size: 36px;
+}
+
+.PopupBuyRequest p {
+  font-size: 14px;
+}
+
+.PopupBuyRequest .SaldoDiff {
+  display: grid;
+
+  grid-template-columns: 214px 1fr 214px;
+
+  justify-items: center;
+  align-content: center;
+
+  width: 100%;
+  height: 215px;
+
+  border: 4px solid red;
+  border-radius: 8px;
+  
+  color: red;
+
+  padding: 15px;
+  margin-bottom: 22px;
+}
+
+.PopupBuyRequest .SaldoDiff h4 {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 24px;
+
+  font-size: 30px;
+
+  height: 70px;
+
+  text-align: center;
+}
+
+.PopupBuyRequest .SaldoDiff .saldo {
+  font-size: 38px;
+  font-weight: 600;
+
+  padding: 6px 17px;
+
+  border: 4px solid red;
+
+  border-radius: 4px;
+
+  white-space: nowrap;
+}
+
+.PopupBuyRequest .ProdutosTable {
+  display: grid;
+
+  grid-template-columns: 312px 1fr 150px;
+  grid-template-rows: 1fr 1fr;
+
+  justify-items: center;
+
+  width: 100%;
+
+  margin-bottom: 76px;
+}
+
+.PopupBuyRequest .ProdutosTable h3 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.PopupBuyRequest .ProdutosTable p {
+  font-size: 24px;
+}
+
+.PopupBuyRequest .ContaDetails {
+  display: grid;
+
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.PopupThanksScreen {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 26px;
+}
+
+.PopupThanksScreen h2 {
+  max-width: 300px;
+
+  font-size: 36px;
+}
+
+.PopupThanksScreen p {
+  max-width: 300px;
+
+  font-size: 14px;
+
+  text-align: center;
+}
+
+.PopupBuy .RaffleNumbers {
+  width: 712px;
+  height: fit-content;
+}
+
+.PopupBuy .RaffleNumbersGroup {
+  width: 100%;
+  height: fit-content;
+  /* TODO Alterar valor para algo repetível */
+}
+
+.PopupBuy .NumberGroupWrapper {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  width: 100%;
+
+  padding: 20px 25px;
+
+  gap: 16px;
+}
+
+.PopupBuy .Number {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-weight: 500;
+
+  width: 51px;
+  height: 51px;
+
+  background-color: transparent;
+  border-radius: 50%;
+  
+  border: 3px solid #17110B;
+  color: #17110B;
+
+  transition: background-color 200ms;
+  cursor: pointer;
+}
+
+.PopupBuy .Number:hover {
+  filter: brightness(50%);
+  background-color: #17110B;
+  color: #d9d9d9;
+}
+
+.PopupBuy .Number.selected {
+  background: linear-gradient(90deg, #1AE22295, #00A31095);
+  background-color: #000;
+  color: white;
+}
+
+.PopupBuy .Number:disabled {
+  background: linear-gradient(90deg, #E21A1A, #A30006);
+  color: white;
+}
+
+.PopupBuy .bottomSection {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 215px;
+
+  width: 100%;
+
+  padding: 26px 63px;
+
+  background-color: white;
+}
+
 
 /*! NÃO ALTERAR DADOS ABAIXO / DO NOT ALTER VALUES BELLOW */
 .mobile, .tablet {

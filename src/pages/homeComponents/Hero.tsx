@@ -3,10 +3,26 @@ import ExternalSVG from '../../assets/ExternalLink.svg'
 import Background from '../../images/Homepage/Hero/HERO.png'
 import Faixas from './Faixa'
 import style from '../homepage.module.css'
+import { useContext } from 'react';
+import { UserContext } from 'contexts/UserContext';
+import UserContextType  from '../../utils/interfaces'
+import { useRouter } from 'next/router';
 
 // import cn from 'classnames'
 
-const Hero = () => {
+const Hero = ({ props }: { props: {isVisible: boolean, setIsVisible: React.Dispatch<React.SetStateAction<boolean>>} }) => {
+  const { setIsVisible } = props
+  const router = useRouter()
+  const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType
+
+  const handleShowRaffles = () => {
+    if(userInfo.token != '') {
+      setIsVisible(true)
+    } else {
+      router.push('/login')
+    }
+  }
+
   return (
     <section id='Home' className={style.Hero}>
       <div className={style.HeroWrapper}>
@@ -16,7 +32,7 @@ const Hero = () => {
               <span className={style.highlight}>Transforme</span> seu <br /> inventário com <br className={style.mobile} />o <span className={style.highlight}>Lokinho</span>
             </h1>
             <p>Fazemos upgrade, compra e venda. Precisa de uma skin especifica? Também fazemos encomendas</p>
-            <button>Compre sua Rifa <Image src={ExternalSVG} alt="Link externo" /></button>
+            <button onClick={() => handleShowRaffles()}>Compre sua Rifa <Image src={ExternalSVG} alt="Link externo" /></button>
           </div>
           <div className={style.col2}></div>
         </div>

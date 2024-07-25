@@ -2,11 +2,13 @@ import Hero from './homeComponents/Hero'
 import Services from './homeComponents/Services'
 import ServicesDisplay from './homeComponents/ServicesDisplay'
 import ServiceRaffle from './homeComponents/ServiceRaffle'
+import PopupBuy from 'components/PopupBuy'
 import History from './homeComponents/History'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../contexts/UserContext'
 import axios from 'axios'	
 import UserContextType  from '../utils/interfaces'
+
 
 const Homepage = () => {
   const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType
@@ -60,13 +62,13 @@ const Homepage = () => {
           console.error('Error:', error);
         }
       }
-
     })();
   }, []);
   
   return (
     <>
-      <Hero />
+      {isVisible && <PopupBuy props={{isVisible, setIsVisible}} />}
+      <Hero props={{isVisible, setIsVisible}} />
       <Services />
       <ServicesDisplay />
       <ServiceRaffle />

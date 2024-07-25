@@ -15,14 +15,14 @@ export default interface UserContextType {
 }
 
 export type UserInfoType = {
-      name: string;
-      id: string;
-      email: string;
-      picture: string;
-      token: string;
-      isAdmin: boolean;
-      phoneNumber: string;
-      tradeLink: string;
+  name: string;
+  id: string;
+  email: string;
+  picture: string;
+  token: string;
+  isAdmin: boolean;
+  phoneNumber: string;
+  tradeLink: string;
 }
 
 export type UserSettingsType = { 
@@ -159,3 +159,10 @@ export interface FormDataType {
   name: string;
   picture: null | File | string;
 }
+
+export interface RaffleNumberType {
+  key: number;
+  number: number;
+  isSelected: boolean;
+  isAvailable: boolean;
+}[]
