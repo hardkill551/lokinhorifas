@@ -38,7 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Footer />
         <Credits />
         <Sidebar />
-         </TextProvider>
+        </TextProvider>
       </UserProvider>
       </SidebarStateProvider>
     </>

@@ -62,7 +62,7 @@ const Login = () => {
       return false
     })
     .catch((error) => {
-      if(error.response.data.name = "DuplicatedEmailError" && step == 0) {
+      if(error.response.data.name == "DuplicatedEmailError" && step == 0) {
         addStep()
       }
         return true
@@ -157,7 +157,7 @@ const Login = () => {
         </div>
         <div className={style.background}>
           <div className={style?.['background-0Wrapper']}>
-            <Image className={style?.['background-0']} src={SingUpBG} alt="Imagem de fundo"/>
+            <Image className={style?.['background-0']} priority={true} src={SingUpBG} alt="Imagem de fundo"/>
           </div>
           <Image className={style?.['background-1']} src={Lines} alt="Linhas de fundo"/>
         </div>
