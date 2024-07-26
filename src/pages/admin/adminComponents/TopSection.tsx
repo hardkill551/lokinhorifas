@@ -4,26 +4,28 @@ const TopSection = () => {
   return (
     <div className={style.topSection}>
       <div className={style.addSkin}>
-        <div className={style.SkinImageBox}>
-
+        <div className={style.col1}>
+          <div className={style.SkinImageBox}>
+          </div>
         </div>
-        <h2>Adicionar skin à tabela</h2>
-        <hr />
+        <div className={style.form}>
+          <h2>Adicionar skin à tabela</h2>
+          <hr />
+          <label>
+            <p>Nome da skin</p>
+            <input type="text" required />
+          </label>
+          <label>
+            <p>Tipo da arma da skin</p>
+            <input type="text" required />
+          </label>
+          <label>
+            <p>Valor estimado da skin</p>
+            <input type="number" required />
+          </label>
+          <button>Adicionar</button>
+        </div>
 
-        <label>
-          <p>Nome da skin</p>
-          <input type="text" required />
-        </label>
-        <label>
-          <p>Tipo da arma da skin</p>
-          <input type="text" required />
-        </label>
-        <label>
-          <p>Valor estimado da skin</p>
-          <input type="number" required />
-        </label>
-
-        <button>Adicionar</button>
       </div>
       <div className={style.graph}>
         <div className={style.graph1}>

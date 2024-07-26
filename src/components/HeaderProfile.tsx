@@ -78,7 +78,7 @@ const HeaderProfile = () => {
   };
 
   return (
-    <div className="Profile desktop">
+    <div className="Profile">
       <div className="ProfileWrapper">
         <div className="ProfileContent" onClick={() => toggleOnDropdownVisibility()}>
           <div className="ProfilePicture">

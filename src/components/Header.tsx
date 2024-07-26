@@ -57,13 +57,14 @@ const Header = () => {
           <nav className='desktop'>
             <ul>
             <li onClick={() => router.push('/#Home')}>Home</li>
-            <li onClick={() => router.push('/#Vantagens')}>Vantagens</li>
-            <li onClick={() => router.push('/#Grupos')}>Grupos</li>
+            <li onClick={() => router.push('/roleta')}>Sorteio</li>
+            <li onClick={() => router.push('/live')}>Live</li>
+            <li onClick={() => router.push('/ultimosganhadores')}>Últimos Ganhadores</li>
             <li onClick={() => router.push('/#SobreNos')}>Sobre Nós</li>
             </ul>
           </nav>
         </div>
-        {userInfo.token == '' ? <button onClick={() => router.push('/login')} className='desktop'>Faça Parte!</button> : <HeaderProfile />}
+        {userInfo.token == '' ? <button onClick={() => router.push('/login')} className='desktop'>Faça Parte!</button> : <div className='desktop'><HeaderProfile /></div>}
         <button onClick={() => toggleSidebar()} className='mobile tablet'>{sidebarView ? <Image src={Xmark} alt="Fechar sidebar" /> : '|||'}</button>
       </div>
     </header>

@@ -27,10 +27,11 @@ const Footer = () => {
 
               <ul>
                 <li onClick={() => router.push('/#Home')}>Home</li>
-                <li onClick={() => router.push('/#Vantagens')}>Vantagens</li>
-                <li onClick={() => router.push('/#Grupos')}>Grupos</li>
+                <li onClick={() => router.push('/roleta')}>Sorteio</li>
+                <li onClick={() => router.push('/live')}>Live</li>
+                <li onClick={() => router.push('/ultimosganhadores')}>Últimos Ganhadores</li>
                 <li onClick={() => router.push('/#SobreNos')}>Sobre Nós</li>
-              </ul>
+            </ul>
             </div>
             <div className="ExternalLinks">
               <h2>Links úteis</h2>
