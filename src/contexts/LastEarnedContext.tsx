@@ -112,6 +112,7 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
 
   const setNewLastEarnedList = (dataArray: LastEarnedWinnerType[]) => {
     if(!dataArray) return
+    console.log(dataArray)
     
     const tempArray: LastEarnedPrizeType[] = []
     
@@ -120,6 +121,8 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
 
       // TODO alterar TimeOfEarning
       // TODO alterar imagem do item
+
+      
 
       const newItem = {
         itemImageUrl: '',

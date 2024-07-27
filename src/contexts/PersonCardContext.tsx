@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
-import { Participant, PersonInfoCard, RewardItemType } from "utils/interfaces"
+import { Participant, PersonInfoCard, RewardItemType, UserInfoType } from "utils/interfaces"
 import { useRewardState } from "./RewardContext"
+import { useUserStateContext } from './UserContext'
 import axios from "axios"
 import RouletteItem from "pages/roleta/rolettaComponents/RouletteItem"
 
@@ -182,6 +183,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   //     isWinner: false
   //   },
   // ]
+
+  const { userInfo } = useUserStateContext() as { userInfo: UserInfoType }
   const items: Participant[] = []
 
   const [ participants, setParticipants ] = useState(items);
@@ -191,6 +194,12 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   const [ winnerPopupVisible, setWinnerPopupVisible ] = useState(false)
   const [ animationState, setAnimationState ] = useState() as [ animationState: Animation, setAnimationState: Function ]
   const [ isMockWin, setIsMockWin ] = useState(false)
+
+  // useEffect(() => {
+  //   console.log(userInfo)
+  // }, [userInfo])
+
+  
   
   const toggleIsButtonActive = () => setIsButtonActive(oldValue => !oldValue)
 
@@ -305,22 +314,23 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
   const addLatestWinnerToTable = async () => {
     const participantWinner = participants.filter(item => item.number == Number(winner.dataset.number))[0]
-    
-    console.log('winner raffle number: ', participantWinner.number, '\nfrom the following winner user id: ' , participantWinner.id, '\nand its prize of the following name: ', rewards[0].itemName)
 
-    // try {
-    //   axios.post(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users/winners`, {
-    //     headers: {
-    //       "Authorization": `Bearer ${process.env.AUTH_TOKEN}`
-    //     },
-    //     body: {
-    //       "id": participantWinner.id,
-    //       "number": participantWinner.number
-    //     }
-    //   }).then(res => console.log(res.data))
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
+    const token = localStorage.getItem('token')
+    
+    // console.log('winner raffle number: ', participantWinner.number, '\nfrom the following winner user id: ' , participantWinner.id, '\nand its prize of the following name: ', rewards[0].itemName)
+
+    try {
+      axios.post(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users/winners`, {
+        "id": participantWinner.id,
+        "number": participantWinner.number
+      }, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      }).then(res => console.log(res.data))
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   const loadFillerCards = (position: number) => {
