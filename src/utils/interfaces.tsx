@@ -108,6 +108,7 @@ export type PersonCardContextType = {
 export type SkinType = {
   id: number;
   name: string;
+  type: string;
   picture: string;
   value: number;
 }
@@ -138,6 +139,8 @@ export type RaffleType = {
   is_active: boolean;
   skin: SkinType;
   item_chance: string;
+  cretedAt: Date;
+  updatedAt: Date;
 }
 
 export type LastEarnFrontEndType = {
