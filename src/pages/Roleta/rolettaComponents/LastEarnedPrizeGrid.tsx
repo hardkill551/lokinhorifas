@@ -12,6 +12,7 @@ import { LastEarnFrontEndType } from 'utils/interfaces';
 
 const LastEarnedPrizeGrid = () => {
 
+  
   const { lastEarnedList, setNewLastEarnedList } = useLastEarnedState() as { lastEarnedList: LastEarnFrontEndType[], setNewLastEarnedList: Function }
 
   //* WINNERS
