@@ -5,7 +5,7 @@ import GOLDIcon from '../../../assets/GOLD.svg';
 import SILVERIcon from '../../../assets/SILVER.svg';
 
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
-import defaultGunPic from './defaultGunPic.png'
+import defaultGunPic from '../../../assets/defaultProfilePic.svg'
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
 
 import Image from 'next/image';

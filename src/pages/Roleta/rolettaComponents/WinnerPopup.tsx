@@ -1,7 +1,7 @@
 import style from '../roletta.module.css'
 import Image from 'next/image';
 
-import defaultGunPicture from './defaultGunPic.png'
+import defaultGunPicture from '../../../assets/defaultProfilePic.svg'
 import glitter from '../../../images/Roleta/WinnerPopup/GLITTERS.png'
 import shine from '../../../images/Roleta/WinnerPopup/shine.png'
 
