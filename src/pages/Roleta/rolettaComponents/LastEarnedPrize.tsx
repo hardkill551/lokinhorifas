@@ -4,7 +4,7 @@ import cn from 'classnames';
 import GOLDIcon from '../../../assets/GOLD.svg';
 import SILVERIcon from '../../../assets/SILVER.svg';
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
-import defaultGunPic from '../../../images/Roleta/Prizes/defaultGunPic.png'
+import defaultGunPic from '../../../images/Roleta/Prizes/defaultGunPic.svg'
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
 
 import Image from 'next/image';
