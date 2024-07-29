@@ -10,6 +10,7 @@ import { useRewardState } from 'contexts/RewardContext';
 import { Participant, RewardItemType } from 'utils/interfaces';
 import { useEffect } from 'react';
 
+
 const Hero = () => {
   const { manageMockWinner, isButtonActive, manageWinner, participants = [] } = usePersonCardState() as { manageMockWinner: Function, isButtonActive: boolean, manageWinner: Function, participants: Participant[] };
   
