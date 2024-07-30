@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import { Participant, PersonInfoCard, RewardItemType } from "utils/interfaces"
 import { useRewardState } from "./RewardContext"
 import axios from "axios"
-import RouletteItem from "pages/roleta/rolettaComponents/RouletteItem"
+import RouletteItem from "../pages/roleta/rolettaComponents/RouletteItem"
 
 const PersonCardContext = createContext({})
 
