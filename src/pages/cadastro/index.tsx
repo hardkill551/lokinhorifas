@@ -8,7 +8,7 @@ import axios from "axios";
 
 import style from "./cadastro.module.css";
 
-import SingUpBG from "../../images/Cadastro/CADASTROBG.png";
+import SingUpBG from "../../images/cadastro/CADASTROBG.png";
 import Lines from "../../images/Cadastro/Lines.png";
 import defaultProfilePic from "../../assets/defaultProfilePic.svg";
 import editPencil from "../../assets/editPencil.svg";
