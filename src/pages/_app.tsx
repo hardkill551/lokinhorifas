@@ -12,6 +12,7 @@ import { TextProvider } from '../contexts/TextContext'
 import { SidebarStateProvider } from '../contexts/SidebarContext'
 import Credits from '../components/Credits'
 import Sidebar from '../components/Sidebar'
+import { RaffleProvider } from 'contexts/RaffleContext'
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -38,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Footer />
         <Credits />
         <Sidebar />
-         </TextProvider>
+        </TextProvider>
       </UserProvider>
       </SidebarStateProvider>
     </>

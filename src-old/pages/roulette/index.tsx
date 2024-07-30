@@ -18,7 +18,6 @@ const Roullete = () => {
   useEffect(() => {
      
         axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/roulette/participants", {}).then((res: any) => {
-          console.log(res.data)  
           setParticipants(res.data)
         }).catch((err: any) => {
           console.log(err.response)

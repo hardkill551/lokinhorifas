@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import style from '../admin.module.css'
 
 const Dashboard = () => {
@@ -14,6 +15,7 @@ const Dashboard = () => {
   const tempArray: UserInfoTable[] = []
   const [ users, setUsers ] = useState<UserInfoTable[]>([])
   const [ usersOptions, setUsersOptions ] = useState<UserInfoTable[]>([])
+  const [ tradeLinkOptions, setTradeLinkOptions ] = useState<UserInfoTable[]>([])
   const [ order, setOrder ] = useState(true)
   const [ lastClicked, setLastClicked ] = useState('')
 
@@ -166,16 +168,22 @@ const Dashboard = () => {
   }
 
   const handleSearch = () => {
-    const serachReference = searchRef.current
-    if(!serachReference) return
+    const searchReference = searchRef.current
+    if(!searchReference) return
 
-    setSearchValue(serachReference.value)
+    setSearchValue(searchReference.value)
 
-    if(serachReference.value == '') setUsersOptions([])
-    else setUsersOptions(users.filter(item => item.email.includes(serachReference.value, 0)))
+    if(searchReference.value == '') {
+      setUsersOptions([])
+      setTradeLinkOptions([])
+    }
+    else {
+      setUsersOptions(users.filter(item => item.email.includes(searchReference.value)))
+      setTradeLinkOptions(users.filter(item => item.tradeLink.includes(searchReference.value)))
+    }
   }
 
-  const handleSearchSelection = (id:string, email:string) => {
+  const handleSearchSelectionEmail = (id:string, email:string) => {
     setSearchValue(email)
     setUsers(users.sort((a, b) => {
       if (a.email === email) return -1
@@ -184,9 +192,19 @@ const Dashboard = () => {
     }))
   }
 
+  const handleSearchSelectionTradeLink = (id:string, tradeLink:string) => {
+    setSearchValue(tradeLink)
+    setUsers(users.sort((a, b) => {
+      if (a.tradeLink === tradeLink) return -1
+      if (b.tradeLink === tradeLink) return 1
+      return 0
+    }))
+  }
+
   const handleBlur = () => {
     setTimeout(() => {
       setUsersOptions([])
+      setTradeLinkOptions([])
     }, 200);
   }
 
@@ -199,10 +217,13 @@ const Dashboard = () => {
           <h2>Painel de administração de usuários</h2>
           <label>
             <input type="text" onBlur={() => handleBlur()} name='search' onChange={() => handleSearch()} value={searchValue} ref={searchRef}/>
-            {usersOptions.length > 0 && 
+            {(usersOptions.length > 0 || tradeLinkOptions.length > 0) && 
             <div className={style.options}>
               <ul>
-                {usersOptions.map(item => <li onClick={() => handleSearchSelection(item.id, item.email)} key={Number(item.id) * Math.random() * users.length}>{item.email}</li>)}
+                {usersOptions.length > 0 && <h3>users</h3>}
+                {usersOptions.map(item => <li onClick={() => handleSearchSelectionEmail(item.id, item.email)} key={uuidv4()}>{item.email}</li>)}
+                {tradeLinkOptions.length > 0 && <h3>tradelink</h3>}
+                {tradeLinkOptions.map(item => <li onClick={() => handleSearchSelectionTradeLink(item.id, item.tradeLink)} key={uuidv4()}>{item.email}</li>)}
               </ul>
             </div>}
             <button>Procurar</button>
@@ -214,7 +235,6 @@ const Dashboard = () => {
               <tr>
                 <th onClick={() => filterByTableNumber()}># {lastClicked == 'number' ?order ? '^' : 'v' : ''}</th>
                 <th onClick={() => filterByEmail()}>e-mail {lastClicked == 'email' ?order ? '^' : 'v' : ''}</th>
-                <th>celular</th>
                 <th onClick={() => filterByAdmin()}>admin {lastClicked == 'admin' ?order ? '^' : 'v' : ''}</th>
                 <th onClick={() => filterByTradeLink()}>tradelink {lastClicked == 'tradeLink' ?order ? '^' : 'v' : ''}</th>
                 <th>criação</th>
@@ -222,10 +242,9 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {users.map(item =>
-              <tr  className={style.user}>
-                <th key={Number(item.id) * Math.random() * -users.length}>{item.id}</th>
+              <tr key={uuidv4()} className={style.user}>
+                <th>{item.id}</th>
                 <th>{item.email}</th>
-                <th>cell</th>
                 <th>{item.isAdmin ? 'sim' : 'não'}</th>
                 <th>{item.tradeLink}</th>
                 <th>{item.created}</th>

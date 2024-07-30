@@ -13,9 +13,9 @@ export const usePersonCardState = () => {
     // * Separar o giro teste do Girar Roleta
     // * Criar método para girar para uma pessoa aleatória quando em giro teste
     // TODO Adicionar modo responsivo para até mobile
-    // TODO Terminar fluxo de envios de vencedores para o back
-    // TODO Utilizar tokens autenticados localmente
-    // TODO Pegar os dados de retorno do back e disponibilizar no componente LastEarned
+    // * Terminar fluxo de envios de vencedores para o back
+    // * Utilizar tokens autenticados localmente
+    // * Pegar os dados de retorno do back e disponibilizar no componente LastEarned
     // TODO Alterar imagem de Glitter e imagem temporária das skins
 
 export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {

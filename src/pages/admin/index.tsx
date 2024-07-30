@@ -1,21 +1,28 @@
+import { RaffleProvider } from 'contexts/RaffleContext';
 import style from './admin.module.css'
-import TopSection from './adminComponents/TopSection'
-import Inventory from './adminComponents/SkinInventory';
-import Dashboard from './adminComponents/Dashboard';
+import AdminForm from './adminComponents/AdminForm'
+import Dashboard from './adminComponents/Dashboard'
+import Receipt from './adminComponents/Receipt';
 
 const Admin = () => {
-
-  
   return (
-    <section className={style.admin}>
-      <div className={style.adminWrapper}>
-        <TopSection />
+    <RaffleProvider>
+      <section className={style.admin}>
+        <div className={style.adminWrapper}>
+          <div className={style.colGroup}>
+            <div className={style.formGroup}>
+              {Array.from({ length: 2 }, (_, i) => {
+                const isFree = i == 0 ? false : true
+                return <AdminForm key={i} value={{isFree}}
+                />})}
+            </div>
+            <Receipt />
+          </div>
 
-        <Inventory />
-
-        <Dashboard />
-      </div>
-    </section>
+          <Dashboard />
+        </div>
+      </section>
+    </RaffleProvider>
   );
 }
  

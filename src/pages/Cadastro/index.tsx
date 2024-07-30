@@ -182,7 +182,7 @@ const SignUp = () => {
         }
       );
 
-      console.log(response.data); // Log da resposta do servidor
+      // console.log(response.data); // Log da resposta do servidor
       push("/login");
     } catch (error) {
       console.error(error);

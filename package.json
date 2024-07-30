@@ -31,11 +31,13 @@
     "sharp": "^0.33.4",
     "slick-carousel": "^1.8.1",
     "typescript": "5.0.4",
+    "uuid": "^10.0.0",
     "vanilla-tilt": "^1.8.0"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.13",
     "@types/react-slick": "^0.23.10",
-    "@types/react-text-mask": "^5.4.14"
+    "@types/react-text-mask": "^5.4.14",
+    "@types/uuid": "^10.0.0"
   }
 }

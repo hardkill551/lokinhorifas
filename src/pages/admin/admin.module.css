@@ -20,54 +20,31 @@
   width: 1110px;
 }
 
-.admin .topSection {
-  display: flex;
-
-  gap: 35px;
-
-  width: 100%;
-
-  padding: 30px;
-
-  justify-content: center;
-  align-items: center;
-}
-
-.admin .graph {
+.admin .adminForm {
   display: flex;
 
   flex-direction: column;
 
+  gap: 9px;
+
+  width: 100%;
+
   justify-content: center;
   align-items: center;
-
-  width: 340px;
-  height: 340px;
-
-  padding: 15px;
-
-  gap: 15px;
-  color: black;
-
-  background: linear-gradient(270deg, #A30006, #a30005a7);
-
-  border-radius: 11px;
 }
 
-.admin .graph1, .admin .graph2 {
+.admin .adminForm h2 {
   width: 100%;
-  height: 135px;
+  font-size: 54px;
 
-  background-color: white;
+  font-weight: 500;
 }
 
 .admin .addSkin {
   display: flex;
-
-  justify-content: space-between;
   align-items: center;
 
-  width: 763px;
+  width: fit-content;
   height: 340px;
 
   background: linear-gradient(270deg, #A30006, #a30005a7);
@@ -97,11 +74,11 @@
   height: 100%;
 }
 
-.admin .form h2 {
+.admin .addSkin h2, .admin .receipt hr {
   font-size: 22px;
 }
 
-.admin .form hr {
+.admin .addSkin hr, .admin .receipt hr {
   width: 100px;
 
   border-radius: 15px;
@@ -114,7 +91,7 @@
   margin-bottom: 15px;
 }
 
-.admin .topSection .form label, .admin .topSection .form input {
+.admin .adminForm .form label, .admin .adminForm .form input {
   width: 100%;
 }
 
@@ -129,6 +106,12 @@
 
 .admin .form input:focus-within {
   outline: 2px solid red;
+}
+
+.admin .form .buttonGroup {
+  display: flex;
+
+  gap: 8px;
 }
 
 .admin .form button {
@@ -147,240 +130,134 @@
   cursor: pointer;
 }
 
+.admin .form .buttonGroup button:last-of-type {
+  padding: 8px 14px;
+
+  width: fit-content;
+  height: 36px;
+
+  background-color: #000;
+  color: white;
+
+  white-space: nowrap;
+
+  border-radius: 4px;
+  border: none;
+
+  transition: translate 400ms ease-out, box-shadow 400ms ease-in;
+  cursor: pointer;
+}
+
 .admin .form button:hover {
   translate: 2px 2px;
   box-shadow: 0 0 15px #E21A1A;
 }
 
-
-
-
-
-.skinInventory {
-  width: 1110px;
-  height: 550px;
-
-  padding: 0 30px;
-}
-
-.skinInventory .inventory {
+.admin .colGroup {
   display: flex;
-
-  width: 100%;
-  height: 100%;
-
-  padding: 15px;
-
-  gap: 15px;
-
-  background: linear-gradient(270deg, #A30006, #a30005a7);
-
-  border-radius: 11px;
-}
-
-.skinInventory .col1 {
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  width: 650px;
-  height: 100%;
-}
-
-.skinInventory .col2 {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 5px;
-
-  width: 450px;
-  height: 100%;
-
-  padding: 15px;
-
-  border-radius: 11px;
-
-  background-color: #222;
-}
-
-.skinInventory .SkinImageBox {
-  width: 100%;
-  height: 420px;
-
-  background-color: white;
-
-  border-radius: 11px;
-}
-
-.skinInventory .form {
-  display: flex;
-
-  align-items: stretch;
-
-  flex-wrap: wrap;
-
-  /* gap: 15px; */
-  height: 100px;
-
-  justify-content: space-between;
-}
-
-.skinInventory .form label {
-  margin-bottom: 0;
-
-  font-size: 10px;
-}
-
-.skinInventory .form label:nth-of-type(1),
-.skinInventory .form label:nth-of-type(4) {
-  width: 65%;
-}
-
-.skinInventory .form label:nth-of-type(2), 
-.skinInventory .form label:nth-of-type(3) {
-  width: 30%;
-}
-
-.skinInventory .form input {
-  width: 100%;
-}
-
-.skinInventory .col1 h2 {
-  width: 100%;
-
-  text-align: center;
-}
-
-.skinInventory .availableRaffles {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 15px;
-
-  margin-block: 15px;
-}
-
-.skinInventory .raffle {
-  width: 45px;
-  height: 45px;
-
-  border-radius: 4px;
-
-  background-color: #777;
-
-  cursor: pointer;
-}
-
-.skinInventory .raffle:hover {
-  filter: brightness(50%);
-}
-
-.skinInventory .raffleGroup {
-  width: 100%;
-  height: 75px;
-
-  padding: 15px;
-
-  border-radius: 4px;
-
-  background-color: #333;
-}
-
-.skinInventory .buttonGroup {
-  display: flex;
-
-  justify-content: space-between;
-
-  width: 100%;
-}
-
-.skinInventory .buttonGroup .mainButtons {
-  display: flex;
-
-  gap: 8px;
-}
-
-.skinInventory .buttonGroup .mainButtons label {
-  display: flex;
-
-  align-items: center;
   
-  gap: 5px;
+  align-items: flex-start;
 
-  font-size: 14px;
-}
-
-.skinInventory .buttonGroup button {
-  font-size: 14px;
-
-  padding: 4px 12px;
-
-  border-radius: 4px;
-  border: none;
-
-  background-color: #222;
-  color: white;
-
-  cursor: pointer;
-}
-
-.skinInventory .buttonGroup button:hover {
-  filter: brightness(150%);
-}
-
-.skinInventory .buttonGroup .mainbutton {
-  background-color: #E21A1A;
-
-  transition: translate 400ms ease-out, box-shadow 400ms ease-in;
-}
-
-.skinInventory .buttonGroup .mainbutton:hover {
-  translate: 2px 2px;
-  box-shadow: 0 0 15px #E21A1A;
-  filter: brightness(100%);
-}
-
-.skinInventory .skinViewport {
   width: 100%;
-  height: 220px;
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  padding: 30px;
 
-  margin-block: 10px;
+  gap: 30px;
+
+  overflow: visible;
 }
 
-.skinInventory .skinGroup {
+.admin .formGroup {
   display: flex;
+  flex-direction: column;
 
-  justify-content: center;
-
-  flex-wrap: wrap;
-
-  width: 100%;
-  height: fit-content;
-
-  gap: 5px;
+  gap: 30px;
 }
 
-.skinInventory .skin {
-  width: 49px;
-  height: 49px;
+.admin .receipt {
+  height: 100%;
+  width: 356px;
 
-  border-radius: 4px;
+  margin-top: 72px;
+}
 
-  background-color: #fff;
+.admin .receiptWrapper {
+  position: sticky;
+  top: 0;
 
+  height: fit-content;
+  width: 100%;
+  background-color: #222;
+
+  padding: 24px 30px;
+
+  border-radius: 11px;
+}
+
+.admin .receipt h2 {
+  font-weight: 500;
+}
+
+.admin .receipt h2 hr {
+  margin-bottom: 28px;
+}
+
+.admin .receipt .tableOfItems {
+  margin: 24px 0;
+}
+
+.admin .receipt .tableOfItems .item:hover {
+  color: red;
+
+  text-decoration: line-through;
   cursor: pointer;
 }
 
-.skinInventory .skin:hover {
-  filter: brightness(50%);
+.admin input[type="number"]::-webkit-inner-spin-button,
+.admin input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: textfield;
 }
+
+.admin .receipt input {
+  height: 30px;
+
+  padding-inline: 5px;
+
+  border: none;
+}
+
+.admin .receipt input:hover {
+  outline: 2px solid red;
+}
+
+
+.admin .receipt .tableOfItems hr {
+  width: 100%;
+
+  margin: 10px 0;
+
+  border: 1.5px solid white;
+}
+
+.admin .receipt .tableOfItems p {
+  opacity: .5;
+  font-size: 12px;
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+.admin .receipt .price {
+  font-size: 34px;
+  font-weight: 500;
+}
+
+
+
+
+
+
 
 
 
@@ -424,28 +301,39 @@
   top: 90%;
 
   width: 80%;
-  height: fit-content;
+  max-height: 300px;
+
+  overflow: auto;
 
   background-color: #ddd;
 
   border-radius: 0 0 4px 4px;
 }
 
+.adminDashboard .TopSection .options h3 {
+  padding: 15px 15px 5px;
+  width: 100%;
+  background-color: #222;
+  color: white;
+
+  font-weight: 500;
+}
+
 .adminDashboard .TopSection .options ul {
   list-style: none;
+
+  height: fit-content;
 
   color: black;
 }
 
 .adminDashboard .TopSection .options li {
-  padding: 15px;
+  padding: 10px 15px;
 
   cursor: pointer;
 }
 
 .adminDashboard .TopSection .options li:hover {
-  padding: 15px;
-
   background-color: #666;
 }
 
