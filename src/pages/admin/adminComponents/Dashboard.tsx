@@ -1,17 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import style from '../admin.module.css'
+import { UserInfoTable } from 'utils/interfaces';
 
 const Dashboard = () => {
-  type UserInfoTable = {
-    id: string;
-    email: string;
-    phoneNumber: string;
-    isAdmin: boolean;
-    tradeLink: string;
-    created: string;
-  }
-
   const tempArray: UserInfoTable[] = []
   const [ users, setUsers ] = useState<UserInfoTable[]>([])
   const [ usersOptions, setUsersOptions ] = useState<UserInfoTable[]>([])
@@ -103,14 +95,12 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    
-
     for(let i = 0; i < 88; i++) {
       tempArray.push({
         id: `${i}`,
         email: emails[Math.floor(Math.random() * emails.length)],
         phoneNumber: '',
-        isAdmin: Math.floor(Math.random() * 2) ? true : false,
+        isAdmin: Math.floor(Math.random() * 10) == 1 ? true : false,
         tradeLink: tradeLinks[Math.floor(Math.random() * tradeLinks.length)],
         created: formatarDataHoraAtual(),
       })

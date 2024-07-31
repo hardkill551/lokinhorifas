@@ -91,11 +91,11 @@
   margin-bottom: 15px;
 }
 
-.admin .adminForm .form label, .admin .adminForm .form input {
+.admin .adminForm .form label, .admin .adminForm .form input, .admin .adminForm .form select {
   width: 100%;
 }
 
-.admin .form input {
+.admin .form input, .admin .form select {
   border: none;
   border-radius: 4px;
 
@@ -104,7 +104,7 @@
   padding: 7px;
 }
 
-.admin .form input:focus-within {
+.admin .form input:focus-within, .admin .form select:focus-within {
   outline: 2px solid red;
 }
 

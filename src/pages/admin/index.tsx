@@ -3,6 +3,7 @@ import style from './admin.module.css'
 import AdminForm from './adminComponents/AdminForm'
 import Dashboard from './adminComponents/Dashboard'
 import Receipt from './adminComponents/Receipt';
+import RaffleDashboard from './adminComponents/RaffleDashboard';
 
 const Admin = () => {
   return (
@@ -18,6 +19,8 @@ const Admin = () => {
             </div>
             <Receipt />
           </div>
+
+          <RaffleDashboard />
 
           <Dashboard />
         </div>

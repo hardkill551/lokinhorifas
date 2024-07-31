@@ -15,14 +15,23 @@ export default interface UserContextType {
 }
 
 export type UserInfoType = {
-      name: string;
-      id: string;
-      email: string;
-      picture: string;
-      token: string;
-      isAdmin: boolean;
-      phoneNumber: string;
-      tradeLink: string;
+  name: string;
+  id: string;
+  email: string;
+  picture: string;
+  token: string;
+  isAdmin: boolean;
+  phoneNumber: string;
+  tradeLink: string;
+}
+
+export type UserInfoTable = {
+  id: string;
+  email: string;
+  phoneNumber: string;
+  isAdmin: boolean;
+  tradeLink: string;
+  created: string;
 }
 
 export type UserSettingsType = { 
@@ -138,6 +147,20 @@ export type RaffleType = {
   is_active: boolean;
   skin: SkinType;
   item_chance: string;
+}
+
+export type RaffleInfoTable = {
+  id: string;
+  name: string;
+  state: 'ativada' | 'em espera' | 'desativada';
+  totalValue: number;
+  isFree: boolean;
+  unitValue: number;
+  participants: number;
+  maxParticipants: number;
+  skins: string[];
+  ocurred: string | false;
+  created: string;
 }
 
 export type LastEarnFrontEndType = {

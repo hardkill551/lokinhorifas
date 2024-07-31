@@ -19,7 +19,7 @@ const AdminForm = ({value}: { value: { isFree: boolean } }) => {
     setFormItems({name: '', quality: '', value: 0})
   }
 
-  const handleFormUpdate = (e: ChangeEvent<HTMLInputElement>, type: string) => {
+  const handleFormUpdate = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>, type: string) => {
     if(!e.target.value) return
     if(e.target.value == '') return
 
@@ -46,7 +46,14 @@ const AdminForm = ({value}: { value: { isFree: boolean } }) => {
           </label>
           <label>
             <p>Qualidade da arma</p>
-            <input type="text" value={formItems.quality} required onChange={e => handleFormUpdate(e, 'quality')}/>
+            <select required value={formItems.quality} onChange={e => handleFormUpdate(e, 'quality')}>
+              <option value="">Selecione uma opção</option>
+              <option value="01">01 - Novo em Folha</option>
+              <option value="02">02 - Pouco Usado</option>
+              <option value="03">03 - Testado em Campo</option>
+              <option value="04">04 - Bem Usado</option>
+              <option value="05">05 - Desgastado pela Batalha</option>
+            </select>
           </label>
           <label>
             <p>Valor estimado da skin</p>
@@ -54,7 +61,7 @@ const AdminForm = ({value}: { value: { isFree: boolean } }) => {
           </label>
           <div className={style.buttonGroup}>
             <button onClick={() => handleFormSubmit()}>Adicionar</button>
-            <button onClick={() => submitNewRaffle()} disabled={addedItemList.length == 0 ? true : false}>Criar rifa ({addedItemList.length})</button>
+            <button onClick={() => submitNewRaffle(isFree)} disabled={addedItemList.length == 0 ? true : false}>Criar rifa ({addedItemList.length})</button>
             </div>
         </div>
 
