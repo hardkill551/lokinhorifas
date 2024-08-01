@@ -109,6 +109,7 @@ export const RaffleProvider = ({children} : {children: ReactNode}) =>{
 
   const sanitizeRaffleInput = (i: number, isFree: boolean, newItems?: boolean ): RaffleInfoTable => {
     if(newItems) {
+      if(typeof isFree != 'boolean') isFree = false
       let tempTotalValue = 0
       let tempArray: string[] = []
       
@@ -175,27 +176,29 @@ export const RaffleProvider = ({children} : {children: ReactNode}) =>{
   }, [])
 
   const submitNewRaffle = (isFree: boolean) => {
-    // TODO enviar para o back os dados da rifa para criar novas rifas
-    // console.log(addedItemList, isFree)
-    // console.log(addedItemList)
-    // ? dados presentes serão: [nome: string, qualidade: string e valor: número (float)]
-
-    setRaffle(oldArray => {return [...oldArray, sanitizeRaffleInput((raffle.length + 1), isFree, true)]})
-    setAddedItemList([])
-    
-    if(numberOfParticipants.current) {
-      numberOfParticipants.current.value = ''
+    if(typeof isFree === 'boolean') {
+      // TODO enviar para o back os dados da rifa para criar novas rifas
+      // console.log(addedItemList, isFree)
+      // console.log(addedItemList)
+      // ? dados presentes serão: [nome: string, qualidade: string e valor: número (float)]
+  
+      setRaffle(oldArray => {return [...oldArray, sanitizeRaffleInput((raffle.length + 1), isFree, true)]})
+      setAddedItemList([])
+      
+      if(numberOfParticipants.current) {
+        numberOfParticipants.current.value = ''
+      }
+  
+      // ? created: "18/04/2024, às 05:40"
+      // ?id: "1"
+      // ?maxParticipants: 29
+      // ?name: "SORTEIO #000001"
+      // ?ocurred: "14/03/2024, às 02:12"
+      // ?participants: 1skins: (4) ['Cortex', 'Case Hardened', 'Cortex', 'Roll Cage']
+      // ?state: "desativada"
+      // ?totalValue: 39
+      // ?unitValue: 1.34
     }
-
-    // ? created: "18/04/2024, às 05:40"
-    // ?id: "1"
-    // ?maxParticipants: 29
-    // ?name: "SORTEIO #000001"
-    // ?ocurred: "14/03/2024, às 02:12"
-    // ?participants: 1skins: (4) ['Cortex', 'Case Hardened', 'Cortex', 'Roll Cage']
-    // ?state: "desativada"
-    // ?totalValue: 39
-    // ?unitValue: 1.34
   }
 
   const addItem = (item: [string, string, number]) => {
@@ -209,19 +212,19 @@ export const RaffleProvider = ({children} : {children: ReactNode}) =>{
   }
 
   const formatReceipt = () => {
-    if(!addedItemList) return
-
-    const max_width = 31
-    return addedItemList.map(([item, quality, price], index) => {
-      const itemPriceStr = `${item} (${quality}) ${Number(price).toFixed(2).toString().replace('.', ',')}`
-      const numPeriods = max_width - itemPriceStr.length
-      const periods = '.'.repeat(numPeriods)
-      return (
-        <p key={index} className={style.item} onClick={() => removeItem([item, quality, price])}>
-          {item} ({quality}){periods}R$ {Number(price).toFixed(2).toString().replace('.', ',')}
-        </p>
-      )
-    })
+    if(addedItemList) {
+      const max_width = 31
+      return addedItemList.map(([item, quality, price], index) => {
+        const itemPriceStr = `${item} (${quality}) ${Number(price).toFixed(2).toString().replace('.', ',')}`
+        const numPeriods = max_width - itemPriceStr.length
+        const periods = '.'.repeat(numPeriods)
+        return (
+          <p key={index} className={style.item} onClick={() => removeItem([item, quality, price])}>
+            {item} ({quality}){periods}R$ {Number(price).toFixed(2).toString().replace('.', ',')}
+          </p>
+        )
+      })
+    }
   }
 
   return (

@@ -14,7 +14,7 @@ const Admin = () => {
             <div className={style.formGroup}>
               {Array.from({ length: 2 }, (_, i) => {
                 const isFree = i == 0 ? false : true
-                return <AdminForm key={i} value={{isFree}}
+                return <AdminForm key={i} isFree={isFree}
                 />})}
             </div>
             <Receipt />

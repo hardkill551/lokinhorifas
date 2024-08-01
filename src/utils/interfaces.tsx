@@ -148,8 +148,21 @@ export type RaffleType = {
   is_active: boolean;
   skin: SkinType;
   item_chance: string;
-  cretedAt: Date;
-  updatedAt: Date;
+  updatedAt: string;
+}
+
+export type RaffleInfoTable = {
+  id: string;
+  name: string;
+  state: 'ativada' | 'em espera' | 'desativada';
+  totalValue: number;
+  isFree: boolean;
+  unitValue: number;
+  participants: number;
+  maxParticipants: number;
+  skins: string[];
+  ocurred: string | false;
+  created: string;
 }
 
 export type LastEarnFrontEndType = {

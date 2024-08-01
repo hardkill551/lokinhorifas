@@ -2,12 +2,11 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import style from '../admin.module.css'
 import { useRaffleContext } from 'contexts/RaffleContext'
 
-const AdminForm = ({value}: { value: { isFree: boolean } }) => {
+const AdminForm = ({isFree = false}: { isFree: boolean }) => {
+
   const { addItem, addedItemList, submitNewRaffle } = useRaffleContext() as { 
     addItem: Function, addedItemList: Function, submitNewRaffle: Function 
   }
-
-  const { isFree } = value
   
   const [ formItems, setFormItems ] = useState<{
     name:string, quality:string, value:number
@@ -31,7 +30,7 @@ const AdminForm = ({value}: { value: { isFree: boolean } }) => {
   
   return (
     <div className={style.adminForm}>
-      <h2>Rifa {isFree ? 'Rifa Free (Gratuita)' : 'Comum (Paga)'}</h2>
+      <h2>Rifa {isFree !== undefined && isFree ? 'Rifa Free (Gratuita)' : 'Comum (Paga)'}</h2>
       <div className={style.addSkin}>
         <div className={style.col1}>
           <div className={style.SkinImageBox}>
@@ -61,7 +60,7 @@ const AdminForm = ({value}: { value: { isFree: boolean } }) => {
           </label>
           <div className={style.buttonGroup}>
             <button onClick={() => handleFormSubmit()}>Adicionar</button>
-            <button onClick={() => submitNewRaffle(isFree)} disabled={addedItemList.length == 0 ? true : false}>Criar rifa ({addedItemList.length})</button>
+            <button onClick={() => submitNewRaffle(isFree !== undefined && isFree)} disabled={addedItemList && addedItemList.length == 0 ? true : false}>Criar rifa ({addedItemList && addedItemList.length})</button>
             </div>
         </div>
 

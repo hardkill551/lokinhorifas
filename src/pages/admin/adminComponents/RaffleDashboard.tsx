@@ -165,9 +165,9 @@ const RaffleDashboard = () => {
             <div className={style.options}>
               <ul>
                 {raffleOptions.length > 0 && <h3>estado</h3>}
-                {raffleOptions.map(item => <li onClick={() => handleSearchSelectionState(item.state)} key={uuidv4()}>{item.name}</li>)}
+                {raffleOptions.length > 0 && raffleOptions.map(item => <li onClick={() => handleSearchSelectionState(item.state)} key={uuidv4()}>{item.name}</li>)}
                 {skinsOptions.length > 0 && <h3>armas</h3>}
-                {skinsOptions.map(item => <li onClick={() => handleSearchSelectionSkin(item.skins)} key={uuidv4()}>{item.skins.join(', ')}</li>)}
+                {skinsOptions.length > 0 && skinsOptions.map(item => <li onClick={() => handleSearchSelectionSkin(item.skins)} key={uuidv4()}>{item.skins.join(', ')}</li>)}
               </ul>
             </div>}
             <button>Procurar</button>
@@ -190,7 +190,7 @@ const RaffleDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {raffle.map(item =>
+              {raffle && raffle.map(item =>
               <tr key={uuidv4()} className={style.user}>
                 <th>{item.id}</th>
                 <th>{item.name}</th>
