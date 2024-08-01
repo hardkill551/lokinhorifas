@@ -367,7 +367,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
     const winnerCardCenter = (Math.round(winner.getBoundingClientRect().right) - Math.round(winner.getBoundingClientRect().left)) / 2 + Math.round(winner.getBoundingClientRect().left) - (window.innerWidth / 2)
 
-    const timing = 60000
+    const timing = 30000
+    // const timing = 300
     
     
     const randomSide = Math.floor(Math.random() * 2) == 1 ? -1 : 1
@@ -379,16 +380,16 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
     if(randomSide == -1) {
       // * Variável que segura animação
-      const random = Math.floor(Math.random() * 55)
+      const random = Math.floor(Math.random() * 105)
 
       const spinAnimation = new Animation(new KeyframeEffect(roulette, [
         { transform: `translateX(0px)`, offset: 0 },
         { transform: `translateX(80px)`, offset: 0.009 },
-        { transform: `translateX(${winnerCardCenter * -1 -(115 - random)}px)`, offset: 1 }
+        { transform: `translateX(-${winnerCardCenter + random}px)`, offset: 1 }
       ], 
       {
         duration: timing,
-        easing: "cubic-bezier(.04,.97,.81,.99)",
+        easing: "cubic-bezier(.04,.81,.48,1)",
         fill: 'forwards'
       }), document.timeline)
 
@@ -399,16 +400,16 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
       return spinAnimation
     } else {
       // * Variável que segura animação
-      const random = Math.floor(Math.random() * 115)
+      const random = Math.floor(Math.random() * 110)
 
       const spinAnimation = new Animation(new KeyframeEffect(roulette, [
         { transform: `translateX(0px)`, offset: 0 },
         { transform: `translateX(80px)`, offset: 0.009 },
-        { transform: `translateX(${winnerCardCenter * -1 +(115 - random)}px)`, offset: 1 }
+        { transform: `translateX(-${winnerCardCenter - random}px)`, offset: 1 }
       ], 
       {
         duration: timing,
-        easing: "cubic-bezier(.04,.97,.81,.99)",
+        easing: "cubic-bezier(.04,.81,.48,1)",
         fill: 'forwards'
       }), document.timeline)
       
