@@ -13,7 +13,8 @@ const LastEarnedPrizeGrid = () => {
 
   useEffect(() => {
     axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/winners", { params: { page: 1 } })
-      .then((res: any) => {
+      .then((res: any) => { 
+        console.log(res.data);
         setNewLastEarnedList(res.data);
       })
       .catch((err: any) => console.error(err));

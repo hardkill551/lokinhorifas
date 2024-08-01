@@ -121,13 +121,23 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
       // TODO alterar TimeOfEarning
       // TODO alterar imagem do item
 
+      const date = new Date(raffle.updatedAt)
+
+      const earnedDateHours = Math.floor(Math.abs(Date.now() - Number(date)) / (1000 * 60 * 60))
+      const earnedDateDays = Math.floor(Math.abs(Date.now() - Number(date)) / (1000 * 60 * 60 * 24))
+
+      let time = ''
+
+      if(earnedDateHours < 24) time = `${earnedDateHours} hora${earnedDateHours == 1 ? '' : 's'}`
+      else if(earnedDateDays) time = `${earnedDateDays} dia${earnedDateDays == 1 ? '' : 's'}`
+
       const newItem = {
-        itemImageUrl: '',
-        TimeOfEarning: '21 horas',
+        itemImageUrl: raffle.skin.picture.includes('url_to_picture') ? '' : raffle.skin.picture,
+        TimeOfEarning: time,
         ChanceOfEarning: raffle.item_chance,
         PoolType: raffle.skin.value >= 1500 ? 'Gold' : 'Silver',
         ItemName: raffle.skin.name,
-        ItemType: raffle.skin.name,
+        ItemType: raffle.skin.type,
         ItemValue: String(raffle.skin.value),
         WinnerID: winner.id,
         WinnerName: winner.name,

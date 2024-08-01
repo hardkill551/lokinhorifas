@@ -415,7 +415,7 @@ const SignUp = () => {
                           <input type="checkbox" name="tos" id="tos" required />
                           <p>
                             Declaro que li e aceito os{" "}
-                            <Link href={"/"}>termos de serviço</Link>
+                            <Link target="_blank" href={"/termosdeservico"}>termos de serviço</Link>
                           </p>
                         </label>
                       )}
@@ -430,7 +430,7 @@ const SignUp = () => {
                           />
                           <p>
                             Declaro que li e aceito os{" "}
-                            <Link href={"/"}>termos de privacidade</Link>
+                            <Link target="_blank" href={"/termosdeprivacidade"}>termos de privacidade</Link>
                           </p>
                         </label>
                       )}
@@ -462,6 +462,8 @@ const SignUp = () => {
         <div className={style.background}>
           <div className={style?.["background-0Wrapper"]}>
             <Image
+              priority={true}
+              width={2304}
               className={style?.["background-0"]}
               src={SingUpBG}
               alt="Imagem de fundo"

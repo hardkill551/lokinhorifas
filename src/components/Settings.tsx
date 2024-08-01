@@ -26,13 +26,6 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
   const [ error, setError ] = useState('')
   const [ success, setSuccess ] = useState('')
 
-  // const changeProfilePic = () => {
-  //   if(!inputRef.current) return
-  // TODO Não sei o que essa função faz, então comentei
-  //   inputRef.current.click()
-  // }
-  
-
   const handleChange = (e:any) => {
     const { name, value } = e.target;
     if (name === "picture") {
@@ -43,8 +36,9 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
         setImage(file)
         setUserData((prevState:any) => ({
             ...prevState,
-            picture: e.target.files[0]
+            picture: file
         }));
+        updateUser("Image", file)
     } else {
         setUserData((prevState:any) => ({
             ...prevState,
@@ -53,7 +47,7 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
     }
   };
 
-  const updateUser = async (object:string) => {
+  const updateUser = async (object:string, file?:File) => {
     setError('')
     setSuccess('')
 
@@ -66,22 +60,20 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
     if(userData.newPhoneNumber !== ""){
       signUpData.phoneNumber = userData.newPhoneNumber
     }
-    console.log(object)
     
     if(userData.newPassword && userData.oldPassword){
         signUpData.newPassword = userData.newPassword;
         signUpData.oldPassword = userData.oldPassword
     }
 
-
     formData.append('signUpData', JSON.stringify(signUpData));
-
-    if (userData.picture) {
-        formData.append('picture', userData.picture);
+    console.log(file)
+    if (file) {
+        formData.append('picture', file);
     } else {
         formData.append('picture', "Default");
     }
-    
+    console.log(formData)
     try {
         const response = await axios.put(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users/update/${userInfo.id}`, formData, {
             headers: {
@@ -90,26 +82,23 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
             }
         });
         if (response.status === 200) {
-          // TODO setSuccess(true);
-            setSuccess(`Alterou ${object} com sucesso!`)
+            setSuccess(`${object} com sucesso!`)
 
             if(object === "newTradeLink"){
-              setUserData({tradeLink: userData.newTradeLink, newTradeLink:""})
+              setUserData((prevState:any) => ({...prevState, tradeLink: userData.newTradeLink, newTradeLink:""}))
             } else if(object === "password"){
-              setUserData({oldPassword: "", newPassword: ""})
+              setUserData((prevState:any) => ({...prevState, oldPassword: "", newPassword: ""}))
             } else if(object === "Image"){
-              setUserData({picture: null})
+              setUserData((prevState:any) => ({...prevState, picture: null}))
             } else if (object === "phoneNumber"){
-              setUserData({phoneNumber: userData.newPhoneNumber, newPhoneNumber: ""})
+              setUserData((prevState:any) => ({...prevState, phoneNumber: userData.newPhoneNumber, newPhoneNumber: ""}))
             }
             
         } else {
             throw new Error('Erro ao atualizar os dados');
         }
     } catch (err: any) {
-        // TODO setError(true);
         setError(`Falha em alterar ${object}!`)
-
         console.log(err.response.data);
     }
   };
@@ -122,21 +111,19 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
   return (
     <div className="config">
       <div className="statusWrapper">
-        { success && <div onClick={() => resolveToast()} className="success">Alterou object com sucesso!</div> }
-        {error && <div onClick={() => resolveToast()} className="error">Falha em alterar object!</div> }
+        { success && <div onClick={() => resolveToast()} className="success">Alterou {success}</div> }
+        {error && <div onClick={() => resolveToast()} className="error">Falha em alterar {error}!</div> }
       </div>
       <div className="configWrapper">
         <div className="configWrapperContent">
           <button onClick={() => setShowSettings(false)}><Image src={xmark} alt="Fechar menu"/></button>
-
-
           <h2>Configurações de usuário</h2>
           <div className="accountInfo">
             <div className="imageBox">
               <Image width={200} height={200} src={image ? URL.createObjectURL(image) : profile.picture} alt="Imagem de perfil"/>
-              <button type="button" onClick={() => updateUser("Image")}>
+              <button type="button" onClick={() => inputRef.current?.click()}>
                 <Image width={18} height={18} src={editPencil} alt={'Editar foto de perfil'}/>
-                <input type="file" onChange={(e) => handleChange(e)} name="profilePic" id="profilePic" ref={inputRef} />
+                <input type="file" onChange={(e) => handleChange(e)} name="picture" id="profilePic" ref={inputRef} />
               </button>
             </div>
             <div className="accountContent">
@@ -241,10 +228,9 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
           </div>
         </div>
       </div>
-
       <div className="configBackground" onClick={() => setShowSettings(false)}></div>
     </div>
   );
 }
- 
+
 export default Settings;

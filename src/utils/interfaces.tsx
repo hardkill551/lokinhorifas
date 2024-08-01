@@ -117,6 +117,7 @@ export type PersonCardContextType = {
 export type SkinType = {
   id: number;
   name: string;
+  type: string;
   picture: string;
   value: number;
 }
@@ -147,20 +148,8 @@ export type RaffleType = {
   is_active: boolean;
   skin: SkinType;
   item_chance: string;
-}
-
-export type RaffleInfoTable = {
-  id: string;
-  name: string;
-  state: 'ativada' | 'em espera' | 'desativada';
-  totalValue: number;
-  isFree: boolean;
-  unitValue: number;
-  participants: number;
-  maxParticipants: number;
-  skins: string[];
-  ocurred: string | false;
-  created: string;
+  cretedAt: Date;
+  updatedAt: Date;
 }
 
 export type LastEarnFrontEndType = {
@@ -182,3 +171,10 @@ export interface FormDataType {
   name: string;
   picture: null | File | string;
 }
+
+export interface RaffleNumberType {
+  key: number;
+  number: number;
+  isSelected: boolean;
+  isAvailable: boolean;
+}[]

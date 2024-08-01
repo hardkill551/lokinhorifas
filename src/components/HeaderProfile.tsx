@@ -6,6 +6,7 @@ import defaultProfilePicture from '../assets/defaultProfilePic.svg'
 import { useEffect, useState } from "react";
 import Settings from "./Settings";
 import { useRouter } from "next/router";
+import Budget from "./Budget";
 
 const HeaderProfile = () => {
   const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
@@ -13,6 +14,7 @@ const HeaderProfile = () => {
   const [ budgetString, setBudgetString ] = useState<string>()
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
   const [ showSettings, setShowSettings ] = useState<boolean>(false)
+  const [ showBudget, setShowBudget ] = useState<boolean>(false)
   const [ image, setImage ] = useState<File | null>(null)
   
   const randomValue = Math.floor(Math.random() * 5000)
@@ -23,6 +25,13 @@ const HeaderProfile = () => {
     
     html?.classList.toggle('scrollOff', showSettings)
   }, [showSettings])
+
+  useEffect(() => {
+    const html = document.querySelector('html')
+
+    
+    html?.classList.toggle('scrollOff', showBudget)
+  }, [showBudget])
   
   useEffect(() => {
     setBudget(randomValue)
@@ -42,12 +51,17 @@ const HeaderProfile = () => {
     budget: budgetString
   }
 
-  const props = {
+  const settingsProps = {
     profile,
     showSettings,
     setShowSettings,
     image,
     setImage
+  }
+
+  const budgetProps = {
+    showBudget,
+    setShowBudget
   }
 
   const toggleOnDropdownVisibility = () => {
@@ -77,6 +91,10 @@ const HeaderProfile = () => {
     router.push('/cadastro');
   };
 
+  const openBudgetPayment = () => {
+    setShowBudget(true)
+  }
+
   return (
     <div className="Profile">
       <div className="ProfileWrapper">
@@ -97,11 +115,13 @@ const HeaderProfile = () => {
         <ul>
           <li onClick={() => openConfig()}>Configurações</li>
           <li onClick={() => handleLogout()}>Sair</li>
-          <button>Saldo: R$<span className="Value">{profile.budget}</span></button>
+          <button onClick={() => openBudgetPayment()}>Saldo: R$<span className="Value">{profile.budget}</span></button>
         </ul>
       </div>
 
-      {showSettings && <Settings props={props}/>}
+      {showBudget && <Budget props={budgetProps} />}
+
+      {showSettings && <Settings props={settingsProps}/>}
     </div>
   );
 }
