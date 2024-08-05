@@ -1,32 +1,18 @@
-import { RaffleProvider } from 'contexts/RaffleContext';
-import style from './admin.module.css'
-import AdminForm from './adminComponents/AdminForm'
-import Dashboard from './adminComponents/Dashboard'
-import Receipt from './adminComponents/Receipt';
-import RaffleDashboard from './adminComponents/RaffleDashboard';
+import style from './admin.module.css';
+import ProfilePhoto from './adminComponents/ProfilePhoto';
+import ProfileInformations from './adminComponents/ProfileInformations';
 
-const Admin = () => {
+export default function Admin() {
+
   return (
-    <RaffleProvider>
-      <section className={style.admin}>
-        <div className={style.adminWrapper}>
-          <div className={style.colGroup}>
-            <div className={style.formGroup}>
-              {Array.from({ length: 2 }, (_, i) => {
-                const isFree = i == 0 ? false : true
-                return <AdminForm key={i} isFree={isFree}
-                />})}
-            </div>
-            <Receipt />
-          </div>
+    <div className={style.ContainerAdmin}>
+    <div className={style.ContentAdmin}>
+      <ProfilePhoto />
+      <ProfileInformations />
+    </div>
+    </div>
+  )
 
-          <RaffleDashboard />
-
-          <Dashboard />
-        </div>
-      </section>
-    </RaffleProvider>
-  );
 }
- 
-export default Admin;
+
+;
