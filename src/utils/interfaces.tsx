@@ -186,8 +186,8 @@ export interface FormDataType {
 }
 
 
-export interface skinData {
-  value: number;
+export interface skinDataType {
+  value: string;
   type: string;
   name: string;
   picture: null | File | string;
