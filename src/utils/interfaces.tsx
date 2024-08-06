@@ -185,6 +185,14 @@ export interface FormDataType {
   picture: null | File | string;
 }
 
+
+export interface skinData {
+  value: number;
+  type: string;
+  name: string;
+  picture: null | File | string;
+}
+
 export interface RaffleNumberType {
   key: number;
   number: number;
