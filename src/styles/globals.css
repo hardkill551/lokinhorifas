@@ -1040,7 +1040,7 @@ footer nav div {
   text-align: center;
 }
 
-.PopupBuy .step-1, .PopupBuy .step-2, .PopupBuy .step-3 {
+.PopupBuy .stepCounter .step-1, .PopupBuy .stepCounter .step-2, .PopupBuy .stepCounter .step-3 {
   display: flex;
 
   flex-direction: column;
@@ -1103,13 +1103,49 @@ footer nav div {
 }
 
 .PopupBuyContent {
-  width: 100%;
+  width: 710px;
   height: 765px;
 
-  background-color: #eee;
+  position: relative;
+
   border-radius: 11px;
 
+  background-color: #eee;
+
   color: black;
+
+  overflow: hidden;
+}
+
+.PopupBuyContentWrapper {
+  display: flex;
+  flex-direction: row;
+
+  width: 1420px;
+  height: 100%;
+
+  transition: translate 400ms ease-in;
+}
+
+.PopupBuyContentWrapper.step-1 {
+  translate: 0;
+}
+
+.PopupBuyContentWrapper.step-2 {
+  translate: -710px;
+}
+
+.PopupBuyContentWrapper.step-3 {
+  translate: -1420px;
+}
+
+.PopupBuyContentWrapper.step-4 {
+  translate: -2130px;
+}
+
+.PopupBuy .raffleSelect {
+  background-color: #eee;
+  width: 710px;
 }
 
 .PopupBuyContent .sessionInfo {
@@ -1138,7 +1174,14 @@ footer nav div {
   text-align: center;
 }
 
-.PopupBuyContent .cardGroup {
+.PopupBuyContent .raffleSelect .cardGroup {
+  width: 710px;
+  height: 532px;
+
+  overflow-y: auto;
+}
+
+.PopupBuyContent .raffleSelect .cardGroupWrapper {
   display: flex;
 
   flex-wrap: wrap;
@@ -1478,6 +1521,274 @@ footer nav div {
   backdrop-filter: blur(2px);
 
   cursor: pointer;
+}
+
+.PopupBuy .raffleBuyQuantity {
+  width: 710px;
+}
+
+.PopupBuy .raffleBuyQuantity .sessionInfo p {
+  font-weight: 500;
+  opacity: .5;
+}
+
+.PopupBuy .raffleSelect .sessionInfo p {
+  font-weight: 500;
+  opacity: .5;
+}
+
+.PopupBuy .raffleBuyQuantity .cartGroup {
+  height: 465px;
+
+  overflow: auto;
+}
+
+.PopupBuy .raffleBuyQuantity .cartGroupWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.PopupBuy .raffleBuyQuantity .cartItem {
+  display: flex;
+  
+  width: 100%;
+  height: 140px;
+
+  gap: 20px;
+
+  padding: 5px 10px;
+
+  background-color: #d9d9d9;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  padding-block: 15px;
+
+  width: 460px;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleTitleContent h3 {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleTitleContent p {
+  opacity: .5;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity input {
+  padding: 11px 0px 11px 5px;
+
+  width: 76px;
+  height: 42px;
+
+  border-radius: 4px;
+  border: none;
+
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity p {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity h3 {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleBanner {
+  width: 200px;
+  height: 130px;
+
+  background-color: #000;
+
+  overflow: hidden;
+
+  border-radius: 4px;
+
+  position: relative;
+}
+
+.PopupBuy .raffleBuyQuantity .imageGroup {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+.PopupBuyContent .raffleBuyQuantity .glowGroup {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+
+  z-index: 0;
+}
+
+.PopupBuy .raffleBuyQuantity .glow-1 {
+  width: 164px;
+  height: 164px;
+
+  position: absolute;
+  left: -20%;
+  top: -10%;
+
+  background-color: #E21A1A;
+
+  border-radius: 50%;
+
+  filter: blur(22px);
+}
+
+.PopupBuy .raffleBuyQuantity .glow-2 {
+  width: 164px;
+  height: 164px;
+
+  position: absolute;
+  top: -33%;
+  right: -20%;
+
+  background-color: #A30006;
+
+  border-radius: 50%;
+
+  filter: blur(22px);
+}
+
+.PopupBuyContent .raffleBuyQuantity .imageBox {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 35px;
+
+  transition: 400ms ease-in-out;
+}
+
+.PopupBuyContent .raffleBuyQuantity .imageBox img {
+  width: 95px;
+  height: auto;
+
+  opacity: .8;
+  rotate: 40deg;
+
+  transition: 300ms ease-in-out;
+}
+
+.PopupBuyContent .card .imageBox:nth-of-type(5) img {
+  filter: brightness(100%);
+}
+
+
+
+.PopupBuy .bottomSection {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  width: 710px;
+  height: 100px;
+
+  padding: 25px 42px;
+
+  position: absolute;
+  bottom: 0;
+
+  background-color: white;
+}
+
+.PopupBuy .bottomSection button {
+  padding: 15px 9px;
+  font-size: 24px;
+  font-weight: 500;
+
+  border-radius: 7px;
+  border: grey;
+
+  background: linear-gradient(90deg, #1AE22299, #13a11899);
+  background-color: black;
+  color: white;
+
+  cursor: pointer;
+}
+
+.PopupBuy .bottomSection a {
+  color: black;
+
+  font-size: 24px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.PopupBuy .bottomSection button.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.PopupBuy .bottomSection .totalValue {
+  display: flex;
+
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+
+  padding: 25px 42px;
+  
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 100%;
+  height: 70px;
+
+  background-color: #ccc;
+}
+
+.PopupBuy .bottomSection .totalValue h3 {
+  font-size: 34px;
+  font-weight: 500;
 }
 
 

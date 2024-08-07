@@ -9,12 +9,16 @@ import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
 import Image from "next/image";
 import RaffleCard from "./RaffleCard";
 import RaffleDetails from "./RaffleDetails";
+import StepCounter from "./stepCounter";
+import RaffleSelect from "./raffleSelect";
+import RaffleSelectQuantity from "./raffleSelectQuantity";
 
 const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.Dispatch<React.SetStateAction<boolean>>} }) => {
 
   const { isVisible, setIsVisible } = props
   const [ detailsVisible, setDetailsVisible ] = useState(false)
-  const [ step, setStep ] = useState(0)
+  const [ step, setStep ] = useState(2)
+  const [ total, setTotal ] = useState(0)
 
   const addStep = () => {
     setStep(oldValue => oldValue += 1)
@@ -39,59 +43,69 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
   const { userInfo } = useUserStateContext() as { userInfo: UserInfoType }
 
 
-  function sortObjectsWithZerosAtEnd(arr: RaffleNumberType[]) {
-    let nonZeroObjects = arr.filter(obj => obj.number !== 0)
-    let zeroObjects = arr.filter(obj => obj.number === 0)
+  // function sortObjectsWithZerosAtEnd(arr: RaffleNumberType[]) {
+  //   let nonZeroObjects = arr.filter(obj => obj.number !== 0)
+  //   let zeroObjects = arr.filter(obj => obj.number === 0)
     
-    nonZeroObjects.sort((a, b) => a.number - b.number)
+  //   nonZeroObjects.sort((a, b) => a.number - b.number)
     
-    arr.length = 0
-    arr.push(...nonZeroObjects, ...zeroObjects)
+  //   arr.length = 0
+  //   arr.push(...nonZeroObjects, ...zeroObjects)
 
-    return arr
-  }
+  //   return arr
+  // }
 
   const checkStep = () => {
-    if(step == 1) return 'step-2'
-    else if(step == 2) return 'step-3'
+    if(step == 2) return 'step-2'
+    else if(step == 3) return 'step-3'
+    else if(step == 4) return 'step-4'
 
     return 'step-1'
+  }
+
+  const handleButtonText = () => {
+    if(checkStep() == 'step-1') return 'Confirmar seleções'
+    else if(checkStep() == 'step-2') return 'Confirmar quantidades'
+    else if(checkStep() == 'step-3') return 'Confirmar compra'
+    else if(checkStep() == 'step-4') return 'Continuar'
   }
 
   return (
     <section className={`PopupBuy ${isVisible ? '' : 'not-show'}`}>
       <div className="PopupBuyWrapper">
-        <div className="stepCounter">
-          <div className="step-1 selected">
-            <div className="bar">
-              <div className="ball">1</div>
-            </div>
-            <h3>Selecionar Rifas</h3>
-          </div>
-          <div className="step-2">
-            <div className="bar">
-            <div className="ball">2</div>
-            </div>
-            <h3>Selecionar Quantidade</h3>
-          </div>
-          <div className="step-3">
-            <div className="bar">
-            <div className="ball">3</div>
-            </div>
-            <h3>Pagamento</h3>
-          </div>
-        </div>
+        <StepCounter steps={{step}}/>
 
         <div className="PopupBuyContent">
-          <div className="sessionInfo">
-            <h2>Compra de Rifa</h2>
-            <p>Selecione quais rifas gostaria de participar</p>
-          </div>
+          <div className={`PopupBuyContentWrapper ${checkStep()}`}>
 
-          <div className="cardGroup">
-            <RaffleCard moreDetails={{setDetailsVisible}} />
+            {/* Abaixo são as etapas para compra de rifa */}
+
+            <RaffleSelect moreDetails={{setDetailsVisible}} />
+
+            {/* Raffle select é a primeira etapa, o usuário precisa ter pelo menos uma rifa selecionada para progredir */}
+
+            <RaffleSelectQuantity setQuantity={{setTotal}}/>
+
+            {/* Raffle select quantity é a segunda, aqui ele poderá adicionar mais números referentes as rifas selecionadas na etapa anterior */}
+
+            {/* <RafflePayment /> */}
+
+            {/* Raffle payment lidará com o pagamento através do saldo na conta, essa escolha foi feita pra evitar o possível assincronismo entre a pessoa ter ou não o valor em mãos, algo que à prontifica melhor */}
+
+            {/* <RaffleConfirmation />> */}
+
+            {/* Por último, a tela de confirmação, nela será apenas adiantado que o pagamento foi realizado com sucesso, e que agora ela terá acesso aos números que está participando na rifa */}
+
+          </div>
+          <div className="bottomSection">
+            {(step > 1 && step < 4) && <div className="totalValue">
+              <h3>Total: R$ {total.toFixed(2).toString().replace('.', ',')}</h3>
+            </div>}
+            {(step > 1 && step < 4) && <Link href={''} onClick={removeStep}>&lt;- Voltar</Link>}
+            <button onClick={addStep} className={`${(step == 1 || step == 4) && 'center'}`}>{handleButtonText()}</button>
           </div>
         </div>
+
         <div onClick={() => setIsVisible(false)} className="background"></div>
         {detailsVisible && <RaffleDetails moreDetails={{setDetailsVisible}}/>}
       </div>
