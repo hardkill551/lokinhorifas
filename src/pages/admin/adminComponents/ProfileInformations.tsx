@@ -74,9 +74,8 @@ export default function ProfileInformations() {
                 }
             );
     
-        } catch (error) {
-            console.error(error);
-            setError("Ocorreu um erro ao enviar o formulário.");
+        } catch (error:any) {
+            setError(error.response.data.message);
         }
     };
 

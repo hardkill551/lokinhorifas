@@ -23,8 +23,22 @@ export default function Admin() {
   }, []);
 
   function handleDeleteCard(id: number) {
+    const token = localStorage.getItem('token')
      setSkinteste(skinTeste2.filter(data => data.id !== id));
-  }
+     axios.delete(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/skin/${id}`, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
+    })
+     .then(res=>{
+      console.log("skin deletada")
+     })
+     .catch(err=>{
+      console.log(err.response.data.message)
+      console.log("skin não deletada")
+     })
+    }
 
   return (
     <div className={style.ContainerAdmin}>
