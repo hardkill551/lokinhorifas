@@ -5,7 +5,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function CardSkins({ name, type, value, picture, id, onDelete, }: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void }) {
+export default function CardSkins({ name, type, value, picture, id, onDelete,setPopUpSkins }: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void, setPopUpSkins: any }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
@@ -27,7 +27,7 @@ export default function CardSkins({ name, type, value, picture, id, onDelete, }:
                                 transition={{ duration: 0.5, type: "tween" }}
                                 className={style.dropdownMenu}
                             >
-                                <button className={style.buttonSelect}>Atualizar</button>
+                                <button className={style.buttonSelect} onClick={()=>setPopUpSkins(true)}>Atualizar</button>
                                 <button className={style.buttonSelect} onClick={()=>{onDelete(id)}}>Deletar</button>
                                 <button className={style.buttonSelect} onClick={()=>{}}>Add na rifa</button>
                             </motion.div>

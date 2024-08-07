@@ -192,5 +192,36 @@
     border-top-left-radius: 0px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
+}
 
+/* PopUpUpdateSkins */
+.ContainerPopUpUpdate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.4);
+    height: 100vh;
+    width: 100vw;
+    bottom: 0%;
+    z-index: 10;
+}
+
+.ContentPopUpUpdate{
+    background-color: #980106;
+    width: 800px;
+    height: 450px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.ButtonExitUpdate{
+    cursor: pointer;
+}
+
+.DataPopUpUpdate{
+    display: flex;
+    gap: 20px;
 }
