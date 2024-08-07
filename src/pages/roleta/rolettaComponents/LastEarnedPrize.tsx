@@ -10,7 +10,7 @@ import defaultGunPic from '../../../assets/defaultProfilePic.svg'
 import Image from 'next/image';
 import { LastEarnFrontEndType } from 'utils/interfaces';
 
-const LastEarnedPrizes = ({ props }: { props: LastEarnFrontEndType }) => {
+const LastEarnedPrizes = ({ props }: { props: {item: LastEarnFrontEndType, index: number} }) => {
   if (!props) {
     return <div>Error: No props provided</div>;
   }
@@ -23,10 +23,10 @@ const LastEarnedPrizes = ({ props }: { props: LastEarnFrontEndType }) => {
     ItemName = 'Item Desconhecido', // Default item name
     ItemType = 'Tipo Desconhecido', // Default item type
     ItemValue = '0.00' // Default item value
-  } = props;
+  } = props.item;
 
   return (
-    <div className={cn(style.EarnedPrizeItem, style?.[PoolType])}>
+    <div className={cn(props.index > 3 && style.desktop, style.EarnedPrizeItem, style?.[PoolType])}>
       <div className={style.EarnedPrizeItemWrapper}>
         <div className={style.ItemMetaInfo}>
           <p>Foi sorteado há<br />{TimeOfEarning}</p>

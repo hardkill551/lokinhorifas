@@ -45,17 +45,22 @@ const Sidebar = () => {
   }, [sidebarView, setUserInfo, userInfo.picture])
   // * O código acima adiciona e retira scroll da página quando a Sidebar está visível
 
+  const handleRedirectBtn = (route: string) => {
+    router.push(`/${route}`)
+    toggleSidebar()
+  }
+
   return (
     <section className={sidebarView ? "Sidebar mobile tablet visible" : "Sidebar mobile tablet"}>
       <div className="SidebarWrapper">
         <ul className="MainNavigation">
-          <li onClick={() => router.push('/#Home')}>Home</li>
-          <li onClick={() => router.push('/roleta')}>Sorteio</li>
-          <li onClick={() => router.push('/live')}>Live</li>
-          <li onClick={() => router.push('/ultimosganhadores')}>Últimos Ganhadores</li>
-          <li onClick={() => router.push('/#SobreNos')}>Sobre Nós</li>
+          <li onClick={() => handleRedirectBtn('/#Home')}>Home</li>
+          <li onClick={() => handleRedirectBtn('/roleta')}>Sorteio</li>
+          <li onClick={() => handleRedirectBtn('/live')}>Live</li>
+          <li onClick={() => handleRedirectBtn('/ultimosganhadores')}>Últimos Ganhadores</li>
+          <li onClick={() => handleRedirectBtn('/#SobreNos')}>Sobre Nós</li>
         </ul>
-        {userInfo.token == '' ? <button onClick={() => router.push('/login')} className='mobile'>Faça Parte!</button> : <div className="mobile">
+        {userInfo.token == '' ? <button onClick={() => handleRedirectBtn('login')}>Faça Parte!</button> : <div className="mobile">
           <HeaderProfile />
         </div>}
         <ul className="Socials">
