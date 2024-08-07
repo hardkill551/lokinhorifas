@@ -11,6 +11,9 @@ export default function CardSkins({ name, type, value, picture, id, onDelete, }:
     function DeliteCard() {
         onDelete(id);
     }
+    function toggleDropdown() {
+        setIsDropdownOpen(prevState => !prevState);
+    }
 
     return (
         <>
@@ -32,15 +35,14 @@ export default function CardSkins({ name, type, value, picture, id, onDelete, }:
                             >
                                 <button className={style.buttonSelect}>Atualizar</button>
                                 <button className={style.buttonSelect} onClick={()=>{DeliteCard()}}>Deletar</button>
+                                <button className={style.buttonSelect} onClick={()=>{}}>Add na rifa</button>
                             </motion.div>
                         )}
                     </AnimatePresence>
-                    <IoSettingsSharp size={20} onMouseEnter={() => setIsDropdownOpen(true)} onClick={() => setIsDropdownOpen(false)} />     
+                    <IoSettingsSharp size={20}  onClick={toggleDropdown} />     
                 </div>
 
             </div>
-
-
         </>
     );
 }
