@@ -62,6 +62,8 @@ export default function Admin() {
         )}
       </div>
       {popUpSkins && <PopUpUpdateSkins setPopUpSkins={setPopUpSkins}/>}
+
+      {/* Falta fazer a requisicao para o back do dados para ser att */}
     </div>
   )
 };

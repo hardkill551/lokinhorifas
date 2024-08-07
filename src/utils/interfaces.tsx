@@ -117,9 +117,9 @@ export type PersonCardContextType = {
 export type SkinType = {
   id: number;
   name: string;
+  value: number;
   type: string;
   picture: string;
-  value: number;
 }
 
 export type RewardItemContextType = {
@@ -187,7 +187,7 @@ export interface FormDataType {
 
 
 export interface skinDataType {
-  value: string;
+  value: number;
   type: string;
   name: string;
   picture: null | File | string;

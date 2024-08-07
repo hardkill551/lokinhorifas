@@ -5,15 +5,16 @@ import axios from 'axios';
 import { skinDataType } from 'utils/interfaces';
 
 export default function ProfileInformations() {
+    const router = useRouter();
     const [image, setImage] = useState('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const router = useRouter();
     const [skin, setSkin] = useState<skinDataType>({
         name: "",
         value: "",
         type: "",
         picture: null
     });
+    
     const [typeSkins, setTypeSkins] = useState([
         { name: "Faca" },
         { name: "Luva" },
