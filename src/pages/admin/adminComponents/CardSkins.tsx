@@ -8,12 +8,6 @@ import { AnimatePresence, motion } from "framer-motion";
 export default function CardSkins({ name, type, value, picture, id, onDelete, }: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    function DeliteCard() {
-        onDelete(id);
-    }
-    function toggleDropdown() {
-        setIsDropdownOpen(prevState => !prevState);
-    }
 
     return (
         <>
@@ -34,12 +28,12 @@ export default function CardSkins({ name, type, value, picture, id, onDelete, }:
                                 className={style.dropdownMenu}
                             >
                                 <button className={style.buttonSelect}>Atualizar</button>
-                                <button className={style.buttonSelect} onClick={()=>{DeliteCard()}}>Deletar</button>
+                                <button className={style.buttonSelect} onClick={()=>{onDelete(id)}}>Deletar</button>
                                 <button className={style.buttonSelect} onClick={()=>{}}>Add na rifa</button>
                             </motion.div>
                         )}
                     </AnimatePresence>
-                    <IoSettingsSharp size={20}  onClick={toggleDropdown} />     
+                    <IoSettingsSharp size={20}  onClick={()=> {setIsDropdownOpen(prevState => !prevState)}} />     
                 </div>
 
             </div>
