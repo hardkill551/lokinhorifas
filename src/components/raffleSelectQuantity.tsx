@@ -46,9 +46,7 @@ const RaffleSelectQuantity = ({setQuantity}: {setQuantity: {setTotal: Dispatch<R
     newQuantity != 0 ? item.quantity = newQuantity : item.quantity = 1
     const restOfArray = selectedItems.filter(item => item.id != id)
 
-    const fullArray = restOfArray.toSpliced(id, 0, item)
-
-    setSelectedItems(fullArray)
+    setSelectedItems(restOfArray.splice(id, 0, item))
   }
 
   const changeTotal = () => {
