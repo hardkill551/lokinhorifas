@@ -1,0 +1,32 @@
+.Live 
+{
+    margin: auto;
+}
+
+.container 
+{
+    margin-top: 150px;
+}
+
+.conteudo
+{
+
+}
+
+.tituloLive 
+{
+
+}
+
+.text 
+{
+
+}
+
+@media (min-width: 360px)
+{
+    .Live {
+        width: 500px;
+        margin: 10px 100px;
+    }
+}
