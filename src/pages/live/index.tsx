@@ -1,18 +1,50 @@
+import React, { useContext, useEffect, useState } from "react";
 import style from './live.module.css';
-import Image from 'next/image';
+import { TwitchEmbed } from "react-twitch-embed";
+import TextContextType from "../../utils/interfaces";
+import axios from "axios";
+import { TextContext } from "contexts/TextContext";
+
+const Twitch = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [ videoWidth, setVideoWidth ] = useState(0)
+  const { textInfo, setTextInfo } = useContext(TextContext) as TextContextType;
+
+  useEffect(() => {
+    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/text").then((res: any) => {
+      setTextInfo(res.data);
+    }).catch((err: any) => {
+      console.error(err.response ? err.response.data : 'Erro ao buscar dados');
+    });
+
+    
+    const handleResize = () => {
+      const isBigger = Number(window.innerWidth) > 1110 ? 1110 : Number(window.innerWidth - 200)
+      setVideoWidth(isBigger)
+      setIsLoading(true);
+    };
+
+    handleResize(); // Chama a função imediatamente para definir o estado inicial
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
 
 
-const Live = () => {
   return (
-    <div className={style.container}>
-      <div className={style.content}>
-        <h1>TÍTULO DA LIVE</h1>
-        <h2>teste</h2>
-        {/* <Image src={} alt=''/> */}
+    <div className={style.live}>
+      <div className={style.liveWrapper}>
+        <h1>{isLoading && textInfo.text}</h1>
+        <div className={style.liveFeed}>
+          <TwitchEmbed channel="evandro_vidal" width={videoWidth} height={700} />
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Live
+export default Twitch;
