@@ -39,7 +39,7 @@ export default function Admin() {
         console.log("skin não deletada")
       })
   }
-
+  const filterUsers = skinTeste2.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
   return (
     <div className={style.ContainerAdmin}>
       <div className={style.ContentAdmin}>
@@ -57,7 +57,7 @@ export default function Admin() {
         />
       </div>
       <div className={style.ContainerCards}>
-        {skinTeste2.map((data) =>
+        {filterUsers.map((data) =>
           <CardSkins
             key={data.id}
             id={data.id}
@@ -68,6 +68,8 @@ export default function Admin() {
             onDelete={handleDeleteCard}
           />
         )}
+        console.log(filterUsers);
+        
       </div>
     </div>
   )
