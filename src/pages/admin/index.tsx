@@ -6,16 +6,11 @@ import axios from 'axios';
 import { SkinType } from 'utils/interfaces';
 import { IoSearch } from "react-icons/io5";
 
-interface ProfileInformationsProps {
-  reloadSkins: () => void;
-}
-
 export default function Admin() {
-
   const [skinTeste2, setSkinteste] = useState<SkinType[]>([]);
   const [erroskins, setErrorSkins] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-
+ 
   useEffect(() => {
     loadSkins();
   }, []);
@@ -74,6 +69,8 @@ export default function Admin() {
             type={data.type}
             picture={data.picture}
             onDelete={handleDeleteCard}
+            reloadSkins={loadSkins}
+            
           />
         )}
       </div>

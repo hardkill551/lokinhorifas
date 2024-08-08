@@ -24,10 +24,10 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
         { name: "Faca" },
         { name: "Luva" },
         { name: "AWP" },
+        { name: "Ak" },
     ]);
     const [error, setError] = useState('');
 
-    
     const resetForm = () => {
         setSkin({
             name: "",
@@ -38,7 +38,7 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
         setSelectedFile(null);
         setImage('');
     };
-    
+
     const validateForm = async () => {
         if (!skin.name) {
             setError("O nome da skin é obrigatório.");
@@ -116,7 +116,7 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
         const { name, value } = event.target;
         setSkin((prevState: any) => ({
             ...prevState,
-            [name]: value,
+            [name]: `R$ ${value}`,
         }));
     };
 
@@ -171,7 +171,7 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
                             </div>
                             <div className={style.DivInput}>
                                 <label className={style.labelInformation}>Valor Da Skin:</label>
-                                <input 
+                                < input
                                     type='text' 
                                     className={style.InputData} 
                                     name="value" 

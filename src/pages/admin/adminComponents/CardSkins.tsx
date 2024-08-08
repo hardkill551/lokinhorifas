@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import PopUpUpdateSkins from './PopUpUpdateSkins';
 
-export default function CardSkins({ name, type, value, picture, id, onDelete,}: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void}) {
+export default function CardSkins({ name, type, value, picture, id, onDelete,  reloadSkins}: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void, reloadSkins:()=> void}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [popUpSkins, setPopUpSkins] = useState(false);
 
@@ -36,10 +36,8 @@ export default function CardSkins({ name, type, value, picture, id, onDelete,}: 
                     </AnimatePresence>
                     <IoSettingsSharp size={20}  onClick={()=> {setIsDropdownOpen(prevState => !prevState)}} />     
                 </div>
-                {popUpSkins && <PopUpUpdateSkins name={name} type={type} picture={picture} id={id} value={value} setPopUpSkins={setPopUpSkins}/>}
+                {popUpSkins && <PopUpUpdateSkins name={name} type={type} picture={picture} id={id} value={value} setPopUpSkins={setPopUpSkins} reloadSkins={reloadSkins}/>}
             </div>
         </>
     );
 }
-
-
