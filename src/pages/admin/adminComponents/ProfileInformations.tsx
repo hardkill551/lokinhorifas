@@ -27,6 +27,18 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
     ]);
     const [error, setError] = useState('');
 
+    
+    const resetForm = () => {
+        setSkin({
+            name: "",
+            value: 0,
+            type: "",
+            picture: null
+        });
+        setSelectedFile(null);
+        setImage('');
+    };
+    
     const validateForm = async () => {
         if (!skin.name) {
             setError("O nome da skin é obrigatório.");
@@ -85,6 +97,7 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
                 }
             );
             reloadSkins();
+            resetForm();
         } catch (error: any) {
             setError(error.response.data.message);
         }
