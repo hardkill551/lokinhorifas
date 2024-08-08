@@ -1,0 +1,36 @@
+.live {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin-top: 90px;
+}
+
+.liveWrapper {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+
+    width: 1110px;
+    min-height: 900px;
+
+    color: white;
+
+    padding: 30px;
+}
+
+.live h1 {
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.liveFeed {
+    max-width: 1110px;
+}
