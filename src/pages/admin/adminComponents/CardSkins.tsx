@@ -1,12 +1,11 @@
 import style from '../admin.module.css';
 import Image from 'next/image';
-import test from '../../../assets/teste.jpg';
 import { IoSettingsSharp } from "react-icons/io5";
 import { useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import PopUpUpdateSkins from './PopUpUpdateSkins';
 
-export default function CardSkins({ name, type, value, picture, id, onDelete }: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void}) {
+export default function CardSkins({ name, type, value, picture, id, onDelete,}: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [popUpSkins, setPopUpSkins] = useState(false);
 

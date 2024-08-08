@@ -4,10 +4,15 @@ import { useState } from 'react';
 import axios from 'axios';
 import { skinDataType } from 'utils/interfaces';
 
-export default function ProfileInformations() {
+interface ProfileInformationsProps {
+  reloadSkins: () => void;
+}
+
+export default function ProfileInformations({ reloadSkins }: ProfileInformationsProps) {
     const router = useRouter();
     const [image, setImage] = useState('');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
     const [skin, setSkin] = useState<skinDataType>({
         name: "",
         value: 0,
@@ -41,29 +46,25 @@ export default function ProfileInformations() {
         }
         return true;
     };
-    function convertToFloat(value:any) {
-        // Remove qualquer caractere que não seja dígito ou vírgula
+
+    function convertToFloat(value: any) {
         let numericValue = value.replace(/[R$\s.]/g, '').replace(',', '.');
-    
-        // Converte para número flutuante
         let floatValue = Number(parseFloat(numericValue).toFixed(2));
-    
         return floatValue;
     }
-    
-    const sendForm = async (e:any) => {
+
+    const sendForm = async (e: any) => {
         e.preventDefault();
-    
+
         setError("");
         if (!(await validateForm())) return;
-    
+
         const formData = new FormData();
         const pictureFile = selectedFile;
-    
-        const skinData = { ...skin };
 
+        const skinData = { ...skin };
         skinData.value = convertToFloat(skin.value);
-    
+
         if (!pictureFile) {
             skinData.picture = "default";
         } else {
@@ -83,12 +84,11 @@ export default function ProfileInformations() {
                     },
                 }
             );
-    
-        } catch (error:any) {
+            reloadSkins();
+        } catch (error: any) {
             setError(error.response.data.message);
         }
     };
-    
 
     const handleImageChange = (event: any) => {
         const file = event.target.files[0];
@@ -108,13 +108,10 @@ export default function ProfileInformations() {
     };
 
     const handleValueChange = (e: any) => {
-        let value = e.target.value.replace(/\D/g, ''); // Remove qualquer coisa que não seja um dígito
-        value = (Number(value) / 100).toFixed(2); // Divide por 100 e formata para duas casas decimais
-        value = value.replace(".", ","); // Troca o ponto pela vírgula
-
-        // Adiciona os pontos para separar os milhares
+        let value = e.target.value.replace(/\D/g, ''); 
+        value = (Number(value) / 100).toFixed(2); 
+        value = value.replace(".", ","); 
         value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        
         setSkin((prevState: any) => ({
             ...prevState,
             value: `R$ ${value}`,

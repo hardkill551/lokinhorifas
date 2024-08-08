@@ -3,7 +3,8 @@ import style from "../admin.module.css";
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function PopUpUpdateSkins({ setPopUpSkins, name, type, picture, id, value }: any) {
+
+export default function PopUpUpdateSkins({ setPopUpSkins, name, type, picture, id, value }: any ) {
     const [image, setImage] = useState(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [skin, setSkin] = useState<skinDataType>({

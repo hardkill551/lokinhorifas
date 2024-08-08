@@ -6,6 +6,10 @@ import axios from 'axios';
 import { SkinType } from 'utils/interfaces';
 import { IoSearch } from "react-icons/io5";
 
+interface ProfileInformationsProps {
+  reloadSkins: () => void;
+}
+
 export default function Admin() {
 
   const [skinTeste2, setSkinteste] = useState<SkinType[]>([]);
@@ -13,15 +17,18 @@ export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    const promise = axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/skin");
-    promise.then((res) => {
-      setSkinteste(res.data)
-    })
-    promise.catch((err) => {
-      setErrorSkins(err.reponse.data)
-    })
-
+    loadSkins();
   }, []);
+
+  const loadSkins = () => {
+    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/skin")
+      .then((res) => {
+        setSkinteste(res.data)
+      })
+      .catch((err) => {
+        setErrorSkins(err.response.data)
+      })
+  };
 
   function handleDeleteCard(id: number) {
     const token = localStorage.getItem('token')
@@ -39,12 +46,13 @@ export default function Admin() {
         console.log("skin não deletada")
       })
   }
+
   const filterUsers = skinTeste2.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
   return (
     <div className={style.ContainerAdmin}>
       <div className={style.ContentAdmin}>
-        <ProfileInformations />
-
+        <ProfileInformations reloadSkins={loadSkins}/>
       </div>
       <div className={style.inputNavBarContainer}>
         <IoSearch className={style.searchIconMember} />
@@ -68,8 +76,6 @@ export default function Admin() {
             onDelete={handleDeleteCard}
           />
         )}
-        console.log(filterUsers);
-        
       </div>
     </div>
   )
