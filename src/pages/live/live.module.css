@@ -1,32 +1,36 @@
-.Live 
-{
-    margin: auto;
+.live {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin-top: 90px;
 }
 
-.container 
-{
-    margin-top: 150px;
+.liveWrapper {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+
+    width: 1110px;
+    min-height: 900px;
+
+    color: white;
+
+    padding: 30px;
 }
 
-.conteudo
-{
-
+.live h1 {
+    font-size: 34px;
+    font-weight: 500;
 }
 
-.tituloLive 
-{
-
-}
-
-.text 
-{
-
-}
-
-@media (min-width: 360px)
-{
-    .Live {
-        width: 500px;
-        margin: 10px 100px;
-    }
+.liveFeed {
+    max-width: 1110px;
 }
