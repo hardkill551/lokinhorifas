@@ -116,7 +116,7 @@
     flex-wrap: wrap; 
     overflow-y: auto;
     margin-bottom: 30px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 
@@ -289,3 +289,33 @@
     translate: 2px 2px;
     box-shadow: 0 0 15px #E21A1A;
   }
+
+/* barra de pesquisar as skins */
+  .inputNavBarContainer {
+    position: relative;
+    width: 1000px;
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.inputNavBarMember {
+    width: 100%;
+    height: 40px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    padding-left: 30px;
+    padding-right: 50px; 
+}
+
+.searchIconMember {
+    position: absolute;
+    right: 20px; /* Espaço consistente do ícone para a borda direita */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente o ícone */
+    color: #000;
+    width: 35px;
+    height: 35px;
+}

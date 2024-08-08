@@ -4,16 +4,18 @@ import CardSkins from './adminComponents/CardSkins';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { SkinType } from 'utils/interfaces';
-import PopUpUpdateSkins from './adminComponents/PopUpUpdateSkins';
+import { IoSearch } from "react-icons/io5";
 
 export default function Admin() {
 
   const [skinTeste2, setSkinteste] = useState<SkinType[]>([]);
-  const[erroskins , setErrorSkins] = useState([]);
+  const [erroskins, setErrorSkins] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     const promise = axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/skin");
     promise.then((res) => {
-       setSkinteste(res.data)
+      setSkinteste(res.data)
     })
     promise.catch((err) => {
       setErrorSkins(err.reponse.data)
@@ -23,26 +25,36 @@ export default function Admin() {
 
   function handleDeleteCard(id: number) {
     const token = localStorage.getItem('token')
-     setSkinteste(skinTeste2.filter(data => data.id !== id));
-     axios.delete(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/skin/${id}`, {
+    setSkinteste(skinTeste2.filter(data => data.id !== id));
+    axios.delete(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/skin/${id}`, {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`
       }
     })
-     .then(res=>{
-      console.log("skin deletada")
-     })
-     .catch(err=>{
-      console.log("skin não deletada")
-     })
-    }
+      .then(res => {
+        console.log("skin deletada")
+      })
+      .catch(err => {
+        console.log("skin não deletada")
+      })
+  }
 
   return (
     <div className={style.ContainerAdmin}>
       <div className={style.ContentAdmin}>
         <ProfileInformations />
 
+      </div>
+      <div className={style.inputNavBarContainer}>
+        <IoSearch className={style.searchIconMember} />
+        <input
+          type='text'
+          className={style.inputNavBarMember}
+          placeholder="Pesquisar Pelo nome da Skin"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+        />
       </div>
       <div className={style.ContainerCards}>
         {skinTeste2.map((data) =>
@@ -57,8 +69,6 @@ export default function Admin() {
           />
         )}
       </div>
-
-      {/* Falta fazer a requisicao para o back do dados para ser att */}
     </div>
   )
 };
