@@ -51,8 +51,8 @@ const Header = () => {
     <header className={sidebarView ? 'no-background' : ''}>
       <div className="HeaderWrapper">
         <div className="MainHeader">
-          <div className="LogoBox" onClick={() => router.push('/')} >
-            <Image className={sidebarView ? 'Logo SidebarOn' : 'Logo'} src={logo} alt="Logo de Lokinho Rifas" />
+          <div className={sidebarView ? "LogoBox SidebarOn" : "LogoBox"} onClick={() => router.push('/')} >
+            <Image className="Logo" src={logo} alt="Logo de Lokinho Rifas" />
           </div>
           <nav className='desktop'>
             <ul>

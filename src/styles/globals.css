@@ -293,6 +293,8 @@ header {
 .Profile .Dropdown {
   display: flex;
 
+  height: 0;
+
   position: absolute;
   top: 60%;
 
@@ -301,10 +303,17 @@ header {
   background-color: #333;
 }
 
+.Profile .Dropdown.showDropdown {
+  height: fit-content;
+}
+
 .Profile .Dropdown input {
   position: absolute;
   height: 0;
   width: 0;
+
+  background-color: transparent;
+  border: none;
 
   z-index: -1;
 }
@@ -1985,7 +1994,7 @@ footer nav div {
 
 
 /** Mobile */
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1200px) {
   html.SidebarOn {
     overflow: hidden;
   }
@@ -2005,7 +2014,11 @@ footer nav div {
     transition: all 400ms ease-out;
   }
 
-  header .Logo.SidebarOn {
+  header .LogoBox {
+    transition: all 400ms ease-out 0ms;
+  }
+
+  header .LogoBox.SidebarOn {
     translate: calc(50% + 20px) calc(50% + 100px);
     scale: 3;
 
@@ -2088,6 +2101,12 @@ footer nav div {
     list-style: none;
   }
 
+  .Sidebar .MainNavigation li {
+    width: fit-content;
+
+    cursor: pointer;
+  }
+
   .Sidebar .Socials {
     display: flex;
 
@@ -2136,6 +2155,73 @@ footer nav div {
     height: fit-content;
   }
 
+  .Sidebar .Profile {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+    align-items: center;
+
+    height: fit-content;
+  }
+
+  .Sidebar .ProfileContent {
+    display: flex;
+    
+    flex-wrap: wrap;
+
+    padding: 10px;
+
+    width: fit-content;
+
+    opacity: 1;
+  }
+
+  .Sidebar .ProfileText {
+    display: flex;
+
+    flex-direction: column;
+  }
+
+  .Sidebar .ProfileContent h3 {
+    height: fit-content;
+  }
+
+  .Sidebar .Profile .Dropdown {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    top: 0;
+
+    padding-inline: 10px;
+
+    background-color: transparent;
+
+    height: 100%;
+  }
+
+  .Sidebar .Profile .Dropdown ul {
+    display: flex;
+    flex-wrap: wrap;
+
+    height: fit-content;
+
+    flex-direction: row;
+  }
+
+  .Sidebar .Profile .Dropdown li, .Sidebar .Profile .Dropdown button {
+    border-top: none;
+  }
+
+  .Sidebar .Socials {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
   .FooterWrapper {
     display: flex;
 
@@ -2178,11 +2264,11 @@ footer nav div {
 
   footer h2 {
     text-align: left;
-    font-size: 3vw;
+    font-size: 24px;
   }
   
   footer li {
-    font-size: 2.5vw;
+    font-size: 12px;
   }
 
   footer li, footer a {
@@ -2207,6 +2293,16 @@ footer nav div {
 
   .desktop {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  .Sidebar .ProfileContent {
+    justify-content: center;
+  }
+
+  .Sidebar .ProfileText {
+    text-align: center;
   }
 }
 /** Mobile */

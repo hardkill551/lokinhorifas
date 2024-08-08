@@ -11,7 +11,7 @@ import defaultGunPic from '../../../assets/defaultProfilePic.svg'
 import Image from 'next/image';
 import { RewardItemType } from 'utils/interfaces';
 
-const RewardItem = ({ props }: { props: RewardItemType }) => {
+const RewardItem = ({ props }: { props: {item: RewardItemType, index:number} }) => {
   if (!props) {
     return <div>Error: No props provided</div>;
   }
@@ -22,10 +22,10 @@ const RewardItem = ({ props }: { props: RewardItemType }) => {
     itemName,
     itemType,
     itemValue,
-  } = props;
+  } = props.item;
 
   return (
-    <div className={cn(style.Reward, style?.[type])}>
+    <div className={cn(props.index > 1 && style.desktop, style.Reward, style?.[type])}>
       <div className={style.RewardItemWrapper}>
         <div className={style.RewardType}>
           <Image

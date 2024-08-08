@@ -17,7 +17,7 @@ const RewardsArray = () => {
   return (
     <div className={style.RewardsArray}>
       {rewards && rewards.map((item, index) => {
-        if (index < 4) return <RewardItem key={index} props={item} />;
+        if (index < 4) return <RewardItem key={index} props={{item, index}} />;
       })}
     </div>
   );

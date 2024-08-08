@@ -110,7 +110,7 @@ const HeaderProfile = () => {
 
       </div>
 
-      <div className="Dropdown" style={{height: showDropdown ? 'fit-content' : '0'}}>
+      <div className={`Dropdown ${showDropdown ? 'showDropdown' : ''}`}>
         <input type="text" id="headerDropdownInput" onBlur={() => toggleOffDropdownVisibility()}/>
         <ul>
           <li onClick={() => openConfig()}>Configurações</li>

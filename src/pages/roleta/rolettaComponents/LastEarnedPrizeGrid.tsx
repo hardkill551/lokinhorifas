@@ -29,7 +29,7 @@ const LastEarnedPrizeGrid = () => {
         </div>
         <div className={style.EarnedPrizesGrid}>
           {lastEarnedList && lastEarnedList.map((item, index) => {
-            if (index < 8) return <LastEarnedPrizes key={index} props={item} />;
+            if (index < 8) return <LastEarnedPrizes key={index} props={{item, index}} />;
           })}
         </div>
       </div>

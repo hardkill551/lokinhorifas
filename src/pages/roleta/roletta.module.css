@@ -98,6 +98,8 @@
 .Roleta > .background::after {
   content: '';
 
+  width: 1000%;
+
   position: absolute;
   bottom: 160px;
   right: -50vw;
@@ -156,6 +158,10 @@
   height: 117px;
 
   overflow: hidden;
+}
+
+.RewardsAd.desktop {
+  display: flex;
 }
 
 .RewardsAdContent {
@@ -235,6 +241,10 @@
   height: 150px;
 
   position: relative;
+}
+
+.Reward.desktop {
+  display: flex;
 }
 
 .Reward::after {
@@ -1023,6 +1033,10 @@
   overflow: hidden;
 }
 
+.EarnedPrizeItem.desktop {
+  display: flex;
+}
+
 .EarnedPrizeItemWrapper {
   display: flex;
 
@@ -1171,4 +1185,143 @@
 
 .Roleta button:disabled {
   filter: grayscale(100%);
+}
+
+
+.mobile {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
+
+@media only screen and (max-width: 1200px) {
+  .RewardsList {
+    display: flex;
+    
+    flex-wrap: wrap;
+
+    width: 100vw;
+
+    justify-content: center;
+    align-items: center;
+
+    height: fit-content;
+
+    justify-content: center;
+  }
+
+  .RewardsAd.mobile {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 257px;
+    height: fit-content;
+
+    border-radius: 0 0 20px 20px;
+  }
+
+  .RewardsAd.desktop {
+    display: none;
+  }
+
+  .RewardsAdContent {
+    font-size: 24px;
+
+    gap: 18px;
+
+    height: 100%;
+  }
+
+  .RewardsAdContent button {
+    font-size: 18px;
+  }
+
+  .RewardsArray {
+    display: flex;
+
+    flex-direction: column;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+  }
+
+  .Reward.desktop {
+    display: none;
+  }
+
+  .RewardsArray .Reward.Silver {
+    border-bottom: 0;
+    border-left: 2px solid #ebebeb;
+  }
+
+  .RewardsArray .Reward.Silver::after {
+    background: linear-gradient(-90deg, #17110b, #6A6A69);
+  }
+
+  .RewardsArray .Reward.Gold {
+    border-bottom: 0;
+    border-left: 2px solid #EFBC84;
+  }
+
+  .RewardsArray .Reward.Gold::after {
+    background: linear-gradient(-90deg, #17110b, #6b5333);
+  }
+
+  .Roleta .ButtonGroup {
+    display: flex;
+
+    justify-content: center;
+    
+    width: 100vw;
+
+    flex-wrap: wrap;
+  }
+
+  .Roleta > .background::after {
+    right: 30%;
+  }
+
+  .Roulette {
+    width: 90vw;
+  }
+
+  .LastPrizes .EarnedPrizesGrid {
+    display: flex;
+
+    justify-content: center;
+
+    width: 100vw;
+
+    flex-wrap: wrap;
+  }
+
+  .LastPrizes .EarnedPrizeItem.desktop {
+    display: none;
+  }
+
+  .LastPrizes .background img {
+    height: 1730px;
+    width: auto;
+  }
+
+  .WinnerPopup .SkinImageBox {
+    width: 100%;
+  }
+
+
+
+  .mobile {
+    display: block;
+  }
+
+  .desktop {
+    display: none;
+  }
 }
