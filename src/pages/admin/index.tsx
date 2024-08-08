@@ -10,7 +10,6 @@ export default function Admin() {
 
   const [skinTeste2, setSkinteste] = useState<SkinType[]>([]);
   const[erroskins , setErrorSkins] = useState([]);
-  const [popUpSkins, setPopUpSkins] = useState(false);
   useEffect(() => {
     const promise = axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/skin");
     promise.then((res) => {
@@ -18,7 +17,6 @@ export default function Admin() {
     })
     promise.catch((err) => {
       setErrorSkins(err.reponse.data)
-      console.log(err.reponse.data)
     })
 
   }, []);
@@ -36,7 +34,6 @@ export default function Admin() {
       console.log("skin deletada")
      })
      .catch(err=>{
-      console.log(err.response.data.message)
       console.log("skin não deletada")
      })
     }
@@ -57,11 +54,9 @@ export default function Admin() {
             type={data.type}
             picture={data.picture}
             onDelete={handleDeleteCard}
-            setPopUpSkins={setPopUpSkins}
           />
         )}
       </div>
-      {popUpSkins && <PopUpUpdateSkins setPopUpSkins={setPopUpSkins}/>}
 
       {/* Falta fazer a requisicao para o back do dados para ser att */}
     </div>
