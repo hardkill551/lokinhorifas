@@ -17,7 +17,7 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
 
   const { isVisible, setIsVisible } = props
   const [ detailsVisible, setDetailsVisible ] = useState(false)
-  const [ step, setStep ] = useState(2)
+  const [ step, setStep ] = useState(0)
   const [ total, setTotal ] = useState(0)
 
   const addStep = () => {

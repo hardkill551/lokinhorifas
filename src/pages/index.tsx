@@ -13,7 +13,7 @@ import UserContextType  from '../utils/interfaces'
 const Homepage = () => {
   const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType
 
-  const [ isVisible, setIsVisible ] = useState<boolean>(true)
+  const [ isVisible, setIsVisible ] = useState<boolean>(false)
 
   useEffect(() => {
     const htmlElement = document.querySelector('html')
