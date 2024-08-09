@@ -23,6 +23,7 @@ export type UserInfoType = {
   isAdmin: boolean;
   phoneNumber: string;
   tradeLink: string;
+  saldo: number;
 }
 
 export type UserInfoTable = {
@@ -193,9 +194,9 @@ export interface skinDataType {
   picture: null | File | string;
 }
 
-export interface RaffleNumberType {
-  key: number;
-  number: number;
-  isSelected: boolean;
-  isAvailable: boolean;
-}[]
+export type raffleItem = {
+  id: number,
+  skins: string[],
+  value: number,
+  quantity: number
+}

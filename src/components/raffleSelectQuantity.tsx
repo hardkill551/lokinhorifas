@@ -1,5 +1,6 @@
 import { Dispatch, useEffect, useState } from "react";
 import RaffleCartItem from "./raffleCartItem";
+import { raffleItem } from "utils/interfaces";
 
 const RaffleSelectQuantity = ({setQuantity}: {setQuantity: {setTotal: Dispatch<React.SetStateAction<number>>}}) => {
   // Aqui devem ser recebidos:
@@ -8,13 +9,6 @@ const RaffleSelectQuantity = ({setQuantity}: {setQuantity: {setTotal: Dispatch<R
   // O valor da rifa
 
   const { setTotal } = setQuantity
-
-  type raffleItem = {
-    id: number,
-    skins: string[],
-    value: number,
-    quantity: number
-  }
 
   const [selectedItems, setSelectedItems] = useState<raffleItem[]>()
 
@@ -42,11 +36,14 @@ const RaffleSelectQuantity = ({setQuantity}: {setQuantity: {setTotal: Dispatch<R
   const handleChangeQuantity = (id:number, newQuantity: number) => {
     if(!selectedItems) return
 
+    
     const item = selectedItems.filter(item => item.id == id)[0]
     newQuantity != 0 ? item.quantity = newQuantity : item.quantity = 1
     const restOfArray = selectedItems.filter(item => item.id != id)
 
-    setSelectedItems(restOfArray.splice(id, 0, item))
+    restOfArray.splice(id, 0, item)
+
+    if(restOfArray.length != 0) setSelectedItems(restOfArray)
   }
 
   const changeTotal = () => {

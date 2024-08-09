@@ -9,14 +9,14 @@ export const useUserStateContext = () => {
 
 export const UserProvider = ({children} : {children: ReactNode}) =>{
     const router = useRouter()
-    const [userInfo, setUserInfo] = useState({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:""})
+    const [userInfo, setUserInfo] = useState({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:"", saldo: 0})
 
     const logOut = () => {
         if (typeof window !== 'undefined') {
             const storedToken = localStorage.getItem("token");
             if(storedToken) localStorage.setItem('token', '')
         }
-        setUserInfo({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:""})
+        setUserInfo({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:"", saldo: 0})
 
         router.push('/login')
     }

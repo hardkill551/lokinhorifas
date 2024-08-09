@@ -252,6 +252,8 @@ header {
   width: 100%;
   height: fit-content;
 
+  white-space: nowrap;
+
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -263,6 +265,8 @@ header {
 
   width: 100%;
   height: 0;
+
+  white-space: nowrap;
 
   text-overflow: ellipsis;
   overflow: hidden;
@@ -1130,7 +1134,7 @@ footer nav div {
   display: flex;
   flex-direction: row;
 
-  width: 1420px;
+  width: 2130px;
   height: 100%;
 
   transition: translate 400ms ease-in;
@@ -1454,6 +1458,12 @@ footer nav div {
 
 .PopupBuy .detailsWrapper .contentGroup h2 {
   font-weight: 500;
+  width: 100%;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .PopupBuy .detailsWrapper .contentGroup > p {
@@ -1723,6 +1733,10 @@ footer nav div {
   rotate: 40deg;
 
   transition: 300ms ease-in-out;
+}
+
+.PopupBuy .rafflePayment {
+  width: 710px;
 }
 
 .PopupBuyContent .card .imageBox:nth-of-type(5) img {

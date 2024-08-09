@@ -2,14 +2,21 @@ import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
 import checkMark from '../assets/checkmark.svg'
 import Image from "next/image";
 import { Dispatch, useState } from 'react';
+import { raffleItem } from 'utils/interfaces';
 
-const RaffleCard = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>} }) => {
+const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>, setRaffleDetails: Dispatch<React.SetStateAction<number>>}, props: { raffle: raffleItem } }) => {
 
-  const { setDetailsVisible } = moreDetails
+  const { setDetailsVisible, setRaffleDetails } = moreDetails
+  const { raffle } = props
   const [ isSelected, setIsSelected ] = useState(false)
 
+  const handleCardClick = () => {
+    setDetailsVisible(true)
+    setRaffleDetails(raffle.id)
+  }
+
   return (
-    <div className="card" onClick={() => setDetailsVisible(true)}>
+    <div className="card" onClick={() => handleCardClick()}>
       <div className="imageGroup">
         <div className="imageBox">
           <Image src={defaultGunPic} width={150} alt="banner com skin"/>

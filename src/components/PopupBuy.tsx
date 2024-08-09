@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import RaffleNumber from "./RaffleNumber";
-import { RaffleNumberType, UserInfoType } from "utils/interfaces";
+import { raffleItem, UserInfoType } from "utils/interfaces";
 import { useUserStateContext } from "contexts/UserContext";
 import Link from "next/link";
 
@@ -12,12 +12,15 @@ import RaffleDetails from "./RaffleDetails";
 import StepCounter from "./stepCounter";
 import RaffleSelect from "./raffleSelect";
 import RaffleSelectQuantity from "./raffleSelectQuantity";
+import RafflePayment from "./RafflePayment";
 
 const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.Dispatch<React.SetStateAction<boolean>>} }) => {
 
   const { isVisible, setIsVisible } = props
   const [ detailsVisible, setDetailsVisible ] = useState(false)
-  const [ step, setStep ] = useState(0)
+  const [ raffleDetails, setRaffleDetails ] = useState(0)
+  const [ selectedItems, setSelectedItems ] = useState<raffleItem[]>([])
+  const [ step, setStep ] = useState(1)
   const [ total, setTotal ] = useState(0)
 
   const addStep = () => {
@@ -27,6 +30,21 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
   const removeStep = () => {
     setStep(oldValue => oldValue -= 1)
   }
+
+  const raffles = [
+    {
+      id: 0,
+      skins: [ 'neon light', 'neon light', 'neon light', 'neon light', 'neon light', 'neon light' ],
+      value: Math.random() * 500,
+      quantity: 1
+    },
+    {
+      id: 1,
+      skins: [ 'neon light', 'confirmed kill', 'onyx', 'flyer' ],
+      value: Math.random() * 500,
+      quantity: 1
+    }
+  ]
 
 //   const formatarDataHoraAtual = () => {
 //     const agora = new Date(Date.now())
@@ -40,7 +58,7 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
 //     return `${dia}/${mes}/${ano}, às ${horas}:${minutos}`
 // }
 
-  const { userInfo } = useUserStateContext() as { userInfo: UserInfoType }
+  // const { userInfo } = useUserStateContext() as { userInfo: UserInfoType }
 
 
   // function sortObjectsWithZerosAtEnd(arr: RaffleNumberType[]) {
@@ -80,7 +98,7 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
 
             {/* Abaixo são as etapas para compra de rifa */}
 
-            <RaffleSelect moreDetails={{setDetailsVisible}} />
+            <RaffleSelect moreDetails={{setDetailsVisible, setSelectedItems, raffles, setRaffleDetails}} />
 
             {/* Raffle select é a primeira etapa, o usuário precisa ter pelo menos uma rifa selecionada para progredir */}
 
@@ -88,7 +106,7 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
 
             {/* Raffle select quantity é a segunda, aqui ele poderá adicionar mais números referentes as rifas selecionadas na etapa anterior */}
 
-            {/* <RafflePayment /> */}
+            <RafflePayment />
 
             {/* Raffle payment lidará com o pagamento através do saldo na conta, essa escolha foi feita pra evitar o possível assincronismo entre a pessoa ter ou não o valor em mãos, algo que à prontifica melhor */}
 
@@ -107,7 +125,7 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
         </div>
 
         <div onClick={() => setIsVisible(false)} className="background"></div>
-        {detailsVisible && <RaffleDetails moreDetails={{setDetailsVisible}}/>}
+        {detailsVisible && <RaffleDetails moreDetails={{setDetailsVisible, raffle: raffles[raffleDetails]}}/>}
       </div>
     </section>
   );
