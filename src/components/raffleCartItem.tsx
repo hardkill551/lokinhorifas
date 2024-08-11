@@ -1,21 +1,18 @@
 import Image from "next/image";
 import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
+import shine from '../images/Roleta/WinnerPopup/shine.png'
 import { ChangeEvent, Dispatch, useEffect, useState } from "react";
+import { raffleItem } from "utils/interfaces";
 
 const RaffleCartItem = ({props}: {props: { 
-  item: {
-    id: number,
-    skins: string[],
-    value: number,
-    quantity: number
-  },
+  item: raffleItem,
   handleChangeQuantity: Function} }) => {
   // Aqui devem ser recebidos:
-  // todas as skins das armas
+  // a skin principal para capa
   // a rifa em q estão presentes
   // O valor da rifa
 
-  const { id, quantity, skins, value } = props.item
+  const { id, quantity, value, name } = props.item
   const { handleChangeQuantity } = props
 
   const [ defaultValue, setDefaultValue ] = useState(quantity)
@@ -31,39 +28,18 @@ const RaffleCartItem = ({props}: {props: {
   return (
     <div className="cartItem">
       <div className="raffleBanner">
-        <div className="imageGroup">
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-        </div>
         <div className="glowGroup">
           <div className="glow-1"></div>
           <div className="glow-2"></div>
         </div>
+        <Image className="skin" src={defaultGunPic} alt="Skin principal"/>
+        <Image className="shine" src={shine} alt="Brilho"/>
       </div>
 
       <div className="raffleMetaData">
         <div className="raffleTitleContent">
-          <h3>Rifa 6x Neon lights!</h3>
-          <p>6x Neon lights</p>
+          <h3>Rifa {name}</h3>
+          <p>{name}</p>
         </div>
 
         <div className="raffleQuantity">

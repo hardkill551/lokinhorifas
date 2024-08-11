@@ -87,7 +87,7 @@ const HeaderProfile = () => {
 
   function handleLogout() {
     localStorage.setItem("token", "");
-    setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+    setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
     router.push('/cadastro');
   };
 

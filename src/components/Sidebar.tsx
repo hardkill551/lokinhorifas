@@ -34,11 +34,12 @@ const Sidebar = () => {
             token: res.data.user.token,
             isAdmin: res.data.user.isAdmin,
             phoneNumber: res.data.user.phoneNumber,
-            tradeLink: res.data.user.tradeLink
+            tradeLink: res.data.user.tradeLink,
+            saldo: res.data.user.saldo
           });
         }).catch((err) => {
           localStorage.setItem("token", "");
-          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
         });
       }
     }

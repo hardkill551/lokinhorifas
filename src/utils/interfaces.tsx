@@ -197,6 +197,8 @@ export interface skinDataType {
 export type raffleItem = {
   id: number,
   skins: string[],
+  name: string,
   value: number,
-  quantity: number
+  quantity: number,
+  isSelected: boolean
 }
