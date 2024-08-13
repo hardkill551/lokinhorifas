@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import * as gtag from '../utils/gtag'
 import Footer from '../components/Footer'
-import { UserProvider } from '../contexts/UserContext'
+import { UserProvider, useUserStateContext } from '../contexts/UserContext'
 import Header from '../components/Header'
 import { TextProvider } from '../contexts/TextContext'
 import { SidebarStateProvider } from '../contexts/SidebarContext'
@@ -26,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, [router.events]);
+
   return (
     <>
       <Head>

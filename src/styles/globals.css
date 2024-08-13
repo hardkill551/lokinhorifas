@@ -561,7 +561,7 @@ header {
   background-color: black;
 }
 
-.Profile .budget {
+.budget {
   display: flex;
 
   justify-content: center;
@@ -573,21 +573,117 @@ header {
 
   width: 100%;
   height: 100vh;
+
+  z-index: 10;
 }
 
-.Profile .budget .statusBar {
-  position: absolute;
+.budgetWrapper {
+  display: flex;
 
-  height: 685px;
+  flex-direction: column;
 
-  width: 705px;
+  width: 1235px;
+  height: 800px;
 
-  /* outline: 2px solid orange; */
+  border-radius: 20px;
 
-  overflow: hidden;
+  padding: 70px 45px;
+
+  background-color: white;
+
+  gap: 60px;
 }
 
-.Profile .budget .background {
+.budget .currentBudget {
+  width: 100%;
+  text-align: center;
+}
+
+.budget .currentBudget h1 {
+  font-size: 68px;
+  font-weight: 600;
+}
+
+.budget .currentBudget h2 {
+  font-size: 22px;
+  font-weight: 500;
+
+  opacity: .5;
+}
+
+.budget .tableWrapper {
+  height: 500px;
+  overflow: auto;
+}
+
+.budget table {
+  border-spacing: 0;
+
+  width: 100%;
+}
+
+.budget table thead {
+  position: sticky;
+  top: 0;
+
+  background-color: #F3F3F3;
+  font-weight: 600;
+}
+
+.budget table tbody {
+  height: fit-content;
+}
+
+.budget table tbody th {
+  border-top: 2px solid #EAECF0;
+  background-color: rgb(251, 251, 251);
+
+  font-weight: 500;
+}
+
+.budget table tbody tr:last-of-type th {
+  border-bottom: 2px solid #EAECF0;
+}
+
+.budget .price {
+  text-align: end;
+}
+
+.budget tbody .loss {
+  color: #E21A1A;
+}
+
+.budget table th {
+  white-space: nowrap;
+
+  padding: 16px 30px;
+}
+
+.budget button {
+  font-size: 18px;
+  color: white;
+
+  background: linear-gradient(90deg, #1AE222, #13a118);
+
+  width: fit-content;
+
+  border: none;
+  border-radius: 4px;
+
+  align-self: center;
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+  transition: 200ms ease-out;
+}
+
+.budget button:hover {
+  filter: brightness(80%);
+}
+
+.budget .background {
   position: absolute;
   left: 0;
   top: 0;
@@ -601,152 +697,6 @@ header {
   z-index: -1;
 
   cursor: pointer;
-}
-
-.Profile .budgetViewport {
-  width: 712px;
-
-  overflow: hidden;
-
-  border: 5px solid #222;
-
-  border-radius: 11px;
-}
-
-.Profile .budgetWrapper {
-  display: flex;
-
-  /* width: 712px; */
-  width: 1424px;
-  /* height: 600px; */
-  height: 100%;
-
-  align-items: center;
-
-  background-color: white;
-
-  color: black;
-  overflow-y: auto;
-  
-  position: relative;
-
-  transition: translate 600ms ease-in;
-}
-
-.Profile .budgetWrapper.step-2 {
-  translate: -712px;
-}
-
-.Profile .thanksScreen {
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 712px;
-  height: 100%;
-
-  gap: 30px;
-
-  padding: 16px 63px;
-}
-
-.Profile .thanksScreen h2 {
-  font-size: 36px;
-
-  width: fit-content;
-}
-
-.Profile .thanksScreen p {
-  font-size: 14px;
-
-  width: fit-content;
-}
-
-.Profile .thanksScreen button {
-
-  padding: 15px 65px;
-}
-
-.budgetRecharge {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  gap: 30px;
-
-  width: 712px;
-  height: fit-content;
-
-  padding: 16px 63px;
-}
-
-.Profile .budgetWrapper label {
-  font-size: 20px;
-}
-
-.Profile .budgetWrapper input, .Profile .budgetWrapper select {
-  display: block;
-
-  margin-top: 5px;
-
-  width: 590px;
-  height: 48px;
-
-  padding: 14px;
-
-  font-size: 20px;
-
-  border-radius: 4px;
-  border: none;
-  outline: 2px solid;
-
-  color: grey;
-}
-
-.Profile .budgetWrapper input:focus-within, .Profile .budgetWrapper select:focus-within {
-  outline: 2px solid #ff1c1c;
-}
-
-.budgetWrapper button {
-  background: linear-gradient(90deg, #1AE22295, #00A31095);
-  background-color: #000;
-  font-size: 24px;
-
-  outline: #1AE222;
-
-  width: fit-content;
-
-  padding: 15px;
-}
-
-.budgetWrapper button:hover {
-  box-shadow: 0 0 15px #1AE222;
-}
-
-.budgetWrapper .titleWrapper {
-  display: flex;
-
-  flex-direction: column;
-
-  width: 100%;
-
-  gap: 10px;
-
-}
-
-.budgetWrapper h2 {
-  font-size: 36px;
-  width: 100%;
-}
-
-.budgetWrapper p {
-  font-size: 14px;
-  width: 100%;
 }
 
 .Profile .accountContent {
@@ -2009,8 +1959,6 @@ footer nav div {
     translate: 0 0;
     scale: 1;
 
-    z-index: 2;
-
     transition: all 400ms ease-out;
   }
 
@@ -2035,6 +1983,14 @@ footer nav div {
     rotate: 90deg;
 
     font-size: 30px;
+  }
+
+  .Profile .budget {
+    z-index: 10;
+  }
+
+  .Profile .budget .background {
+    top: -90px;
   }
 
   .HeaderWrapper button:hover {

@@ -18,7 +18,7 @@ const Homepage = () => {
   useEffect(() => {
     const htmlElement = document.querySelector('html')
     
-    // htmlElement?.classList.toggle('scrollOff', isVisible)
+    htmlElement?.classList.toggle('scrollOff', isVisible)
   }, [isVisible])
 
   useEffect(() => {
@@ -38,11 +38,12 @@ const Homepage = () => {
             token: res.data.user.token,
             isAdmin: res.data.user.isAdmin,
             phoneNumber: res.data.user.phoneNumber,
-            tradeLink: res.data.user.tradeLink
+            tradeLink: res.data.user.tradeLink,
+            saldo: res.data.user.saldo
           });
         }).catch((err) => {
           localStorage.setItem("token", "");
-          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
         });
       }
     }
@@ -57,7 +58,7 @@ const Homepage = () => {
         try {
           const res = await axios.post(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/auth/twitch`, { code });
           localStorage.setItem('token', res.data.sessionToken);
-          setUserInfo({ ...userInfo, id: res.data.id, name: res.data.name, email: res.data.email, picture: res.data.picture, token: res.data.sessionToken })
+          setUserInfo({ ...userInfo, id: res.data.id, name: res.data.name, email: res.data.email, picture: res.data.picture, token: res.data.sessionToken, saldo: res.data.saldo })
         } catch (error) {
           console.error('Error:', error);
         }

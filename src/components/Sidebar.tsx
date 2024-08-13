@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useUserStateContext } from "contexts/UserContext";
 import UserContextType  from '../utils/interfaces'
 import axios from "axios";
-import HeaderProfile from "./HeaderProfile";
+import HeaderProfileMobile from "./HeaderProfileMobile";
 
 const Sidebar = () => {
   const { sidebarView, toggleSidebar } = useSidebarState() as { sidebarView:boolean, toggleSidebar:Function }
@@ -34,11 +34,12 @@ const Sidebar = () => {
             token: res.data.user.token,
             isAdmin: res.data.user.isAdmin,
             phoneNumber: res.data.user.phoneNumber,
-            tradeLink: res.data.user.tradeLink
+            tradeLink: res.data.user.tradeLink,
+            saldo: res.data.user.saldo
           });
         }).catch((err) => {
           localStorage.setItem("token", "");
-          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
         });
       }
     }
@@ -61,7 +62,7 @@ const Sidebar = () => {
           <li onClick={() => handleRedirectBtn('/#SobreNos')}>Sobre Nós</li>
         </ul>
         {userInfo.token == '' ? <button onClick={() => handleRedirectBtn('login')}>Faça Parte!</button> : <div className="mobile">
-          <HeaderProfile />
+          <HeaderProfileMobile />
         </div>}
         <ul className="Socials">
           <li><a target="_blank" href="https://api.whatsapp.com/send?phone=5586981088012">Whatsapp</a></li>

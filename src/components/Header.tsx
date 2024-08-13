@@ -3,15 +3,23 @@ import { useRouter } from "next/router";
 import { useSidebarState } from '../contexts/SidebarContext';
 import logo from '../images/Logo.png';
 import Xmark from '../assets/xmark.svg';
-import { useEffect } from 'react';
+import { Dispatch, useEffect } from 'react';
 import { useUserStateContext } from 'contexts/UserContext';
-import UserContextType  from '../utils/interfaces'
+import { UserInfoType }  from '../utils/interfaces'
 import HeaderProfile from './HeaderProfile';
 import axios from 'axios';
+import Budget from './Budget';
 
 const Header = () => {
   const { sidebarView, toggleSidebar }:any = useSidebarState()
-  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
+  const { userInfo, setUserInfo, showBudget } = useUserStateContext() as {userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, showBudget: boolean}
+
+  useEffect(() => {
+    const html = document.querySelector('html')
+
+    
+    html?.classList.toggle('scrollOff', showBudget)
+  }, [showBudget])
 
   const router = useRouter()
 
@@ -36,11 +44,12 @@ const Header = () => {
             token: res.data.user.token,
             isAdmin: res.data.user.isAdmin,
             phoneNumber: res.data.user.phoneNumber,
-            tradeLink: res.data.user.tradeLink
+            tradeLink: res.data.user.tradeLink,
+            saldo: res.data.user.saldo
           });
         }).catch((err) => {
           localStorage.setItem("token", "");
-          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "" });
+          setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
         });
       }
     }
@@ -67,6 +76,7 @@ const Header = () => {
         {userInfo.token == '' ? <button onClick={() => router.push('/login')} className='desktop'>Faça Parte!</button> : <div className='desktop'><HeaderProfile /></div>}
         <button onClick={() => toggleSidebar()} className='mobile tablet'>{sidebarView ? <Image src={Xmark} alt="Fechar sidebar" /> : '|||'}</button>
       </div>
+      {showBudget && <Budget />}
     </header>
   );
 }
