@@ -319,3 +319,152 @@
     width: 35px;
     height: 35px;
 }
+
+/* #################################################################################################
+Cadastro de Rifas
+####################################################################################################*/
+.CadastrarRifa 
+{
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #################################################################################################
+Users
+####################################################################################################*/
+
+.ContainerMember{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: rgba(127, 124, 124, 0.712);
+    height: 100vh;
+    width: 100vw;
+    bottom: 0%;
+    z-index: 10;
+}
+.ContentMember{
+    width: 1600px;
+    height: 600px;
+    background-color: #EFEFEF;
+    border-radius: 10px;
+}
+
+.ExitMember{
+    font-size: 28px;
+    text-align: end;
+    margin: 10px 20px 10px 10px;
+    cursor: pointer;
+}
+
+.TitleMember{
+    font-size: 36px;
+    font-family: "Archivo Black";
+    margin-bottom: 25px;
+    margin-left: 5px;
+}
+
+.ContainerSearchMember {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.inputNavBarContainer {
+    position: relative;
+    width: 1350px;
+    display: flex;
+    gap: 15px;
+}
+
+.inputNavBarMember {
+    width: 100%;
+    height: 40px;
+    background-color: #FFFFFF;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    padding-left: 30px;
+    padding-right: 50px; 
+}
+
+.ButtonAddMember{
+    background-color: #32CCFF;
+    width: 50px;
+    height: 45px;
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ContentUsersPopUp {
+    max-height: 360px; 
+    overflow-y: auto; 
+    overflow-x:hidden;
+    width: 1368px;
+}
+.searchIconMember {
+    position: absolute;
+    right: 80px; /* Espaço consistente do ícone para a borda direita */
+    top: 50%;
+    transform: translateY(-50%); /* Centraliza verticalmente o ícone */
+    color: #000;
+    width: 35px;
+    height: 35px;
+}
+
+.ContentData{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Data{
+    display: flex;
+    flex-direction: column;
+    width: 1350px;
+    justify-content: center;
+}
+
+.Table{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 155px;
+    margin-right: 360px;
+}
+.TitleName{
+    font-size: 24px;
+    font-family: "Archivo Black";
+    margin-top: 20px;
+}
+.LineMember{
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+}
