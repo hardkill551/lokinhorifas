@@ -4,7 +4,7 @@ const Raffle = () => {
   return (
     <>
      <div className={style.CadastrarRifa}>
-        <p>opio</p>
+        <p>Cadastro de rifas</p>
      </div> 
     </>
   )

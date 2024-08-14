@@ -199,3 +199,22 @@ export interface RaffleNumberType {
   isSelected: boolean;
   isAvailable: boolean;
 }[]
+
+//interface temporaria para os users da tela do admin
+export interface UsersProps {
+  id: number;
+  image: string;
+  name: string;
+  tradLink: string;
+  charge: string;
+  onChargeChange: (id: number, newCharge: string) => void;
+  onDelete: (id: number) => void;
+}
+
+export interface User {
+  id: number;
+  image: string;
+  name: string;
+  tradLink: string;
+  charge: string;
+}
