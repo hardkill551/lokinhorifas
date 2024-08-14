@@ -23,12 +23,14 @@
 .FullNameUser {
     font-family: "archivo black";
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
+    color: #fff;
 }
 
 .EmailUser {
     font-family: "archivo";
     font-size: 15px;
+    color: #ffffffd1;
 }
 
 .management {

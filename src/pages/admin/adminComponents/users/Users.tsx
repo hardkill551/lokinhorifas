@@ -12,9 +12,9 @@ export default function Users({ id, image, name, tradLink, charge, onChargeChang
             </div>
             <div className={styles.management}>
                 <select className={styles.DropDownUser} value={charge} onChange={(e) => onChargeChange(id, e.target.value)}>
-                    <option value="Admin">Admin</option>
-                    <option value="Usuario">Usuário</option>
-                    <option value="Gerente">Gerente</option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Desativo">Desativo</option>
+                    <option value="Gerente">Teste</option>
                 </select>
                 <div className={styles.deleteUser} onClick={() => onDelete(id)}>x</div>
             </div>
