@@ -388,9 +388,9 @@ Cadastro de Rifas                                                               
 
 .ContainerCardSkinsCart {
     display: flex;
+    height: 320px;
     justify-content: space-around;
     overflow-y:auto;
-    height: 320px;
     flex-wrap: wrap; 
 }
 
@@ -533,9 +533,9 @@ Users do admin                                                                  
 
 .searchIconMember {
     position: absolute;
-    right: 20px;/* Espaço consistente do ícone para a borda direita */
+    right: 20px;
     top: 50%;
-    transform: translateY(-50%);/* Centraliza verticalmente o ícone */
+    transform: translateY(-50%);
     color: #000;
     width: 35px;
     height: 35px;

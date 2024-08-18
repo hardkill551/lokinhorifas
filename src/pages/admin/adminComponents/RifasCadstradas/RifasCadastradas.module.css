@@ -1,0 +1,10 @@
+.ContainerRifasCadastradas{
+    display: flex;
+    height: 500px;
+    width: 1050px;
+    overflow-y:auto;
+    flex-wrap: wrap;
+    background-color: gray; 
+    margin-top: 5px;
+    margin-bottom: 10px;   
+}

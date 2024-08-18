@@ -7,6 +7,7 @@ import { SkinType } from 'utils/interfaces';
 import { IoSearch } from "react-icons/io5";
 import RegisterRaffle from './adminComponents/RegisterRaffle';
 import ScreenUsers from './adminComponents/ScreenUsers';
+import RifasCadastradas from './adminComponents/RifasCadstradas/RifasCadastradas';
 
 
 export default function Admin() {
@@ -78,6 +79,7 @@ export default function Admin() {
         )}
       </div>
       <RegisterRaffle />
+      <RifasCadastradas/>
       <ScreenUsers/>
     </div>
   )
