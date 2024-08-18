@@ -335,12 +335,51 @@ Cadastro de Rifas                                                               
 */
 
 .CadastrarRifa {
-    background-color: white;
+    display: flex;
     width: 1050px;
     height: 500px;
+    justify-content:space-around;
+    background-color: #980106;
+    border-radius: 10px;
+    align-items: center;
 }
 
+.RegisterRifa{
+    width: 46%;
+    height: 90%;
+    color: #fff;
+    background-color: #646462;
+}
 
+.RegisterSkins{
+    width: 46%;
+    height: 90%;
+    background-color: #646462;
+}
+
+.ContainerCardSkinsCart {
+    display: flex;
+    justify-content: space-around;
+    overflow-y: hidden;
+    height: 300px;
+    flex-wrap: wrap; 
+}
+
+/* 
+####################################################################################################
+Card das Skins do cadastro                                                                                            #
+####################################################################################################
+*/
+
+.ContainerCardCart{
+    width: 140px;
+    height: 140px;
+    background-color: #ffffff;
+    border-radius: 10PX;
+}
+.DivImage{
+    height: 50%;
+}
 
 
 

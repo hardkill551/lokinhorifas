@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { SkinType } from 'utils/interfaces';
 import { IoSearch } from "react-icons/io5";
-import Raffle from './adminComponents/Raffle';
+import RegisterRaffle from './adminComponents/RegisterRaffle';
 import ScreenUsers from './adminComponents/ScreenUsers';
 
 
@@ -77,7 +77,7 @@ export default function Admin() {
           />
         )}
       </div>
-      <Raffle />
+      <RegisterRaffle />
       <ScreenUsers/>
     </div>
   )
