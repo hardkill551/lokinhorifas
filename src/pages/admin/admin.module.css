@@ -11,16 +11,17 @@
     justify-content: center;
     align-items: center;
     background-color: #980106;
-    padding: 40px;
+    padding: 30px;
     border-radius: 10px;
 }
 
 .ContainerInformation {
-    width: 600px;
-    height: 250px;
+    width: 1000px;
+    height: 450px;
     border-radius: 10px;
     display: flex;
-    gap: 20px;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .FormPhoto {
@@ -30,7 +31,8 @@
 .Data {
     display: flex;
     justify-content: center;
-    width: 600px;
+    width: 950px;
+    height: 400px;
 }
 
 .ContentPhoto {
@@ -74,29 +76,31 @@
 }
 
 .InputData {
-    width: 300px;
-    height: 30px;
+    width: 450px;
+    height: 50px;
     border-radius: 5px;
     outline: none;
     border: none;
+    font-size: 26px;
 }
 
 .labelInformation {
-    font-size: 16px;
+    font-size: 26px;
     color: #fff;
     font-family: "Work Sans", sans-serif;
 }
 
 .ButtonSave {
-    width: 180px;
-    height: 36px;
-    font-size: 20px;
+    width: 220px;
+    height: 46px;
+    font-size: 25px;
     border-radius: 5px;
     border: none;
     color: #fff;
     background-color: #e21a1a;
     transition: translate 400ms ease-out, box-shadow 400ms ease-in;
     cursor: pointer;
+    margin-top: 30px;
 }
 
 .ButtonSave:hover {
@@ -106,7 +110,7 @@
 
 .TitleAdmin {
     font-weight: 600;
-    font-size: 22px;
+    font-size: 32px;
     color: #fff;
     font-family: "Work Sans", sans-serif;
 }
@@ -342,27 +346,86 @@ Cadastro de Rifas                                                               
     background-color: #980106;
     border-radius: 10px;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .RegisterRifa{
     width: 46%;
     height: 90%;
     color: #fff;
-    background-color: #646462;
+}
+
+.TitleRegisterRifa{
+    color: #fff;
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+.DivInputRegisterRifa{
+    display: flex;
+    flex-direction: column;
+}
+
+.DivInputRegisterRifa label {
+    font-size: 26px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.DivInputRegisterRifa input {
+    height: 50px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-size: 26px;
+    outline: none;
 }
 
 .RegisterSkins{
     width: 46%;
     height: 90%;
-    background-color: #646462;
 }
 
 .ContainerCardSkinsCart {
     display: flex;
     justify-content: space-around;
-    overflow-y: hidden;
-    height: 300px;
+    overflow-y:auto;
+    height: 320px;
     flex-wrap: wrap; 
+}
+
+.DivImage{
+    height: 50%;
+}
+
+.ButtonPrice{
+    display: flex;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Price{
+    font-size: 30px;
+    color: #fff;
+}
+
+.ButtonRigisterRifa{
+    width: 200px;
+    height: 45px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: #e21a1a;
+    transition: translate 400ms ease-out, box-shadow 400ms ease-in;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.ButtonRigisterRifa:hover {
+    translate: 2px 2px;
+    box-shadow: 0 0 15px #E21A1A;
 }
 
 /* 
@@ -374,26 +437,31 @@ Card das Skins do cadastro                                                      
 .ContainerCardCart{
     width: 140px;
     height: 140px;
-    background-color: #ffffff;
-    border-radius: 10PX;
-}
-.DivImage{
-    height: 50%;
+    background-color: #8d8d8a;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
+.NameSkin{
+    font-size: 18PX;
+    color: #fff;
+}
 
+.DivDelite{
+    display: flex;
+    justify-content: end;
+    margin-right: 5px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.ButtonDeleteSkin{
+    color: #fff;
+    background-color: #d51c22;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+}
 
 
 

@@ -218,3 +218,17 @@ export interface User {
   tradLink: string;
   charge: string;
 }
+
+export type RegisterRifa = {
+  id: number;
+  name: string;
+  value: number;
+  picture: string;
+}
+
+export interface InterRegisterRifa {
+  id: number;
+  name: string;
+  value: number;
+  picture: string;
+}
