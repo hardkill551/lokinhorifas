@@ -4,7 +4,66 @@
     width: 1050px;
     overflow-y:auto;
     flex-wrap: wrap;
-    background-color: gray; 
     margin-top: 5px;
-    margin-bottom: 10px;   
+    margin-bottom: 10px;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+
+
+
+
+
+/* 
+#########################################################################################
+card da rifa                                                                            #
+#########################################################################################
+*/
+
+.ContainerCardRifa{
+    width: 180px;
+    height: 200px;
+    background-color:gray;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.NomeRifa {
+    color: #fff;
+    height: 65px;
+    font-size: 18px;
+    margin-top: 3px;
+    word-break: break-word; 
+    white-space: normal;   
+}
+
+.DivType{
+    display: flex;
+    justify-content: end;
+    color: #fff;
+    margin-right: 8px;
+    font-size: 18px;
+}
+/* 
+#########################################################################################
+PopUp da rifa                                                                            #
+#########################################################################################
+*/
+.ContainerPopUpRifa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.ContentPopUpRifa{
+    width: 800px;
+    height: 650px;
+    background-color: #fff;
+    border-radius: 10px;
 }
