@@ -394,8 +394,15 @@ Cadastro de Rifas                                                               
     flex-wrap: wrap; 
 }
 
+.DivImage img{
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
 .DivImage{
-    height: 50%;
+    height: 55%;
 }
 
 .ButtonPrice{
@@ -445,6 +452,7 @@ Card das Skins do cadastro                                                      
 .NameSkin{
     font-size: 18PX;
     color: #fff;
+    margin-left: 5px;
 }
 
 .DivDelite{

@@ -2,52 +2,85 @@ import { useState } from 'react';
 import style from '../admin.module.css';
 import CardSkinsCart from './CardSkinsCart';
 import { RegisterRifa } from 'utils/interfaces';
+import axios from 'axios';
 
-const RegisterRaffle = () => {
+interface RegisterRaffleProps {
+  skinsCard: RegisterRifa[];
+  setSkinsCard: React.Dispatch<React.SetStateAction<RegisterRifa[]>>;
+}
 
-  const [skinsCard, setSkinsCard] = useState<RegisterRifa[]>([
-    {id:1, picture: "", name: "RedLine", value: 350},
-    {id:2, picture: "", name: "Assimov", value: 250},
-    {id:3, picture: "", name: "Fosforo", value: 3050},
-    {id:4, picture: "", name: "Fosforo", value: 3050},
-    {id:5, picture: "", name: "Fosforo", value: 3050},
-    {id:6, picture: "", name: "Fosforo", value: 3050},
-    {id:7, picture: "", name: "Fosforo", value: 3050},
-  ]);
+const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard }) => {
+  const [raffleName, setRaffleName] = useState('');
+  const [numberOfTickets, setNumberOfTickets] = useState(0);
+
+  const calculateTotalPrice = () => {
+    return skinsCard.reduce((total, skin) => total + skin.value, 0).toFixed(2).replace('.', ',');
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    try {
+      const token = localStorage.getItem('token')
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/raffle`, {
+        name: raffleName,
+        users_quantity: numberOfTickets,
+        skins: skinsCard.map(skin => ({ id: skin.id }))
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('Raffle created:', response.data);
+      // Reset form and skinsCard after successful creation
+      setRaffleName('');
+      setNumberOfTickets(0);
+      setSkinsCard([]);
+    } catch (error) {
+      console.error('Error creating raffle:', error);
+    }
+  };
+
+  const handleRemoveSkin = (id: number) => {
+    setSkinsCard(prevSkins => prevSkins.filter(skin => skin.id !== id));
+  };
 
   return (
-    <>
-      <form className={style.CadastrarRifa}>
-        <div className={style.RegisterRifa}>
-          <h1 className={style.TitleRegisterRifa}>Cadastrar Rifas</h1>
-          <div>
-            <div className={style.DivInputRegisterRifa}>
-              <label>Nome Da Rifa:</label>
-              <input type='text' />
-            </div>
-            <div className={style.DivInputRegisterRifa}>
-              <label>Quantidade de Numeros:</label>
-              <input type='number' />
-            </div>
+    <form className={style.CadastrarRifa} onSubmit={handleSubmit}>
+      <div className={style.RegisterRifa}>
+        <h1 className={style.TitleRegisterRifa}>Cadastrar Rifas</h1>
+        <div>
+          <div className={style.DivInputRegisterRifa}>
+            <label>Nome Da Rifa:</label>
+            <input type='text' value={raffleName} onChange={(e) => setRaffleName(e.target.value)} required />
           </div>
-
-        </div>
-        
-        <div className={style.RegisterSkins}>
-          <h1 className={style.TitleRegisterRifa}>Cadastre as skins</h1>
-          <div className={style.ContainerCardSkinsCart}>
-            {skinsCard.map((Skin) => (
-              <CardSkinsCart key={Skin.id} id={Skin.id}name={Skin.name} value={Skin.value} picture={Skin.picture}/>
-            ))}
-          </div>
-          <div className={style.ButtonPrice}>
-            <p className={style.Price}>R$: 350</p>
-            <button className={style.ButtonRigisterRifa} type='submit'>Cadastrar</button>
+          <div className={style.DivInputRegisterRifa}>
+            <label>Quantidade de Numeros:</label>
+            <input type='number' value={numberOfTickets} onChange={(e) => setNumberOfTickets(parseInt(e.target.value))} required />
           </div>
         </div>
-
-      </form>
-    </>
+      </div>
+      
+      <div className={style.RegisterSkins}>
+        <h1 className={style.TitleRegisterRifa}>Skins selecionadas</h1>
+        <div className={style.ContainerCardSkinsCart}>
+          {skinsCard.map((skin) => (
+            <CardSkinsCart
+              key={skin.id}
+              id={skin.id}
+              name={skin.name}
+              value={skin.value}
+              picture={`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${skin.picture}`}
+              onRemove={handleRemoveSkin}
+            />
+          ))}
+        </div>
+        <div className={style.ButtonPrice}>
+          <p className={style.Price}>R$: {calculateTotalPrice()}</p>
+          <button className={style.ButtonRigisterRifa} type='submit'>Cadastrar</button>
+        </div>
+      </div>
+    </form>
   );
 }
 

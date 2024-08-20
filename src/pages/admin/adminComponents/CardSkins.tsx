@@ -4,11 +4,42 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import PopUpUpdateSkins from './PopUpUpdateSkins';
+import { RegisterRifa } from 'utils/interfaces'; // Certifique-se de importar a interface correta
 
-export default function CardSkins({ name, type, value, picture, id, onDelete,  reloadSkins}: { name: string, type: string, value: number, picture: string, id: number, onDelete: (id: number) => void, reloadSkins:()=> void}) {
+export default function CardSkins({
+    name,
+    type,
+    value,
+    picture,
+    id,
+    onDelete,
+    reloadSkins,
+    skinsCard,
+    setSkinsCard
+}: {
+    name: string;
+    type: string;
+    value: number;
+    picture: string;
+    id: number;
+    onDelete: (id: number) => void;
+    reloadSkins: () => void;
+    skinsCard: RegisterRifa[]; // Tipo da lista de skins
+    setSkinsCard: React.Dispatch<React.SetStateAction<RegisterRifa[]>>; // Tipo da função para atualizar a lista de skins
+}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [popUpSkins, setPopUpSkins] = useState(false);
 
+    // Função para adicionar a skin na rifa
+    const handleAddToRaffle = () => {
+        const newSkin: RegisterRifa = {
+            id,
+            picture,
+            name,
+            value
+        };
+        setSkinsCard(prevSkins => [...prevSkins, newSkin]);
+    };
 
     return (
         <>
@@ -28,9 +59,9 @@ export default function CardSkins({ name, type, value, picture, id, onDelete,  r
                                 transition={{ duration: 0.5, type: "tween" }}
                                 className={style.dropdownMenu}
                             >
-                                <button className={style.buttonSelect} onClick={()=>setPopUpSkins(true)}>Atualizar</button>
-                                <button className={style.buttonSelect} onClick={()=>{onDelete(id)}}>Deletar</button>
-                                <button className={style.buttonSelect} onClick={()=>{}}>Add na rifa</button>
+                                <button className={style.buttonSelect} onClick={() => setPopUpSkins(true)}>Atualizar</button>
+                                <button className={style.buttonSelect} onClick={() => { onDelete(id) }}>Deletar</button>
+                                <button className={style.buttonSelect} onClick={handleAddToRaffle}>Add na rifa</button>
                             </motion.div>
                         )}
                     </AnimatePresence>

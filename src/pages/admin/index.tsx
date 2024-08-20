@@ -3,18 +3,18 @@ import ProfileInformations from './adminComponents/ProfileInformations';
 import CardSkins from './adminComponents/CardSkins';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SkinType } from 'utils/interfaces';
+import { RegisterRifa, SkinType } from 'utils/interfaces';
 import { IoSearch } from "react-icons/io5";
 import RegisterRaffle from './adminComponents/RegisterRaffle';
 import ScreenUsers from './adminComponents/ScreenUsers';
-import RifasCadastradas from './adminComponents/RifasCadstradas/RifasCadastradas';
-
+import RifasCadastradas from './adminComponents/RifasCadastradas/RifasCadastradas';
+import ChangeTextLive from './adminComponents/ChangeTextLive';
 
 export default function Admin() {
   const [skinTeste2, setSkinteste] = useState<SkinType[]>([]);
   const [erroskins, setErrorSkins] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
- 
+  const [skinsCard, setSkinsCard] = useState<RegisterRifa[]>([]);
   useEffect(() => {
     loadSkins();
   }, []);
@@ -74,13 +74,15 @@ export default function Admin() {
             picture={data.picture}
             onDelete={handleDeleteCard}
             reloadSkins={loadSkins}
-            
+            skinsCard={skinsCard}
+            setSkinsCard={setSkinsCard}
           />
         )}
       </div>
-      <RegisterRaffle />
+      <RegisterRaffle skinsCard={skinsCard} setSkinsCard={setSkinsCard}/>
       <RifasCadastradas/>
       <ScreenUsers/>
+      <ChangeTextLive/>
     </div>
   )
 };

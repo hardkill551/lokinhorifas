@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export default interface TextContextType{
+export interface TextContextType{
   textInfo: {
     text:string,
     id:number
@@ -8,7 +8,7 @@ export default interface TextContextType{
   setTextInfo: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default interface UserContextType {
+export interface UserContextType {
     userInfo: UserInfoType;
     setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
     logOut: Function
