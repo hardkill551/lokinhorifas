@@ -683,7 +683,7 @@ header {
   filter: brightness(80%);
 }
 
-.budget .background {
+.budget > .background {
   position: absolute;
   left: 0;
   top: 0;
@@ -698,6 +698,149 @@ header {
 
   cursor: pointer;
 }
+
+.brick {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.brickWrapper {
+  z-index: 1;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 12px;
+
+  background-color: white;
+
+  overflow: hidden;
+}
+
+.brickContent {
+  display: flex;
+
+  width: fit-content;
+  height: 500px;
+
+  transition: translate 400ms ease-out;
+}
+
+.brickContent.step-2-wrap {
+  translate: -500px;
+}
+
+.brickContent.step-3-wrap {
+  translate: -1000px;
+}
+
+.brick .step-1, .brick .step-2, .brick .step-3 {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
+
+  width: 500px;
+  height: 100%;
+}
+
+.brick .step-1 h2 {
+  width: 400px;
+  text-align: center;
+
+  font-weight: 500;
+}
+
+.brick .step-1 input {
+  padding: 5px 15px;
+
+  border-radius: 4px;
+
+  font-size: 18px;
+}
+
+.brick .step-1 button {
+  width: 250px;
+}
+
+.brick .step-1 button:disabled {
+  filter: grayscale(100%);
+}
+
+.brick .step-1 p {
+  font-size: 12px;
+  font-weight: 400;
+
+  opacity: .5;
+}
+
+.brick .step-2 {
+  padding: 30px;
+}
+
+.brick .step-2 a {
+  margin-top: auto;
+  color: black;
+
+  cursor: pointer;
+}
+
+.brick .step-3 {
+  padding: 30px;
+}
+
+.brick .step-3 img {
+  width: 200px;
+  height: auto;
+}
+
+.brick .step-3 h2 {
+  font-weight: 500;
+}
+
+.brick .step-3 p {
+  font-size: 14px;
+  font-weight: 400;
+
+  opacity: .5;
+
+  margin-bottom: auto;
+}
+
+.brick .step-3 h2, .brick .step-3 p {
+  width: 300px;
+  text-align: center;
+}
+
+.brick .background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .4;
+
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(#333, black);
+
+  z-index: 0;
+
+  cursor: pointer;
+}
+
 
 .Profile .accountContent {
   display: flex;

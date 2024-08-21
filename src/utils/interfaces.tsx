@@ -328,3 +328,4 @@ export type AdditionalData = {
   'bin': string,
   'lastFourDigits': string,
 }
+
