@@ -736,11 +736,11 @@ header {
 }
 
 .brickContent.step-2-wrap {
-  translate: -500px;
+  translate: calc(-100% / 3);
 }
 
 .brickContent.step-3-wrap {
-  translate: -1000px;
+  translate: calc(-200% / 3);
 }
 
 .brick .step-1, .brick .step-2, .brick .step-3 {
@@ -2385,6 +2385,189 @@ footer nav div {
   .Credits p {
     white-space: nowrap;
   }
+
+  .budget {
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .budgetWrapper {
+    border-radius: 40px 40px 0 0;
+    width: 100%;
+    height: fit-content;
+
+    padding: 30px 0;
+
+    translate: 0 100%;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+
+  .budgetWrapper .tableWrapper {
+    width: 100%;
+    height: fit-content;
+  }
+
+  .budget .currentBudget h1 {
+    white-space: nowrap;
+  }
+
+  .budget table th {
+    padding: 5px;
+
+    white-space: wrap;
+
+    text-align: center;
+
+    font-size: 2.5vmin;
+  }
+
+  .budget .price {
+    text-align: center;
+  }
+
+  .budget > .background {
+    opacity: .8;
+  }
+
+  .brick {
+    align-items: flex-end;
+  }
+
+  .brickWrapper {
+    width: 100%;
+
+    border-radius: 20px 20px 0 0;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .brick .step-1, .brick .step-2, .brick .step-3 {
+    width: 100vw;
+  }
+
+  .brick .step-1 {
+    justify-content: flex-start;
+
+    padding-top: 30px;
+  }
+
+  .brick .step-1 h2 {
+    font-size: 7vmin;
+    width: 90%;
+  }
+
+  .brick .step-1 input {
+    font-size: 4.5vmin;
+  }
+
+  .brick .step-1 button {
+    font-size: 4.5vmin;
+    width: fit-content;
+  }
+
+  .brick .step-1 p {
+    font-size: 3vmin;
+    width: 90%;
+
+    text-align: center;
+  }
+
+  .brick .step-2 a {
+    font-size: 5vmin;
+  }
+
+  .brick .step-2 .paymentWrapper {
+    width: 100%;
+    height: 100%;
+
+    overflow: auto;
+  }
+
+  .brick .step-3 img {
+    width: 70%;
+    height: auto;
+  }
+
+  .brick .step-3 h2 {
+    font-size: 6vmin;
+  }
+
+  .brick .step-3 p {
+    font-size: 4vmin;
+
+    margin-bottom: 20px;
+  }
+
+  .brick .step-3 button {
+    font-size: 4.5vmin;
+    width: fit-content;
+  }
+
+  .Profile .config {
+    align-items: flex-end;
+  }
+
+  .Profile .configWrapperContent {
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+
+    border: none;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .Profile .configWrapperContent h2 {
+    font-size: 5.5vmin;
+    text-align: center;
+  }
+
+  .Profile .config .imageBox img {
+    border: 2px solid black;
+  }
+
+  .Profile .configWrapperContent .accountInfo {
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .Profile .config .box {
+    width: 100%;
+  }
+
+  .Profile .config .box h3 {
+    text-align: center;
+  }
+
+  .Profile .config .box input {
+    width: 100%;
+  }
+
+  .Profile .config .box button {
+    width: 100%;
+  }
+
+  .Profile .config .box:last-of-type p {
+    text-align: justify;
+  }
+
+
+
+  @keyframes showUp {
+    0% {
+      translate: 0 100%;
+    }
+    100% {
+      translate: 0;
+    }
+  }
+
+
+
 
   .mobile {
     display: block;

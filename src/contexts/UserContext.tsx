@@ -11,7 +11,7 @@ export const UserProvider = ({children} : {children: ReactNode}) =>{
     const router = useRouter()
     const [userInfo, setUserInfo] = useState({name:"", id:"", email:"", picture:"", token:"", isAdmin:false, phoneNumber: "", tradeLink:"", saldo: 0})
 
-    const [ showBudget, setShowBudget ] = useState<boolean>(true)
+    const [ showBudget, setShowBudget ] = useState<boolean>(false)
 
     const logOut = () => {
         if (typeof window !== 'undefined') {

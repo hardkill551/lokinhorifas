@@ -148,7 +148,6 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
       </div>
       <div className="configWrapper">
         <div className="configWrapperContent">
-          <button onClick={() => setShowSettings(false)}><Image src={xmark} alt="Fechar menu" /></button>
           <h2>Configurações de usuário</h2>
           <div className="accountInfo">
             <div className="imageBox">

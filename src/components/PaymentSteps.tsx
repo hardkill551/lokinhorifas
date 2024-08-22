@@ -18,7 +18,7 @@ const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetSt
 
   const { setShowPayment } = props
 
-  const [ step, setStep ] = useState(1)
+  const [ step, setStep ] = useState(3)
 
   const addStep = () => {
     setStep(oldValue => oldValue + 1)
@@ -157,7 +157,9 @@ const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetSt
             <p>Poderá voltar para alterar esse valor depois</p>
           </div>
           <div className="step-2">
-            <div id="paymentBrick_container"></div>
+            <div className="paymentWrapper">
+              <div id="paymentBrick_container"></div>
+            </div>
             <a onClick={removeStep}>&lt;- Voltar</a>
           </div>
           <div className="step-3">

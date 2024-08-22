@@ -6,7 +6,6 @@ import defaultProfilePicture from '../assets/defaultProfilePic.svg'
 import { Dispatch, useEffect, useState } from "react";
 import Settings from "./Settings";
 import { useRouter } from "next/router";
-import Budget from "./Budget";
 
 const HeaderProfile = () => {
   const { userInfo, setUserInfo, setShowBudget } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, setShowBudget: Dispatch<React.SetStateAction<boolean>>  }
