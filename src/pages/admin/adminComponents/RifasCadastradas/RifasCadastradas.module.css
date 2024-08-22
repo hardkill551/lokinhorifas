@@ -59,12 +59,64 @@ PopUp da rifa                                                                   
     top: 0;
     left: 0;
     z-index: 10;
+    padding: 0%;
 }
 
 .ContentPopUpRifa{
-    width: 800px;
-    height: 650px;
+    width: 500px;
+    height: 300px;
     background-color: #fff;
     border-radius: 10px;
-    padding: 20px;
+}
+
+.ButtonExitUpdate {
+    margin-right: 0px;
+    display: flex;
+    justify-content: end;
+}
+
+.ButtonExitUpdateStyle {
+    background-color: transparent;
+    border: none;
+    color: #000;
+
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.TitleDescriptionPopUpRifa{
+    color: #000;
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    font-weight: 600;
+}
+
+.ButtonPopUpRifa {
+    width: 33.33%; 
+    height: 30px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.ButtonPopUpRifa:nth-child(1) {
+    background-color: green;
+    border-bottom-left-radius: 10px;
+}
+
+.ButtonPopUpRifa:nth-child(2) {
+    background-color: red;
+}
+
+
+.ButtonPopUpRifa:nth-child(3) {
+    background-color: #000;
+   border-bottom-right-radius: 10px;
+}
+
+.EstateRaffle{
+    color: rgb(189, 192, 5);
 }
