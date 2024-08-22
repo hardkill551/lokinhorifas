@@ -582,3 +582,38 @@ Users do admin                                                                  
     height: 1px;
     background-color: #000;
 }
+
+/* 
+####################################################################################################
+Texto da Live                                                                                           #
+####################################################################################################
+*/
+
+.Configs{
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 100px;
+}
+.TitlesRifa{
+    color: #fff;
+}
+
+.changeText{
+    width: 950px;
+    height: 30px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    outline: none;
+    border: none;
+}
+.ButtonTextLive{
+    border: none;
+    height: 30px;
+    width: 100px;
+    background-color: green;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}

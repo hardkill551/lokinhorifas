@@ -28,12 +28,12 @@ const ChangeTextLive = () => {
     return (
         <div>
             <div className={style.Configs}>
-                <h1 className={style.Titles}>Alterar texto da Live</h1>
+                <h1 className={style.TitlesRifa}>Alterar texto da Live</h1>
                 <input onChange={(e) => setText(e.target.value)} value={text} className={style.changeText} />
-                <button onClick={() => trocarText(text)}>Trocar Texto</button> 
+                <button onClick={() => trocarText(text)} className={style.ButtonTextLive}>Trocar Texto</button> 
             </div>
         </div>
     )
 }
 
-export default ChangeTextLive
+export default ChangeTextLive;
