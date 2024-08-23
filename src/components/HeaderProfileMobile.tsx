@@ -8,7 +8,7 @@ import Settings from "./Settings";
 import { useRouter } from "next/router";
 import Budget from "./Budget";
 
-const HeaderProfile = () => {
+const HeaderProfileMobile = () => {
   const { userInfo, setUserInfo, setShowBudget } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, setShowBudget: Dispatch<React.SetStateAction<boolean>>  }
   const [ budget, setBudget ] = useState<number>(0)
   const [ budgetString, setBudgetString ] = useState<string>()
@@ -90,7 +90,6 @@ const HeaderProfile = () => {
       </div>
 
       <div className={`Dropdown ${showDropdown ? 'showDropdown' : ''}`}>
-        <input type="text" id="headerDropdownInput" onBlur={() => toggleOffDropdownVisibility()}/>
         <ul>
           <li onClick={() => openConfig()}>Configurações</li>
           <li onClick={() => handleLogout()}>Sair</li>
@@ -103,4 +102,4 @@ const HeaderProfile = () => {
   );
 }
  
-export default HeaderProfile;
+export default HeaderProfileMobile;

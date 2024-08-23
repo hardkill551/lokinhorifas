@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^0.0.19",
     "@mui/icons-material": "^5.15.16",
     "@types/node": "20.2.3",
     "@types/react": "18.2.7",

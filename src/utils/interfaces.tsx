@@ -1,5 +1,3 @@
-import { StaticImageData } from "next/image";
-
 export default interface TextContextType{
   textInfo: {
     text:string,
@@ -202,3 +200,140 @@ export type raffleItem = {
   quantity: number,
   isSelected: boolean
 }
+export interface RaffleNumberType {
+  key: number;
+  number: number;
+  isSelected: boolean;
+  isAvailable: boolean;
+}[]
+
+
+
+export type IBrickError = {
+  type: "non_critical" | "critical";
+  message: string;
+  cause: ErrorCause;
+}
+
+export type ErrorCause = {
+  'already_initialized':string,
+  'amount_is_not_number':string,
+  'amount_is_not_number_in_update':string,
+  'card_token_creation_failed':string,
+  'container_not_found':string,
+  'fields_setup_failed':string,
+  'fields_setup_failed_after_3_tries':string,
+  'financial_institution_not_found':string,
+  'get_address_data_failed':string,
+  'get_card_bin_payment_methods_failed':string,
+  'get_card_issuers_failed':string,
+  'get_identification_types_failed':string,
+  'get_mexico_payment_points_failed':string,
+  'get_config_assets_failed':string,
+  'get_payment_installments_failed':string,
+  'empty_installments':string,
+  'get_payment_methods_failed':string,
+  'get_preference_details_failed':string,
+  'get_saved_cards_failed':string,
+  'incomplete_fields':string,
+  'incorrect_initialization':string,
+  'invalid_preference_purpose':string,
+  'invalid_sdk_instance':string,
+  'missing_amount_property':string,
+  'missing_site_property':string,
+  'missing_container_id':string,
+  'missing_locale_property':string,
+  'missing_payment_information':string,
+  'missing_payment_type':string,
+  'missing_required_callbacks':string,
+  'missing_texts':string,
+  'no_preference_provided':string,
+  'no_chunk_path_provided':string,
+  'secure_fields_card_token_creation_failed':string,
+  'settings_empty':string,
+  'translation_key_not_found':string,
+  'unauthorized_payment_method':string,
+  'update_preference_details_failed':string,
+  'validations_parameter_null':string,
+  'get_chunk_failed':string,
+  'get_saved_cards_on_bricks_api_failed':string,
+  'window_redirect_was_blocked':string,
+  'missing_required_review_props':string,
+  'no_payment_method_for_provided_bin':string,
+  'payment_method_not_in_allowed_types':string,
+  'payment_method_not_in_allowed_methods':string,
+  'no_installments_in_selected_range':string,
+  'no_issuers_found_for_card':string,
+}
+
+export type PaymentFormData = {
+  selectedPaymentMethod: "credit_card" |
+    "debit_card" |
+    "ticket" |
+    "bank_transfer" |
+    "wallet_purchase" |
+    "atm";
+  formData: CardData | TicketData | BankTransferData | WalletPurchaseData;
+}
+
+export type CardData = {
+  'token': string,
+  'issuer_id': string,
+  'payment_method_id': string,
+  'transaction_amount': number,
+  'payment_method_option_id': string | null,
+  'processing_mode': string | null,
+  'installments': number,
+  'payer': {
+      'email': string,
+      'identification': {
+              'type': string,
+              'number': string
+      }
+  }
+}
+
+export type TicketData = {
+  'payment_method_id': string,
+  'transaction_amount': number,
+  'transaction_details'?: {
+      'financial_institution': string,
+  },
+  'payer': {
+      'email': string,
+      'identification'?: {
+          'type': string,
+          'number': string
+      },
+      'first_name'?: string,
+      'last_name'?: string,
+      'address'?: {
+          'city': string,
+          'federal_unit': string,
+          'neighborhood': string,
+          'street_name': string,
+          'street_number': string,
+          'zip_code': string
+      }
+  },
+  'metadata'?: {
+      'payment_point'?: string,
+      'payment_mode'?: string
+  }
+}
+
+export type BankTransferData = {
+  'payment_method_id': string,
+  'transaction_amount': number,
+  'payer': {
+      'email': string
+  }
+}
+
+export type WalletPurchaseData = null
+
+export type AdditionalData = {
+  'bin': string,
+  'lastFourDigits': string,
+}
+

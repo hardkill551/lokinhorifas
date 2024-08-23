@@ -58,7 +58,7 @@ const Homepage = () => {
         try {
           const res = await axios.post(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/auth/twitch`, { code });
           localStorage.setItem('token', res.data.sessionToken);
-          setUserInfo({ ...userInfo, id: res.data.id, name: res.data.name, email: res.data.email, picture: res.data.picture, token: res.data.sessionToken })
+          setUserInfo({ ...userInfo, id: res.data.id, name: res.data.name, email: res.data.email, picture: res.data.picture, token: res.data.sessionToken, saldo: res.data.saldo })
         } catch (error) {
           console.error('Error:', error);
         }
