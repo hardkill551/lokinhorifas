@@ -252,6 +252,8 @@ header {
   width: 100%;
   height: fit-content;
 
+  white-space: nowrap;
+
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -263,6 +265,8 @@ header {
 
   width: 100%;
   height: 0;
+
+  white-space: nowrap;
 
   text-overflow: ellipsis;
   overflow: hidden;
@@ -1223,7 +1227,7 @@ footer nav div {
   display: flex;
   flex-direction: row;
 
-  width: 1420px;
+  width: 2840px;
   height: 100%;
 
   transition: translate 400ms ease-in;
@@ -1316,6 +1320,41 @@ footer nav div {
   cursor: pointer;
 }
 
+.PopupBuyContent .card .skin {
+  position: absolute;
+
+  justify-self: center;
+  align-self: center;
+
+  width: 70%;
+  height: auto;
+
+  z-index: 2;
+
+  transition: scale 400ms ease-out;
+}
+
+.PopupBuyContent .card:hover .skin {
+  scale: 1.2;
+}
+
+.PopupBuyContent .card .shine {
+  position: absolute;
+  top: 0;
+
+  justify-self: center;
+  align-self: center;
+
+  scale: 2;
+
+  width: 100%;
+  height: auto;
+
+  z-index: 1;
+
+  animation: 12s linear 0s infinite normal both running spin;
+}
+
 .PopupBuyContent .card::after {
   content: '';
 
@@ -1327,71 +1366,6 @@ footer nav div {
   background: linear-gradient(0deg, black 5%, transparent 75%);
 }
 
-.PopupBuyContent .card .imageGroup {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
-
-  position: absolute;
-  top: 0;
-
-  z-index: 1;
-}
-
-.PopupBuyContent .card .imageBox {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 55px;
-
-  transition: 400ms ease-in-out;
-}
-
-.PopupBuyContent .card .imageBox:nth-of-type(5) {
-  z-index: 2;
-}
-
-.PopupBuyContent .card:hover .imageBox:nth-of-type(5) {
-  scale: 1.4;
-}
-
-.PopupBuyContent .card .imageBox img {
-  width: 150px;
-  height: auto;
-
-  opacity: .8;
-  rotate: 40deg;
-
-  transition: 300ms ease-in-out;
-}
-
-.PopupBuyContent .card:hover .imageBox img {
-  width: 150px;
-  height: auto;
-
-  opacity: .8;
-  rotate: 40deg;
-
-  filter: brightness(50%);
-
-  transition: 300ms ease-in-out;
-}
-
-.PopupBuyContent .card .imageBox:nth-of-type(5) img {
-  filter: brightness(100%);
-
-}
-
-.PopupBuyContent .card:hover .imageBox:nth-of-type(5) img {
-  opacity: 1;
-  /* rotate: 0deg; */
-}
 
 .PopupBuyContent .card h3 {
   width: 100%;
@@ -1415,6 +1389,8 @@ footer nav div {
 
   width: 50px;
   height: 50px;
+
+  z-index: 10;
 }
 
 .PopupBuyContent .selectCheck img {
@@ -1495,43 +1471,6 @@ footer nav div {
   outline: 1px solid grey;
 }
 
-.PopupBuy .detailsWrapper .imageGroup {
-  display: flex;
-
-  justify-content: center;
-  align-items: flex-start;
-
-  width: 100%;
-  height: 90px;
-
-  padding-top: 20px;
-
-  background: linear-gradient(90deg, #E21A1A, #A30006);
-
-  border-bottom: 1px solid grey;
-
-  z-index: 1;
-
-  overflow: hidden;
-}
-
-.PopupBuy .detailsWrapper .imageBox {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 55px;
-
-  transition: 400ms ease-in-out;
-}
-
-.PopupBuy .detailsWrapper .imageBox img {
-  rotate: 40deg;
-
-  width: 150px;
-  height: auto;
-}
 
 .PopupBuy .detailsWrapper .contentGroup {
   display: flex;
@@ -1547,6 +1486,12 @@ footer nav div {
 
 .PopupBuy .detailsWrapper .contentGroup h2 {
   font-weight: 500;
+  width: 100%;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .PopupBuy .detailsWrapper .contentGroup > p {
@@ -1680,6 +1625,14 @@ footer nav div {
 
 .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleTitleContent h3 {
   font-size: 24px;
+  
+  width: 100%;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   font-weight: 500;
 }
 
@@ -1687,6 +1640,13 @@ footer nav div {
   opacity: .5;
   font-weight: 500;
   font-size: 18px;
+
+  width: 80%;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity {
@@ -1730,6 +1690,11 @@ footer nav div {
 }
 
 .PopupBuy .raffleBuyQuantity .raffleBanner {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
   width: 200px;
   height: 130px;
 
@@ -1742,20 +1707,46 @@ footer nav div {
   position: relative;
 }
 
-.PopupBuy .raffleBuyQuantity .imageGroup {
-  display: flex;
 
-  justify-content: center;
-  align-items: center;
+.PopupBuy .raffleBuyQuantity .raffleBanner .skin {
+  width: 140px;
+  height: auto; 
 
+  z-index: 2;
+
+  transition: scale 400ms ease-out;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleBanner .shine {
   position: absolute;
-  top: 0;
 
   width: 100%;
-  height: 100%;
+  height: auto; 
+
+  scale: 2;
 
   z-index: 1;
+
+  animation: 12s linear 0s infinite normal both running spin;
+
+  /* opacity: 0; */
 }
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+    filter: brightness(200%);
+  }
+  50% {
+    scale: 1.5;
+    opacity: .5;
+  }
+  100% {
+    rotate: 360deg;
+    filter: brightness(200%);
+  }
+}
+
 
 .PopupBuyContent .raffleBuyQuantity .glowGroup {
   width: 100%;
@@ -1797,31 +1788,147 @@ footer nav div {
   filter: blur(22px);
 }
 
-.PopupBuyContent .raffleBuyQuantity .imageBox {
+.PopupBuy .rafflePayment {
+  display: flex;
+  flex-direction: column;
+
+  width: 710px;
+
+  gap: 41px;
+}
+
+.PopupBuy .rafflePayment .userPaymentData,
+.PopupBuy .rafflePayment .itemTable,
+.PopupBuy .rafflePayment .purchaseDetails {
+  padding-inline: 60px;
+}
+
+.PopupBuy .userPaymentData .value {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.PopupBuy .userPaymentData .value h3 {
   display: flex;
 
   justify-content: center;
   align-items: center;
 
-  width: 35px;
+  gap: 6px;
 
-  transition: 400ms ease-in-out;
+  margin-bottom: 10px;
 }
 
-.PopupBuyContent .raffleBuyQuantity .imageBox img {
-  width: 95px;
-  height: auto;
-
-  opacity: .8;
-  rotate: 40deg;
-
-  transition: 300ms ease-in-out;
+.PopupBuy .userPaymentData .value h3 img {
+  height: 24px;
+  width: auto;
 }
 
-.PopupBuyContent .card .imageBox:nth-of-type(5) img {
-  filter: brightness(100%);
+.PopupBuy .userPaymentData .value h3 span {
+  font-weight: 500;
+
+  opacity: .5;
 }
 
+.PopupBuy .userPaymentData .value h2 {
+  font-weight: 600;
+}
+
+.PopupBuy .userPaymentData .userBudget {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.PopupBuy .userPaymentData .userBudget h3 {
+  font-weight: 400;
+
+  font-size: 16px;
+}
+
+.PopupBuy .userPaymentData .userBudget h3:last-of-type {
+  color: #E21A1A;
+}
+
+.PopupBuy .itemTable {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.PopupBuy .itemTable .header {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 24px;
+}
+
+.PopupBuy .itemTable .item {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 20px;
+}
+
+.PopupBuy .itemTable .item .name {
+  display: block;
+  width: 350px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+
+.PopupBuy .itemTable .item h3 {
+  display: flex;
+  font-weight: 400;
+}
+
+.PopupBuy .purchaseDetails {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.PopupBuy .account h3, .PopupBuy .dateOfPurchase h3 {
+  font-size: 22px;
+}
+
+.PopupBuy .account p, .PopupBuy .dateOfPurchase p {
+  font-size: 20px;
+}
+
+.PopupBuy .raffleConfirmation {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 32px;
+
+  width: 710px;
+}
+
+.PopupBuy .raffleConfirmation h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.PopupBuy .raffleConfirmation p {
+  width: 355px;
+
+  text-align: center;
+
+  font-size: 18px;
+}
 
 
 .PopupBuy .bottomSection {
@@ -1841,6 +1948,12 @@ footer nav div {
   background-color: white;
 }
 
+.PopupBuy .bottomSection.end {
+  background-color: transparent;
+
+  translate: 0 -45px;
+}
+
 .PopupBuy .bottomSection button {
   padding: 15px 9px;
   font-size: 24px;
@@ -1854,6 +1967,10 @@ footer nav div {
   color: white;
 
   cursor: pointer;
+}
+
+.PopupBuy .bottomSection button:disabled {
+  filter: grayscale(100%);
 }
 
 .PopupBuy .bottomSection a {

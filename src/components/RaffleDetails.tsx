@@ -1,61 +1,32 @@
 import Image from 'next/image';
 import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
 import { Dispatch } from 'react';
+import { raffleItem } from 'utils/interfaces';
 
-const RaffleDetails = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>} }) => {
-  const { setDetailsVisible } = moreDetails
+const RaffleDetails = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>, rafflesData: raffleItem, toggleSelection: Function} }) => {
+  const { setDetailsVisible, rafflesData, toggleSelection } = moreDetails
 
   const handleSelection = () => {
-
+    toggleSelection(rafflesData.id)
     setDetailsVisible(false)
   }
+
   return (
     <div className="details">
       <div className="detailsWrapper">
-      <div className="imageGroup">
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-      </div>
         <div className="contentGroup">
-          <h2>Rifa 6x Neon lights!</h2>
-            <p>Valor total dos prêmios de R$ 1000,00!</p>
+          <h2>Rifa {rafflesData.name}</h2>
+            <p>Valor unitário da rifa: R$ {rafflesData.value.toFixed(2).toString().replace('.', ',')}!</p>
           <div className="included">
             <h3>Nesta rifa são incluídos:</h3>
-            
-            <p>Números individuais para os seguintes itens</p>
 
             <ul>
-              <li>6x Neon Light</li>
+              {rafflesData && rafflesData.skins.map((skin, index) => <li key={index}>{skin}</li>)}
             </ul>
           </div>
 
 
-          <button onClick={() => handleSelection()}>Adicionar</button>
+          <button onClick={() => handleSelection()}>{rafflesData.isSelected ? "Remover" : "Adicionar"}</button>
         </div>
       </div>
       <div onClick={() => setDetailsVisible(false)} className="background"></div>

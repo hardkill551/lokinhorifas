@@ -192,6 +192,14 @@ export interface skinDataType {
   picture: null | File | string;
 }
 
+export type raffleItem = {
+  id: number,
+  skins: string[],
+  name: string,
+  value: number,
+  quantity: number,
+  isSelected: boolean
+}
 export interface RaffleNumberType {
   key: number;
   number: number;
