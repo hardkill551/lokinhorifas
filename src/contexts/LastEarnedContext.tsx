@@ -118,7 +118,7 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
     dataArray.map((item: LastEarnedWinnerType) => {
       const { raffle, winner } = item
 
-      // TODO alterar TimeOfEarning
+      // * alterar TimeOfEarning
       // TODO alterar imagem do item
 
       const date = new Date(raffle.updatedAt)

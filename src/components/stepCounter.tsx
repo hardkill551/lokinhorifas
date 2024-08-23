@@ -3,7 +3,7 @@ const StepCounter = ({steps}: { steps: {step: number} }) => {
   const { step } = steps
 
   return (
-    <div className="stepCounter">
+    <div className="stepCounter desktop">
       <div className={`step-1 ${step == 1 && 'selected'}`}>
         <div className="bar">
           <div className="ball">1</div>

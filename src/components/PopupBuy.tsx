@@ -132,11 +132,7 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
   }
 
   const checkStep = () => {
-    if(step == 2) return 'step-2'
-    else if(step == 3) return 'step-3'
-    else if(step == 4) return 'step-4'
-
-    return 'step-1'
+    return `step-${step}`
   }
 
   const handleButtonText = () => {
@@ -153,8 +149,9 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
     }
     else {
       if(userInfo.saldo < total) {
+        addStep()
         console.log('falha')
-        // TODO: Lançar um popup na interface para pedir pro usuário comprar mais créditos ou cancelar a compra
+        // TODO!: Lançar um popup na interface para pedir pro usuário comprar mais créditos ou cancelar a compra
       }
       else {
         setUserInfo(oldValue => {return {...oldValue, saldo: oldValue.saldo -= total}})

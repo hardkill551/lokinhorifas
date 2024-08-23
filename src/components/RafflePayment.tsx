@@ -39,41 +39,37 @@ const RafflePayment = ({props}: {props: {rafflesData: raffleItem[]}}) => {
         <p>Confira os dados e confirme a compra para prosseguir</p>
       </div>
 
-      <div className="userPaymentData">
-        <div className="value">
-          <h3><Image height={24} src={Currency} alt="Imagem de uma moeda"/> <span>BRL</span></h3>
-          <h2>R$ {value.toFixed(2).toString().replace('.', ',')}</h2>
+      <div className="rafflePaymentWrapper">
+        <div className="userPaymentData">
+          <div className="value">
+            <h3><Image height={24} src={Currency} alt="Imagem de uma moeda"/> <span>BRL</span></h3>
+            <h2>R$ {value.toFixed(2).toString().replace('.', ',')}</h2>
+          </div>
+          <div className="userBudget">
+            <h3>Saldo Atual: R$ {userInfo.saldo.toFixed(2).toString().replace('.', ',')} BRL</h3>
+            <h3>Saldo Restante: R$ {(userInfo.saldo - value).toFixed(2).toString().replace('.', ',')} BRL</h3>
+          </div>
         </div>
-
-        <div className="userBudget">
-          <h3>Saldo Atual: R$ {userInfo.saldo.toFixed(2).toString().replace('.', ',')} BRL</h3>
-          <h3>Saldo Restante: R$ {(userInfo.saldo - value).toFixed(2).toString().replace('.', ',')} BRL</h3>
+        <div className="itemTable">
+          <div className="header">
+            <h3>Produto x Quantidade</h3>
+            <h3>Custo</h3>
+          </div>
+          {selectedItems && selectedItems.map(item =>
+          <div className="item" key={item.key}>
+            <h3><span className="name">Rifa {item.name}</span> <div className="quantity">x {item.quantity}</div></h3>
+            <h3>R$ {(item.value * item.quantity).toFixed(2).toString().replace('.', ',')}</h3>
+          </div>)}
         </div>
-      </div>
-
-      <div className="itemTable">
-        <div className="header">
-          <h3>Produto x Quantidade</h3>
-          <h3>Custo</h3>
-        </div>
-
-        {selectedItems && selectedItems.map(item => 
-        <div className="item" key={item.key}>
-          <h3><span className="name">Rifa {item.name}</span> x {item.quantity}</h3>
-          <h3>R$ {(item.value * item.quantity).toFixed(2).toString().replace('.', ',')}</h3>
-        </div>)}
-
-      </div>
-
-      <div className="purchaseDetails">
-        <div className="account">
-          <h3>Conta:</h3>
-          <p>{userInfo.email}</p>
-        </div>
-
-        <div className="dateOfPurchase">
-          <h3>Data da Compra:</h3>
-          <p>{formatDate()}</p>
+        <div className="purchaseDetails">
+          <div className="account">
+            <h3>Conta:</h3>
+            <p>{userInfo.email || 'notloggedinindividual'}</p>
+          </div>
+          <div className="dateOfPurchase">
+            <h3>Data da Compra:</h3>
+            <p>{formatDate()}</p>
+          </div>
         </div>
       </div>
     </div>

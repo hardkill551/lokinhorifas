@@ -27,7 +27,7 @@ const RaffleCartItem = ({props}: {props: {
 
   return (
     <div className="cartItem">
-      <div className="raffleBanner">
+      <div className="raffleBanner desktop">
         <div className="glowGroup">
           <div className="glow-1"></div>
           <div className="glow-2"></div>

@@ -2672,6 +2672,259 @@ footer nav div {
     text-align: justify;
   }
 
+  .PopupBuy {
+    align-items: flex-end;
+  }
+
+  .PopupBuy .stepCounter.desktop {
+    display: none;
+  }
+
+  .PopupBuyContent {
+    border-radius: 20px 20px 0 0;
+
+    width: 100%;
+
+    height: 500px;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .PopupBuyWrapper {
+    width: 100%;
+  }
+
+  .PopupBuy .PopupBuyWrapper > .background {
+    background: black;
+
+    opacity: .7;
+  }
+
+  .PopupBuyContent .sessionInfo {
+    width: 100%;
+  }
+
+  .PopupBuyContentWrapper {
+    width: calc(100% * 4);
+  }
+
+  .PopupBuy .raffleSelect,
+  .PopupBuy .raffleBuyQuantity,
+  .PopupBuy .rafflePayment,
+  .PopupBuy .raffleConfirmation {
+    width: calc(100% / 4);
+  }
+
+  .PopupBuyContent .sessionInfo h2 {
+    font-size: 9vmin;
+  }
+
+  .PopupBuyContent .sessionInfo p {
+    font-size: 5vmin;
+  }
+
+  .PopupBuyContent .raffleSelect .cardGroup {
+    height: 270px;
+  }
+
+  .PopupBuy .raffleBuyQuantity .cartGroup {
+    height: 200px;
+  }
+
+  .raffleSelect .cardGroupWrapper, .PopupBuyContent .raffleSelect .cardGroup {
+    width: 100%;
+  }
+
+  .raffleSelect .cardGroupWrapper .card {
+    width: 100%;
+  }
+
+  .raffleSelect .cardGroupWrapper .card .skin {
+    height: 100%;
+    width: auto;
+  }
+
+  .raffleSelect .cardGroupWrapper .card .shine {
+    height: 100%;
+    width: auto;
+  }
+
+  .PopupBuy .card .glow-1, .PopupBuy .card .glow-2 {
+    width: 80%;
+  }
+
+  .PopupBuy .details {
+    align-items: flex-end;
+  }
+
+  .PopupBuy .detailsWrapper {
+    width: 100%;
+
+    border-radius: 20px 20px 0 0;
+
+    border-top: 1px solid grey;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .PopupBuy .details .background {
+    background: black;
+
+    opacity: .8;
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup {
+    align-items: center;
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup h2 {
+    text-align: center;
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup button {
+    align-self: center;
+  }
+
+  .PopupBuy .bottomSection {
+    flex-direction: column-reverse;
+
+    justify-content: center;
+
+    gap: 10px;
+    width: 100%;
+  }
+
+  .PopupBuy .bottomSection .totalValue h3 {
+    font-size: 8vmin;
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .PopupBuy .bottomSection button,
+  .PopupBuy .bottomSection a {
+    font-size: 5vmin;
+
+    white-space: nowrap;
+  }
+
+  .PopupBuyContentWrapper.step-1 {
+    translate: 0;
+  }
+  
+  .PopupBuyContentWrapper.step-2 {
+    translate: calc(-100% / 4);
+  }
+  
+  .PopupBuyContentWrapper.step-3 {
+    translate: calc(-200% / 4);
+  }
+  
+  .PopupBuyContentWrapper.step-4 {
+    translate: calc(-300% / 4);
+  }
+
+  .PopupBuy .raffleBuyQuantity .raffleBanner.desktop {
+    display: none;
+  }
+
+  .PopupBuy .raffleBuyQuantity .raffleMetaData {
+    width: 100%;
+  }
+
+  .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity h3 {
+    font-size: 6vmin;
+  }
+
+  .PopupBuy .rafflePayment {
+    align-items: center;
+  }
+
+  .PopupBuy .rafflePayment .userPaymentData,
+  .PopupBuy .rafflePayment .itemTable,
+  .PopupBuy .rafflePayment .purchaseDetails {
+    padding-inline: 0;
+
+    width: 80%;
+  }
+
+  .PopupBuy .rafflePayment {
+    gap: 0;
+  }
+
+  .PopupBuy .rafflePayment .userBudget h3 {
+    font-size: 5vmin;
+  }
+
+  .rafflePaymentWrapper {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+    height: 270px;
+
+    background-color: #ddd;
+
+    padding-block: 10px;
+
+    overflow: auto;
+
+
+    gap: 41px;
+  }
+
+  .PopupBuy .itemTable .header {
+    font-size: 4.5vmin;
+  }
+
+  .PopupBuy .itemTable .item {
+    font-size: 4vmin;
+  }
+
+  .PopupBuy .itemTable .item h3 {
+    display: flex;
+
+    align-items: center;
+
+    width: 50%;
+  }
+
+  .PopupBuy .itemTable .item h3 .quantity {
+    display: block;
+
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .PopupBuy .itemTable .item h3:last-of-type {
+    justify-content: flex-end;
+  }
+
+  .PopupBuy .account h3, .PopupBuy .dateOfPurchase h3 {
+    font-size: 5vmin;
+  }
+
+  .PopupBuy .account p, .PopupBuy .dateOfPurchase p {
+    font-size: 4vmin;
+  }
+
+  .PopupBuy .raffleConfirmation img {
+    width: 110px;
+    height: auto;
+  }
+
+  .PopupBuy .raffleConfirmation p {
+    font-size: 5vmin;
+
+    width: 80%;
+
+    margin-bottom: 95px;
+  }
+
+
 
 
   @keyframes showUp {
