@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import "../styles/globals.css";
 import Head from "next/head";
@@ -27,13 +27,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://sdk.mercadopago.com/js/v2";
-    script.async = true;
-    script.onload = () => {
-      // console.log('MercadoPago script loaded');
-      // console.log('window.MercadoPago:', window.MercadoPago); // Verificar se o objeto MercadoPago está disponível
-    };
+    // script.onload = () => {
+    //   // console.log('MercadoPago script loaded');
+    //   // console.log('window.MercadoPago:', window.MercadoPago); // Verificar se o objeto MercadoPago está disponível
+    // };
 
+    script.src = "https://sdk.mercadopago.com/js/v2";
+    script.className = "mercado-pago-sdk";
+    script.async = true;
     document.body.appendChild(script);
 
     return () => {

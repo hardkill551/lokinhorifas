@@ -149,7 +149,6 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
     }
     else {
       if(userInfo.saldo < total) {
-        addStep()
         console.log('falha')
         // TODO!: Lançar um popup na interface para pedir pro usuário comprar mais créditos ou cancelar a compra
       }

@@ -177,7 +177,7 @@ export const RaffleProvider = ({children} : {children: ReactNode}) =>{
 
   const submitNewRaffle = (isFree: boolean) => {
     if(typeof isFree === 'boolean') {
-      // TODO enviar para o back os dados da rifa para criar novas rifas
+      // ? enviar para o back os dados da rifa para criar novas rifas
       // console.log(addedItemList, isFree)
       // console.log(addedItemList)
       // ? dados presentes serão: [nome: string, qualidade: string e valor: número (float)]

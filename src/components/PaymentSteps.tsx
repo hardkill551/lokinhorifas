@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Dispatch, useEffect, useRef, useState } from "react";
-import shield from '../assets/checkmark.shield.svg'
+import shield from "../assets/checkmark.shield.svg";
 
 declare global {
   interface Window {
@@ -11,54 +11,73 @@ declare global {
   }
 }
 
-const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetStateAction<boolean>> } }) => {
+const PaymentBrick = ({
+  props,
+}: {
+  props: { setShowPayment: Dispatch<React.SetStateAction<boolean>> };
+}) => {
   const [sdkLoaded, setSdkLoaded] = useState(false);
-  const [ price, setPrice ] = useState(0)
-  const ref = useRef<HTMLInputElement>(null)
+  const [price, setPrice] = useState(0);
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const ref = useRef<HTMLInputElement>(null);
+  const [step, setStep] = useState(1);
 
-  const { setShowPayment } = props
-
-  const [ step, setStep ] = useState(3)
+  const { setShowPayment } = props;
 
   const addStep = () => {
-    setStep(oldValue => oldValue + 1)
-  }
+    setStep((oldValue) => oldValue + 1);
+  };
 
   const removeStep = () => {
-    setStep(oldValue => oldValue - 1)
-  }
+    setStep((oldValue) => oldValue - 1);
+  };
 
+  // Carregue o SDK do Mercado Pago dinamicamente
   useEffect(() => {
-    // Verifica se o SDK foi carregado
-    const checkSdkLoaded = () => {
-      if (window.MercadoPago) {
-        setSdkLoaded(true);
-        console.log("MercadoPago SDK carregado com sucesso.");
-      } else {
-        console.log(
-        "MercadoPago SDK ainda não carregado. Tentando novamente em 2s..."
-        );
-        setTimeout(checkSdkLoaded, 2000);
-      }
+    const script = document.createElement("script");
+    script.src = "https://sdk.mercadopago.com/js/v2";
+    script.async = true;
+    script.onload = () => {
+      console.log("MercadoPago SDK loaded.");
+      setSdkLoaded(true);
     };
+    document.body.appendChild(script);
 
-    checkSdkLoaded();
+    return () => {
+      document.body.removeChild(script);
+    };
   }, []);
 
+  // Simulação de obtenção do preferenceId (substitua por sua lógica real)
   useEffect(() => {
-    if (!sdkLoaded || price == 0 || step != 2) return; // Aguarda até que o SDK esteja carregado e o valor da compra seja maior que o padrão (0) e que a etapa esteja certa
+    if (step === 2) {
+      // Simulação: definir um preferenceId fictício
+      setPreferenceId("YOUR_PREFERENCE_ID");
+      console.log("Preference ID set.");
+    }
+  }, [step]);
+
+  // Renderize o Payment Brick
+  useEffect(() => {
+    if (!sdkLoaded || !preferenceId || step !== 2) {
+      console.log(
+        "SDK not loaded, preference ID not set, or step not correct."
+      );
+      return;
+    }
 
     const renderPaymentBrick = async () => {
-      console.log("MercadoPago está carregado, iniciando...");
+      console.log("Rendering Payment Brick...");
 
-      const mp = new window.MercadoPago(process.env.NEXT_PUBLIC_ACCESS_KEY, {
+      const mp = new window.MercadoPago(process.env.NEXT_PUBLIC_PUBLIC_KEY, {
         locale: "pt-BR",
       });
 
       const bricksBuilder = mp.bricks();
       const settings = {
         initialization: {
-          amount: price, // Valor a ser pago
+          preferenceId: preferenceId,
+          amount: price,
         },
         customization: {
           paymentMethods: {
@@ -67,7 +86,7 @@ const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetSt
             ticket: "all",
             bankTransfer: "all",
             atm: "all",
-            maxInstallments: 1
+            maxInstallments: 1,
           },
           visual: {
             hideFormTitle: true,
@@ -78,7 +97,7 @@ const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetSt
         },
         callbacks: {
           onReady: () => {
-            console.log("Payment Brick is ready");
+            console.log("Payment Brick is ready.");
           },
           onSubmit: ({
             selectedPaymentMethod,
@@ -87,27 +106,30 @@ const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetSt
             selectedPaymentMethod: any;
             formData: any;
           }): Promise<void> => {
-            console.log("Enviando dados de pagamento...");
+            console.log("Submitting payment data...");
             return new Promise((resolve, reject) => {
-              fetch("/process_payment", {
+              fetch(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/payment`, {
                 method: "POST",
                 headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),
               })
                 .then((response) => response.json())
                 .then((response) => {
-                  addStep()
+                  console.log(response);
+                  addStep();
                   resolve(response);
                 })
                 .catch((error) => {
-                  console.log("Erro encontrado: ", reject(error))
+                  console.log("Error encountered: ", error);
+                  reject(error);
                 });
             });
           },
           onError: (error: Error) => {
-            console.error("Erro no pagamento:", error);
+            console.error("Payment error:", error);
           },
         },
       };
@@ -118,61 +140,72 @@ const PaymentBrick = ({ props }: { props: { setShowPayment: Dispatch<React.SetSt
           "paymentBrick_container",
           settings
         );
-        console.log("Payment Brick foi criado com sucesso.");
+        console.log("Payment Brick successfully created.");
       } catch (error) {
-        console.error("Erro ao criar o Payment Brick:", error);
+        console.error("Error creating Payment Brick:", error);
       }
     };
 
-    // Renderiza o Payment Brick na montagem do componente
     renderPaymentBrick();
 
-    // Desmonta o Payment Brick quando o componente for desmontado
     return () => {
       if (window.paymentBrickController) {
         window.paymentBrickController.unmount();
-        console.log("Payment Brick desmontado.");
+        console.log("Payment Brick unmounted.");
       }
     };
-  }, [sdkLoaded, step]); // Executa o efeito quando o SDK estiver carregado
+  }, [sdkLoaded, preferenceId, step]);
 
   const handlePriceChange = () => {
-    if(ref.current === null) return
-
-    setPrice(Number(ref.current.value))
-  }
+    if (ref.current === null) return;
+    setPrice(Number(ref.current.value));
+  };
 
   const handleStepChange = () => {
-    return `brickContent step-${step}-wrap`
-  }
+    return `brickContent step-${step}-wrap`;
+  };
 
-  return ( 
+  return (
     <div className="brick">
       <div className="brickWrapper">
         <div className={handleStepChange()}>
           <div className="step-1">
             <h2>Quanto de saldo gostaria de adicionar à sua conta?</h2>
-            <input type="number" placeholder="Valor em reais" ref={ref} onChange={handlePriceChange}/>
-            <button disabled={price <= 0} onClick={addStep}>Continuar</button>
+            <input
+              type="number"
+              placeholder="Valor em reais"
+              ref={ref}
+              onChange={handlePriceChange}
+            />
+            <button disabled={price <= 0} onClick={addStep}>
+              Continuar
+            </button>
             <p>Poderá voltar para alterar esse valor depois</p>
           </div>
           <div className="step-2">
+            <h2>Quanto de saldo gostaria de adicionar à sua conta?</h2>
             <div className="paymentWrapper">
               <div id="paymentBrick_container"></div>
             </div>
             <a onClick={removeStep}>&lt;- Voltar</a>
           </div>
           <div className="step-3">
-            <Image src={shield} alt="Ícone de confirmação"/>
+            <Image src={shield} alt="Ícone de confirmação" />
             <h2>Estamos processando o pagamento!</h2>
             <p>Já já estará disponível o novo saldo!</p>
-            <button disabled={step != 3} onClick={() => setShowPayment(false)}>Continuar</button>
+            <button
+              type="button"
+              disabled={step != 3}
+              onClick={() => setShowPayment(false)}
+            >
+              Continuar
+            </button>
           </div>
         </div>
       </div>
       <div className="background" onClick={() => setShowPayment(false)}></div>
     </div>
-   );
-}
- 
+  );
+};
+
 export default PaymentBrick;

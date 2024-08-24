@@ -10,7 +10,7 @@ const Budget = () => {
     setShowBudget: Dispatch<React.SetStateAction<boolean>>;
   };
 
-  const [ showPayment, setShowPayment ] = useState(false)
+  const [ showPayment, setShowPayment ] = useState(true)
 
   const formatarDataHoraAtual = (): string => {
     const agora = new Date();
