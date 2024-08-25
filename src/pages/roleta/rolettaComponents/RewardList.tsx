@@ -3,7 +3,6 @@ import RewardsArray from './RewardArray';
 import cn from 'classnames'
 
 const RewardList = () => {
-
   return (
     <div className={style.RewardsList}>
       <div className={cn(style.desktop, style.RewardsAd)}>

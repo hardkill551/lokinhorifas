@@ -26,7 +26,7 @@ const LastEarnedPrizes = ({ props }: { props: {item: LastEarnFrontEndType, index
   } = props.item;
 
   return (
-    <div className={cn(props.index > 3 && style.desktop, style.EarnedPrizeItem, style?.[PoolType])}>
+    <div className={cn(props.index > 2 && style.desktop, style.EarnedPrizeItem, style?.[PoolType])}>
       <div className={style.EarnedPrizeItemWrapper}>
         <div className={style.ItemMetaInfo}>
           <p>Foi sorteado há<br />{TimeOfEarning}</p>

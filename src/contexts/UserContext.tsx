@@ -27,7 +27,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     saldo: 0,
   });
 
-  const [showBudget, setShowBudget] = useState<boolean>(true);
+  const [showBudget, setShowBudget] = useState<boolean>(false);
 
   const logOut = () => {
     if (typeof window !== "undefined") {

@@ -1,3 +1,4 @@
+import axios from "axios"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import { LastEarnedPrizeType, LastEarnedWinnerType } from "utils/interfaces"
 
@@ -151,9 +152,17 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
 
   }
 
+  useEffect(() => {
+    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/winners", { params: { page: 1 } })
+      .then((res: any) => { 
+        console.log(res.data);
+        setNewLastEarnedList(res.data);
+      })
+      .catch((err: any) => console.error(err));
+  }, []);
+
   const value = {
     lastEarnedList,
-    setNewLastEarnedList
   }
 
   // ! PARA DEBUGGING

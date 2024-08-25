@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 export default interface TextContextType{
   textInfo: {
     text:string,
@@ -337,3 +339,57 @@ export type AdditionalData = {
   'lastFourDigits': string,
 }
 
+export type RaffleSkin = {
+  id: number,
+  raffle_id: number,
+  skinName: string,
+  skinPicture: string,
+  skinType: string,
+  skinValue: number,
+  skin_id: number,
+  winner_id: null,
+}
+
+export type RaffleParticipant = {
+  number: number,
+  user: {
+    id: number,
+    name: string,
+    picture: string
+  }
+}
+
+export type RaffleReward = RewardItemType & {
+  id: number
+}
+
+export type Raffle = {
+  createdAt: string,
+  free: boolean,
+  id: number,
+  is_active: string,
+  name: string,
+  participants: RaffleParticipant[]
+  raffleSkins: RaffleSkin[],
+  updatedAt: string,
+  users_quantity: number,
+  value: number
+}
+
+export type RouletteContext = {
+  availableRaffles: Raffle[],
+  raffle: Raffle,
+  winnerPopupVisible: boolean,
+  isButtonActive: boolean,
+  isMockWin: boolean,
+  winner: HTMLElement,
+  participants: Participant[],
+  rewards: RaffleReward[],
+  removeReward: Function,
+  setWinner: Dispatch<React.SetStateAction<HTMLElement>>,
+  loadFillerCards: (position: number) => JSX.Element[] | undefined,
+  manageWinner: Function,
+  manageMockWinner: Function,
+  manageCloseResult: Function,
+  selectRaffle: (id: number) => void,
+}

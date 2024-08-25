@@ -11,15 +11,6 @@ export const usePersonCardState = () => {
   return useContext(PersonCardContext)
 }
 
-    // * Separar o giro teste do Girar Roleta
-    // * Criar método para girar para uma pessoa aleatória quando em giro teste
-    // * Adicionar modo responsivo para até mobile
-    // * Terminar fluxo de envios de vencedores para o back
-    // * Utilizar tokens autenticados localmente
-    // * Pegar os dados de retorno do back e disponibilizar no componente LastEarned
-    // * Alterar imagem de Glitter
-    // TODO? Alterar imagem temporária das skins
-
 export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
   // ? Default/Fallback values used to keep operations
   // const items: Participant[] = [
@@ -263,6 +254,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
     // ? Defaults every new entry object-like structure to the one used within the site
     dataArray.map((item: PersonInfoCard) => {
       const { name, number, picture, id } = item
+
+      // ? Dados do usuário
   
       tempArray.push({
         id: id,
@@ -426,6 +419,8 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
     .catch((err: any) => console.error(err.response))
   }
 
+
+
   const value = {
     participants,
     getNewParticipants,
@@ -444,8 +439,7 @@ export const PersonCardStateProvider = ({children}:{children: ReactNode} ) => {
 
   // ! PARA DEBUGGING
   // useEffect(() => {
-  //   console.log('Debugging PersonCardState: ', participants)
-  // })
+  // }, [])
   // ! PARA DEBUGGING
 
   return (
