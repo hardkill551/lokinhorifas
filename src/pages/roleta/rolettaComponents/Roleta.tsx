@@ -5,10 +5,7 @@ import Roulette from './Roulette';
 
 import HEROBACK from '../../../images/Roleta/Hero/HEROBACKGROUND.png';
 import LINES from '../../../images/Roleta/Hero/Lines.png';
-import { usePersonCardState } from 'contexts/PersonCardContext';
-import { useRewardState } from 'contexts/RewardContext';
-import { Participant, RewardItemType, RouletteContext } from 'utils/interfaces';
-import { useEffect } from 'react';
+import { RouletteContext } from 'utils/interfaces';
 import { useRouletteContext } from 'contexts/RouletteContext';
 
 
