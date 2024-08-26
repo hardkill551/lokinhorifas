@@ -1,7 +1,7 @@
 import axios from "axios";
 import RouletteItem from "pages/roleta/rolettaComponents/RouletteItem";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { Participant, Raffle, RaffleParticipant, RaffleReward, RaffleSkin } from "utils/interfaces";
+import { Participant, Raffle, raffleItem, RaffleParticipant, RaffleReward, RaffleSkin } from "utils/interfaces";
 
 export const RouletteStateContext = createContext({})
 
@@ -12,6 +12,7 @@ export const useRouletteContext = () => {
 export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // ? Init variables
   const [ availableRaffles, setAvailableRaffles ] = useState<Raffle[]>([])
+  const [ purchasableRaffles, setPurchasableRaffles ] = useState<raffleItem[]>([])
   const [ raffle, setRaffle ] = useState<Raffle>()
   // ? Init variables
 
@@ -150,6 +151,24 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   const selectRaffle = (id: number) => {
     setRaffle(availableRaffles.filter(raffle => raffle.id == id)[0])
+  }
+
+  const toggleSelection = (id:number) => {
+    const newRaffles = purchasableRaffles.map(raffle => {
+      if(raffle.id == id) return {...raffle, isSelected: !raffle.isSelected}
+      return raffle
+    })
+
+    setPurchasableRaffles(newRaffles)
+  }
+
+  const handleChangeQuantity = (id:number, newQuantity: number) => {
+    const newRaffles = purchasableRaffles.map(raffle => {
+      if(raffle.id == id) return {...raffle, quantity: newQuantity}
+      return raffle
+    })
+
+    setPurchasableRaffles(newRaffles)
   }
   // ? Functions
 
@@ -296,6 +315,70 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   }
   // * Sanitize Rewards
 
+  // * Available for purchase raffles
+  const handleBigNames = (raffles: raffleItem[]) => {
+    let tempNamesArray: string[] = []
+
+    let itemsTempArray: {name: string, quantity: number}[] = []
+
+    const newRaffleData = raffles.map(raffle => {
+      tempNamesArray = []
+      itemsTempArray = []
+
+      raffle.skins.map(raffle => {
+        if(tempNamesArray.join('').includes(raffle)) {
+          itemsTempArray.filter(item => item.name == raffle)[0].quantity++
+        } else {
+          tempNamesArray.push(raffle)
+          itemsTempArray.push({name: raffle, quantity: 1})
+        }
+      })
+
+      const finalArray: string[] = []
+  
+      itemsTempArray.map(item => finalArray.push(`${item.quantity > 1 ? item.quantity + 'x ' : ''}${item.name}${item.quantity > 1 ? 's' : ''}`))
+  
+      return {...raffle, skins: finalArray}
+    })
+
+    return newRaffleData
+
+  }
+  const filterPurchasableRaffles = () => {
+    if(availableRaffles.length == 0) return
+
+    const tempArray: raffleItem[] = []
+
+    const options = availableRaffles.filter(raffle => raffle.free == false && raffle.participants.length != raffle.users_quantity)
+
+    options.map(raffle => {
+      const { id, raffleSkins, name, value, users_quantity, participants } = raffle
+
+      const skins: string[] = raffleSkins.map(skin => skin.skinName)
+
+      const bundleValue: number = raffleSkins.reduce((sum, skin) => sum + skin.skinValue, 0)
+
+      const bannerSkin: string = raffleSkins.reduce((max, skin) => (skin.skinValue > max.skinValue ? skin : max)).skinPicture
+
+      const tempObject: raffleItem = {
+        id,
+        skins,
+        name,
+        value: value / users_quantity,
+        quantity: 1,
+        maxQuantity: users_quantity - participants.length,
+        isSelected: false,
+        bannerSkin,
+        bundleValue
+      }
+
+      tempArray.unshift(tempObject)
+    })
+
+    setPurchasableRaffles(handleBigNames(tempArray))
+  }
+  // * Available for purchase raffles
+
   // * INIT
   const getRaffleList = () => {
     // * adicionar escolha de rifas com padrão caso não haja parâmetro
@@ -318,6 +401,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
     setNewParticipants(raffle.participants)
     setNewRewards(raffle.raffleSkins)
+    filterPurchasableRaffles()
   }, [raffle])
 
   // ! DEBUGGING
@@ -329,6 +413,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   const value = {
     availableRaffles,
+    purchasableRaffles,
     raffle,
     winnerPopupVisible,
     isButtonActive,
@@ -336,6 +421,8 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     winner,
     participants,
     rewards,
+    toggleSelection,
+    handleChangeQuantity,
     removeReward,
     setWinner,
     loadFillerCards,

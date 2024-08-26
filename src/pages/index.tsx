@@ -4,15 +4,18 @@ import ServicesDisplay from "./homeComponents/ServicesDisplay";
 import ServiceRaffle from "./homeComponents/ServiceRaffle";
 import PopupBuy from "components/PopupBuy";
 import History from "./homeComponents/History";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { useEffect, useState } from "react";
+import { useUserStateContext } from "../contexts/UserContext";
 import axios from "axios";
 import UserContextType from "../utils/interfaces";
+import { RouletteProvider } from "contexts/RouletteContext";
+import PaymentBrick from "components/PaymentSteps";
 
 const Homepage = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType;
+  const { userInfo, setUserInfo, showPayment, setShowPayment } = useUserStateContext() as UserContextType;
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [ valueDiff, setValueDiff ] = useState<number>(0)
 
   useEffect(() => {
     const htmlElement = document.querySelector("html");
@@ -94,12 +97,17 @@ const Homepage = () => {
 
   return (
     <>
-      {isVisible && <PopupBuy props={{ isVisible, setIsVisible }} />}
+      {isVisible && <RouletteProvider>
+        <PopupBuy props={{ isVisible, setIsVisible, setShowPayment, setValueDiff }} />
+      </RouletteProvider>}
       <Hero props={{ isVisible, setIsVisible }} />
       <Services />
       <ServicesDisplay />
       <ServiceRaffle />
       <History />
+      {showPayment && <RouletteProvider>
+        <PaymentBrick props={{setShowPayment, valueDiff}}/>
+      </RouletteProvider>}
     </>
   );
 };

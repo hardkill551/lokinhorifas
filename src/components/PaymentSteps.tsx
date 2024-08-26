@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import shield from "../assets/checkmark.shield.svg";
+import { useRouter } from "next/router";
 
 declare global {
   interface Window {
@@ -14,15 +15,16 @@ declare global {
 const PaymentBrick = ({
   props,
 }: {
-  props: { setShowPayment: Dispatch<React.SetStateAction<boolean>> };
+  props: { setShowPayment: Dispatch<React.SetStateAction<boolean>>, valueDiff: number };
 }) => {
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const [price, setPrice] = useState(0);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const ref = useRef<HTMLInputElement>(null);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
+  const router = useRouter()
 
-  const { setShowPayment } = props;
+  const { setShowPayment, valueDiff = 0 } = props;
 
   const addStep = () => {
     setStep((oldValue) => oldValue + 1);
@@ -34,6 +36,11 @@ const PaymentBrick = ({
 
   // Carregue o SDK do Mercado Pago dinamicamente
   useEffect(() => {
+    if(ref.current) {
+      ref.current.value = valueDiff.toString()
+      setPrice(Number(ref.current.value))
+    }
+
     const script = document.createElement("script");
     script.src = "https://sdk.mercadopago.com/js/v2";
     script.async = true;
@@ -165,6 +172,11 @@ const PaymentBrick = ({
     return `brickContent step-${step}-wrap`;
   };
 
+  const handleCompletion = () => {
+    router.reload()
+    setShowPayment(false)
+  }
+
   return (
     <div className="brick">
       <div className="brickWrapper">
@@ -183,7 +195,6 @@ const PaymentBrick = ({
             <p>Poderá voltar para alterar esse valor depois</p>
           </div>
           <div className="step-2">
-            <h2>Quanto de saldo gostaria de adicionar à sua conta?</h2>
             <div className="paymentWrapper">
               <div id="paymentBrick_container"></div>
             </div>
@@ -196,7 +207,7 @@ const PaymentBrick = ({
             <button
               type="button"
               disabled={step != 3}
-              onClick={() => setShowPayment(false)}
+              onClick={() => handleCompletion()}
             >
               Continuar
             </button>

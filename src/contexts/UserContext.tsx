@@ -3,7 +3,6 @@ import {
   ReactNode,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
@@ -28,6 +27,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [showBudget, setShowBudget] = useState<boolean>(false);
+  const [ showPayment, setShowPayment ] = useState<boolean>(false)
 
   const logOut = () => {
     if (typeof window !== "undefined") {
@@ -55,6 +55,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUserInfo,
     showBudget,
     setShowBudget,
+    showPayment, 
+    setShowPayment
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

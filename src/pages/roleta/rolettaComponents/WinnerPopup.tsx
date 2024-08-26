@@ -55,7 +55,7 @@ const RoletaWinner = () => {
     <div className={style.WinnerPopup} style={{display:`${winnerPopupVisible ? 'flex' : 'none'}`}}>
     <div className={style.WinnerPopupWrapper}>
       <div className={style.SkinImageBox}>
-        <Image src={localWinner.prize.itemImageUrl != "" ? localWinner.prize.itemImageUrl : defaultGunPicture} alt="Imagem de Skin"/>
+        <Image src={typeof localWinner.prize.itemImageUrl === "string" ? defaultGunPicture : localWinner.prize.itemImageUrl} alt="Imagem de Skin"/>
         <Image src={shine} alt="Brilho de fundo"/>
       </div>
       <h2>Parabéns!</h2>

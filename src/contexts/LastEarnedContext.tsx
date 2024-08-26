@@ -133,7 +133,7 @@ export const LastEarnedContextProvider = ({children}:{children: ReactNode} ) => 
       else if(earnedDateDays) time = `${earnedDateDays} dia${earnedDateDays == 1 ? '' : 's'}`
 
       const newItem = {
-        itemImageUrl: raffle.skin.picture.includes('url_to_picture') ? '' : raffle.skin.picture,
+        itemImageUrl: raffle.skin.picture,
         TimeOfEarning: time,
         ChanceOfEarning: raffle.item_chance,
         PoolType: raffle.skin.value >= 1500 ? 'Gold' : 'Silver',

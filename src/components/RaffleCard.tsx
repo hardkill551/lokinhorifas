@@ -17,7 +17,10 @@ const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dis
 
   return (
     <div className="card" onClick={() => handleCardClick()}>
-      <Image className='skin' src={defaultGunPic} alt='Skin principal'/>
+      {typeof raffle.bannerSkin === 'string' ? 
+      <Image className='skin' src={defaultGunPic} alt='Skin principal padrão'/> 
+      : <Image className='skin' src={raffle.bannerSkin} alt='Skin principal'/>
+      }
       <Image className='shine' src={shine} alt='Skin principal'/>
 
       {raffle.isSelected && <div className="selectCheck">
@@ -25,11 +28,11 @@ const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dis
       </div>}
 
       <div className="glowGroup">
-        <div className="glow-1"></div>
-        <div className="glow-2"></div>
+        <div className={`glow-1 ${raffle.bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
+        <div className={`glow-2 ${raffle.bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
       </div>
 
-      <h3>Rifa {raffle.name}</h3>
+      <h3 className={`${raffle.bundleValue > 1000 ? 'Gold' : 'Silver'}`}>{raffle.name}</h3>
     </div>
   );
 }

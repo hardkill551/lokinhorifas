@@ -1,3 +1,4 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { Dispatch } from "react";
 
 export default interface TextContextType{
@@ -11,7 +12,11 @@ export default interface TextContextType{
 export default interface UserContextType {
     userInfo: UserInfoType;
     setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
-    logOut: Function
+    logOut: Function,
+    showPayment: boolean, 
+    setShowPayment: React.Dispatch<React.SetStateAction<boolean>>
+    showBudget: boolean, 
+    setShowBudget: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export type UserInfoType = {
@@ -82,7 +87,7 @@ export type RewardItemType = {
 }
 
 export type LastEarnedPrizeType = {
-  itemImageUrl: string;
+  itemImageUrl: string | StaticImport;
   TimeOfEarning: string;
   ChanceOfEarning: string;
   PoolType: string;
@@ -120,7 +125,7 @@ export type SkinType = {
   name: string;
   value: number;
   type: string;
-  picture: string;
+  picture: string | StaticImport;
 }
 
 export type RewardItemContextType = {
@@ -200,7 +205,10 @@ export type raffleItem = {
   name: string,
   value: number,
   quantity: number,
-  isSelected: boolean
+  maxQuantity: number,
+  isSelected: boolean,
+  bannerSkin: string | StaticImport,
+  bundleValue: number,
 }
 export interface RaffleNumberType {
   key: number;
@@ -378,6 +386,7 @@ export type Raffle = {
 
 export type RouletteContext = {
   availableRaffles: Raffle[],
+  purchasableRaffles: raffleItem[],
   raffle: Raffle,
   winnerPopupVisible: boolean,
   isButtonActive: boolean,
@@ -385,6 +394,8 @@ export type RouletteContext = {
   winner: HTMLElement,
   participants: Participant[],
   rewards: RaffleReward[],
+  toggleSelection: (id: number) => void,
+  handleChangeQuantity: (id: number, newQuantity: number) => void,
   removeReward: Function,
   setWinner: Dispatch<React.SetStateAction<HTMLElement>>,
   loadFillerCards: (position: number) => JSX.Element[] | undefined,
@@ -392,4 +403,18 @@ export type RouletteContext = {
   manageMockWinner: Function,
   manageCloseResult: Function,
   selectRaffle: (id: number) => void,
+}
+
+export interface LastPayment {
+  date: string;
+  type: string;
+  moneySpent: number;
+  totalBudgetThen: number;
+}
+
+export type rafflePayment =  {
+  key: number, 
+  name: string,
+  quantity:number,
+  value:number
 }

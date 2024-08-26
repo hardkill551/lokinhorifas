@@ -1,5 +1,5 @@
 import { Dispatch, useEffect, useState } from "react";
-import { raffleItem, UserInfoType } from "utils/interfaces"
+import { raffleItem, RouletteContext, UserInfoType } from "utils/interfaces"
 import Link from "next/link";
 
 import RaffleDetails from "./RaffleDetails";
@@ -9,101 +9,21 @@ import RaffleSelectQuantity from "./raffleSelectQuantity";
 import RafflePayment from "./RafflePayment";
 import { useUserStateContext } from "contexts/UserContext";
 import RaffleConfirmation from "./RaffleConfirmation";
+import { useRouletteContext } from "contexts/RouletteContext";
+import { useRouter } from "next/router";
 
-const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.Dispatch<React.SetStateAction<boolean>>} }) => {
+const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.Dispatch<React.SetStateAction<boolean>>, setShowPayment: React.Dispatch<React.SetStateAction<boolean>>, setValueDiff: React.Dispatch<React.SetStateAction<number>>} }) => {
 
+  const { purchasableRaffles = [], toggleSelection, handleChangeQuantity } = useRouletteContext() as RouletteContext
+  const router = useRouter()
   
-  const { isVisible, setIsVisible } = props
+  const { isVisible, setIsVisible, setShowPayment, setValueDiff } = props
   const { userInfo, setUserInfo } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>}
   const [ detailsVisible, setDetailsVisible ] = useState(false)
   const [ raffleDetails, setRaffleDetails ] = useState(0)
-  const [ rafflesData, setRaffleData ] = useState<raffleItem[]>([])
   const [ step, setStep ] = useState(1)
   const [ total, setTotal ] = useState(0)
-
-  const raffles = [
-    {
-      id: 0,
-      skins: [ 'neon light', 'neon light', 'neon light', 'neon light', 'neon light', 'neon light' ],
-      name: '',
-      value: Math.random() * 500,
-      quantity: 1,
-      isSelected: false
-    },
-    {
-      id: 1,
-      skins: [ 'neon light', 'neon light', 'neon light', 'neon light', 'neon light', 'neon light' ],
-      name: '',
-      value: Math.random() * 500,
-      quantity: 1,
-      isSelected: false
-    },
-    {
-      id: 2,
-      skins: [ 'neon light', 'neon light', 'neon light', 'neon light', 'neon light', 'neon light' ],
-      name: '',
-      value: Math.random() * 500,
-      quantity: 1,
-      isSelected: false
-    },
-    {
-      id: 3,
-      skins: [ 'neon light', 'neon light', 'neon light', 'neon light', 'neon light', 'neon light' ],
-      name: '',
-      value: Math.random() * 500,
-      quantity: 1,
-      isSelected: false
-    },
-    {
-      id: 4,
-      skins: [ 'neon light', 'neon light', 'neon light', 'neon light', 'neon light', 'neon light' ],
-      name: '',
-      value: Math.random() * 500,
-      quantity: 1,
-      isSelected: false
-    },
-    {
-      id: 5,
-      skins: [ 'neon light', 'confirmed kill', 'onyx', 'flyer' ],
-      name: '',
-      value: Math.random() * 500,
-      quantity: 1,
-      isSelected: false
-    }
-  ]
-  
-  const handleBigNames = (raffles: raffleItem[]) => {
-    let tempNamesArray: string[] = []
-
-    let itemsTempArray: {name: string, quantity: number}[] = []
-
-    const newRaffleData = raffles.map(raffle => {
-      tempNamesArray = []
-      itemsTempArray = []
-
-      raffle.skins.map(raffle => {
-        if(tempNamesArray.join('').includes(raffle)) {
-          itemsTempArray.filter(item => item.name == raffle)[0].quantity++
-        } else {
-          tempNamesArray.push(raffle)
-          itemsTempArray.push({name: raffle, quantity: 1})
-        }
-      })
-
-      const finalArray: string[] = []
-  
-      itemsTempArray.map(item => finalArray.push(`${item.quantity > 1 ? item.quantity + 'x' : ''} ${item.name}${item.quantity > 1 ? 's' : ''}`))
-  
-      return {...raffle, name: finalArray.join(', ')}
-    })
-
-    return newRaffleData
-
-  }
-
-  useEffect(() => {
-    setRaffleData(handleBigNames(raffles))
-  }, [])
+  const [ showPrompt, setShowPrompt ] = useState(false)
 
   const addStep = () => {
     setStep(oldValue => oldValue += 1)
@@ -111,24 +31,6 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
 
   const removeStep = () => {
     setStep(oldValue => oldValue -= 1)
-  }
-
-  const toggleSelection = (id:number) => {
-    const newRaffles = rafflesData.map(raffle => {
-      if(raffle.id == id) return {...raffle, isSelected: !raffle.isSelected}
-      return raffle
-    })
-
-    setRaffleData(newRaffles)
-  }
-
-  const handleChangeQuantity = (id:number, newQuantity: number) => {
-    const newRaffles = rafflesData.map(raffle => {
-      if(raffle.id == id) return {...raffle, quantity: newQuantity}
-      return raffle
-    })
-
-    setRaffleData(newRaffles)
   }
 
   const checkStep = () => {
@@ -143,22 +45,31 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
   }
 
   const handleStepValidation = () => {
+    if(!userInfo.email) return router.reload()
     if(step < 3) addStep()
     else if(step == 4) {
       setIsVisible(false)
     }
     else {
       if(userInfo.saldo < total) {
-        console.log('falha')
-        // TODO!: Lançar um popup na interface para pedir pro usuário comprar mais créditos ou cancelar a compra
+        setShowPrompt(true)
+        // * Lançar um popup na interface para pedir pro usuário comprar mais créditos ou cancelar a compra
       }
       else {
         setUserInfo(oldValue => {return {...oldValue, saldo: oldValue.saldo -= total}})
         addStep()
-        // TODO: Enviar para o back a transação
+        // TODO!: Enviar para o back a transação
       }
     }
   }
+
+  const handlePrompt = (redirect: boolean) => {
+    setShowPrompt(false)
+
+    if(redirect) setShowPayment(true)
+  }
+
+  const newTotal = total.toString().includes('.') ? `${total.toString().split('.')[0]},${total.toString().split('.')[1][0]}${total.toString().split('.')[1][1] ? total.toString().split('.')[1][1] : '0'}` : `${total.toString()},00`
 
   return (
     <section className={`PopupBuy ${isVisible ? '' : 'not-show'}`}>
@@ -170,15 +81,15 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
 
             {/* Abaixo são as etapas para compra de rifa */}
 
-            <RaffleSelect moreDetails={{setDetailsVisible, rafflesData, setRaffleDetails}} />
+            <RaffleSelect moreDetails={{setDetailsVisible, rafflesData: purchasableRaffles, setRaffleDetails}} />
 
             {/* Raffle select é a primeira etapa, o usuário precisa ter pelo menos uma rifa selecionada para progredir */}
 
-            <RaffleSelectQuantity setQuantity={{setTotal, rafflesData, handleChangeQuantity}}/>
+            <RaffleSelectQuantity setQuantity={{setTotal, rafflesData: purchasableRaffles, handleChangeQuantity}}/>
 
             {/* Raffle select quantity é a segunda, aqui ele poderá adicionar mais números referentes as rifas selecionadas na etapa anterior */}
 
-            <RafflePayment props={{rafflesData}} />
+            <RafflePayment props={{rafflesData: purchasableRaffles, setValueDiff}} />
 
             {/* Raffle payment lidará com o pagamento através do saldo na conta, essa escolha foi feita pra evitar o possível assincronismo entre a pessoa ter ou não o valor em mãos, algo que à prontifica melhor */}
 
@@ -189,16 +100,26 @@ const PopupBuy = ({ props }: { props: {isVisible: boolean, setIsVisible: React.D
           </div>
           <div className={step == 4 ? "bottomSection end" : "bottomSection"}>
             {(step > 1 && step < 3) && <div className="totalValue">
-              <h3>Total: R$ {total.toFixed(2).toString().replace('.', ',')}</h3>
+              <h3>Total: R$ {newTotal}</h3>
             </div>}
             {(step > 1 && step < 4) && <Link href={''} onClick={removeStep}>&lt;- Voltar</Link>}
-            <button onClick={handleStepValidation} disabled={rafflesData.filter(raffle => raffle.isSelected).length == 0} className={`${(step == 1 || step == 4) && 'center'}`}>{handleButtonText()}</button>
+            <button onClick={handleStepValidation} disabled={purchasableRaffles.filter(raffle => raffle.isSelected).length == 0} className={`${(step == 1 || step == 4) && 'center'}`}>{handleButtonText()}</button>
           </div>
         </div>
 
         <div onClick={() => setIsVisible(false)} className="background"></div>
-        {detailsVisible && <RaffleDetails moreDetails={{setDetailsVisible, rafflesData: rafflesData[raffleDetails], toggleSelection}}/>}
+        {detailsVisible && <RaffleDetails moreDetails={{setDetailsVisible, rafflesData: purchasableRaffles.filter(raffle => raffle.id == raffleDetails)[0], toggleSelection}}/>}
       </div>
+      {showPrompt && <div className="prompt">
+        <div className="promptWrapper">
+          <h2>Saldo insuficiente!</h2>
+          <div className="buttonGroup">
+            <button onClick={() => handlePrompt(true)}>Comprar mais</button>
+            <button onClick={() => handlePrompt(false)}>Cancelar</button>
+          </div>
+        </div>
+        <div onClick={() => handlePrompt(false)} className="background"></div>
+      </div>}
     </section>
   );
 }

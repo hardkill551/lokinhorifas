@@ -11,12 +11,15 @@ const RaffleDetails = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatc
     setDetailsVisible(false)
   }
 
+  const newValue = rafflesData.value.toString().includes('.') ? `${rafflesData.value.toString().split('.')[0]},${rafflesData.value.toString().split('.')[1][0]}${rafflesData.value.toString().split('.')[1][1] ? rafflesData.value.toString().split('.')[1][1] : '0'}` : `${rafflesData.value.toString()},00`
+
   return (
     <div className="details">
       <div className="detailsWrapper">
         <div className="contentGroup">
-          <h2>Rifa {rafflesData.name}</h2>
-            <p>Valor unitário da rifa: R$ {rafflesData.value.toFixed(2).toString().replace('.', ',')}!</p>
+          <h2>{rafflesData.name}</h2>
+            <p>Valor unitário da rifa: R$ {newValue}!</p>
+            <p>Valor total da rifa: R$ {rafflesData.bundleValue},00!</p>
           <div className="included">
             <h3>Nesta rifa são incluídos:</h3>
 

@@ -1,16 +1,11 @@
 import { useUserStateContext } from "contexts/UserContext";
 import { Dispatch, useState } from "react";
-import { UserInfoType } from "utils/interfaces";
+import { LastPayment } from "utils/interfaces";
+import UserContextType from "utils/interfaces";
 import PaymentBrick from "./PaymentSteps";
 
 const Budget = () => {
-  const { userInfo, setShowBudget } = useUserStateContext() as {
-    userInfo: UserInfoType;
-    showBudget: boolean;
-    setShowBudget: Dispatch<React.SetStateAction<boolean>>;
-  };
-
-  const [ showPayment, setShowPayment ] = useState(false)
+  const { userInfo, setShowPayment, setShowBudget } = useUserStateContext() as UserContextType;
 
   const formatarDataHoraAtual = (): string => {
     const agora = new Date();
@@ -23,13 +18,6 @@ const Budget = () => {
 
     return `${dia}/${mes}/${ano}, às ${horas}:${minutos}`;
   };
-
-  interface LastPayment {
-    date: string;
-    type: string;
-    moneySpent: number;
-    totalBudgetThen: number;
-  }
 
   const lastPayments: LastPayment[] = [
     {
@@ -139,8 +127,6 @@ const Budget = () => {
         </div>
 
         <button onClick={() => setShowPayment(true)}>Comprar Saldo</button>
-
-        {showPayment && <PaymentBrick props={{setShowPayment}}/>}
       </div>
       <div onClick={() => setShowBudget(false)} className="background"></div>
     </div>

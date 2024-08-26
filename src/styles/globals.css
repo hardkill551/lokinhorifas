@@ -709,12 +709,29 @@ header {
   justify-content: center;
   align-items: center;
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
 
   width: 100%;
   height: 100%;
+
+  z-index: 20;
+}
+
+.brick button {
+  padding: 15px 9px;
+  font-size: 24px;
+  font-weight: 500;
+
+  border-radius: 7px;
+  border: grey;
+
+  background: linear-gradient(90deg, #1AE22299, #13a11899);
+  background-color: black;
+  color: white;
+
+  cursor: pointer;
 }
 
 .brick .step-2 .paymentWrapper {
@@ -1108,6 +1125,87 @@ footer nav div {
   z-index: 10;
 }
 
+.PopupBuy .prompt {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+}
+
+.prompt .promptWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+
+  padding: 30px;
+
+  gap: 30px;
+
+  border-radius: 12px;
+  outline: 2px solid grey;
+}
+
+.prompt .promptWrapper .buttonGroup {
+  display: flex;
+
+  gap: 15px;
+}
+
+.prompt .promptWrapper .buttonGroup button {
+  padding: 10px;
+
+  font-size: 20px;
+
+  border-radius: 8px;
+
+  border: none;
+
+  outline: 1px solid #E21A1A;
+
+  background: linear-gradient(90deg, #E21A1A, #A30006);
+  color: white;
+
+  cursor: pointer;
+
+  transition: 200ms ease-out;
+
+  white-space: nowrap;
+}
+
+.prompt .promptWrapper .buttonGroup button:hover {
+  filter: brightness(50%);
+}
+
+.prompt .background {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: #00000050;
+
+  backdrop-filter: blur(2px);
+
+  z-index: -1;
+
+  cursor: pointer;
+}
+
 .PopupBuy .PopupBuyWrapper > .background {
   position: absolute;
 
@@ -1385,6 +1483,14 @@ footer nav div {
   z-index: 3;
 }
 
+.PopupBuyContent .card h3.Gold {
+  color: #EFBC84;
+}
+
+.PopupBuyContent .card h3.Silver {
+  color: #EBEBEB;
+}
+
 .PopupBuyContent .card:hover h3 {
   z-index: 2;
 }
@@ -1423,11 +1529,17 @@ footer nav div {
   left: -20%;
   top: -10%;
 
-  background-color: #E21A1A;
-
   border-radius: 50%;
 
   filter: blur(22px);
+}
+
+.PopupBuy .card .glow-1.Gold, .PopupBuy .cartItem .glow-1.Gold {
+  background-color: #EFBC84;
+}
+
+.PopupBuy .card .glow-1.Silver, .PopupBuy .cartItem .glow-1.Silver {
+  background-color: #cdcccc;
 }
 
 .PopupBuy .card .glow-2 {
@@ -1438,11 +1550,18 @@ footer nav div {
   top: -33%;
   right: -20%;
 
-  background-color: #A30006;
-
   border-radius: 50%;
 
   filter: blur(22px);
+}
+
+
+.PopupBuy .card .glow-2.Gold, .PopupBuy .cartItem .glow-2.Gold {
+  background-color: #6B5333;
+}
+
+.PopupBuy .card .glow-2.Silver, .PopupBuy .cartItem .glow-2.Silver {
+  background-color: #6A6A69;
 }
 
 .PopupBuy .details {

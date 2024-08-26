@@ -1,25 +1,27 @@
 import { useUserStateContext } from "contexts/UserContext";
-import { raffleItem, UserInfoType } from "utils/interfaces";
+import { raffleItem, rafflePayment, UserInfoType } from "utils/interfaces";
 import Currency from '../assets/currency.svg'
 import Image from "next/image";
 
-const RafflePayment = ({props}: {props: {rafflesData: raffleItem[]}}) => {
+const RafflePayment = ({props}: {props: {rafflesData: raffleItem[], setValueDiff: React.Dispatch<React.SetStateAction<number>>}}) => {
 
   const { userInfo } = useUserStateContext() as { userInfo: UserInfoType }
 
-  const { rafflesData } = props
+  const { rafflesData, setValueDiff } = props
 
   let value = 0
-  let selectedItems: {key: number, name: string, quantity:number, value:number}[] = []
+  let selectedItems: rafflePayment[] = []
 
   rafflesData.map(raffle => {
     if(raffle.isSelected) {
-      console.log(raffle)
-      value += (raffle.value * raffle.quantity)
+       value = value += (raffle.value * raffle.quantity)
 
       selectedItems.push({key: selectedItems.length, name: raffle.name, quantity: raffle.quantity, value: raffle.value})
     }
   })
+
+  setValueDiff((userInfo.saldo - value) * -1)
+
 
   function formatDate() {
     const now = new Date();
@@ -57,7 +59,7 @@ const RafflePayment = ({props}: {props: {rafflesData: raffleItem[]}}) => {
           </div>
           {selectedItems && selectedItems.map(item =>
           <div className="item" key={item.key}>
-            <h3><span className="name">Rifa {item.name}</span> <div className="quantity">x {item.quantity}</div></h3>
+            <h3><span className="name">{item.name}</span> <div className="quantity">x {item.quantity}</div></h3>
             <h3>R$ {(item.value * item.quantity).toFixed(2).toString().replace('.', ',')}</h3>
           </div>)}
         </div>
