@@ -1,25 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import style from "./RifasCadastradas.module.css";
 import CardRifas from "./CardRifas";
 
-export default function RifasCadastradas(){
-    const [rifascadastradas, setRifasCadastradas] = useState([
-        {id: 1, name:"Rifa 1 aaaaaaaaaaaaaaaaaaaaaaaaaa", type:"Ativa"},
-        {id: 2, name:"Rifa 2", type:"desativa"},
-        {id: 3, name:"Rifa 3", type:"analise"},
-        {id: 4, name:"Rifa 4", type:"analise"},
-        {id: 6, name:"Rifa 2", type:"desativa"},
-        {id: 7, name:"Rifa 3", type:"analise"},
-        {id: 8, name:"Rifa 2", type:"desativa"},
-        {id: 9, name:"Rifa 1", type:"Ativa"},
-        {id: 10, name:"Rifa 4", type:"analise"},
-        {id: 11, name:"Rifa 3", type:"analise"},
-        {id: 12, name:"Rifa 4", type:"analise"},
-    ])
+export default function RifasCadastradas() {
+    const [rifascadastradas, setRifasCadastradas] = useState([]);
+    const [loading, setLoading] = useState(true); // Para indicar o status de carregamento
+    const [error, setError] = useState(null); // Para capturar erros
+    const [pageRaffle, setPageRaffle] = useState(1);
+    useEffect(() => {
+        axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/raffle/allRaffle?page=${pageRaffle}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        } )
+        .then((res) => {
+            setRifasCadastradas(res.data);
+    
+        })
+        .catch((err) => {
+            setError(err.response.data);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+    }, []);
+
+ 
+
+    if (loading) {
+        return <div>Carregando...</div>;
+    }
+
+    if (error) {
+        return <div>Erro: {error}</div>;
+    }
 
     return(
         <div className={style.ContainerRifasCadastradas}>
-        {rifascadastradas.map((rifa) =>
+        {rifascadastradas.map((rifa:any) =>
             <CardRifas key={rifa.id} id={rifa.id} name={rifa.name} type={rifa.type}/>
         )}
         </div>

@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import style from "./RifasCadastradas.module.css";
+import axios from "axios";
 
-export default function PopUpRifa({setPopUpRifaRifa}:any) {
+export default function PopUpRifa({setPopUpRifaRifa, id}:any) {
+
+    function ActiveRaflle(){
+        
+    }
 
     return (
         <div className={style.ContainerPopUpRifa}>
@@ -18,11 +24,16 @@ export default function PopUpRifa({setPopUpRifaRifa}:any) {
                    <p className={style.TitleDescriptionPopUpRifa}>Modificada em: <span>12/09/2024</span></p>
                 </div>
                 <div>
-                    <button className={style.ButtonPopUpRifa}>Ativar Rifa</button>
+                    <button className={style.ButtonPopUpRifa} onClick={()=> {
+                        axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/raffle/active?id=${id}`,{}, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)})}}>Ativar Rifa</button>
                    <button className={style.ButtonPopUpRifa}>Deletar Rifa</button>
                    <button className={style.ButtonPopUpRifa}>Atualizar Rifa</button>
                 </div>
             </div>
         </div>
     );
+}
+
+function useState(): [any, any] {
+    throw new Error("Function not implemented.");
 }

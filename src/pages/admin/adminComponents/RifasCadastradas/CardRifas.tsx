@@ -8,7 +8,7 @@ export default function CardRifas({ name, type, id }: any) {
 
     return (
         <>
-            {popUpRifa && <PopUpRifa setPopUpRifaRifa={setPopUpRifaRifa}/>}
+            {popUpRifa && <PopUpRifa setPopUpRifaRifa={setPopUpRifaRifa} id={id}/>}
             <div className={style.ContainerCardRifa} onClick={() => setPopUpRifaRifa(true)}>
                 <Image src={imagem} width={180} height={100} alt="Card rifa" />
                 <div className={style.NomeRifa}>
