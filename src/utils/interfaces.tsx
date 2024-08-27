@@ -160,7 +160,7 @@ export type RaffleType = {
 export type RaffleInfoTable = {
   id: string;
   name: string;
-  state: "ativada" | "em espera" | "desativada";
+  state: "Ativa" | "Em espera" | "Inativa";
   totalValue: number;
   isFree: boolean;
   unitValue: number;
