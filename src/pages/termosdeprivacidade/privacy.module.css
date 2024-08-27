@@ -17,6 +17,10 @@
   padding: 30px;
 }
 
+.privacyWrapper * {
+  color: white;
+}
+
 .privacy h1 {
   font-size: 32px;
 }
@@ -26,7 +30,8 @@
   margin-bottom: 12px;
 }
 
-.privacy p, .privacy li {
+.privacy p,
+.privacy li {
   line-height: 140%;
 }
 
