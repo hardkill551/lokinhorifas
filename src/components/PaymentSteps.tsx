@@ -19,17 +19,17 @@ const PaymentBrick = ({
     setShowPayment: Dispatch<React.SetStateAction<boolean>>;
     valueDiff: number;
   };
+  props: {
+    setShowPayment: Dispatch<React.SetStateAction<boolean>>;
+    valueDiff: number;
+  };
 }) => {
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const [price, setPrice] = useState(0);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const ref = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState(1);
-<<<<<<< HEAD
-  const router = useRouter()
-=======
   const router = useRouter();
->>>>>>> 4d0970e36174ce01d034cd256a92db0f5d1a3710
 
   const { setShowPayment, valueDiff = 0 } = props;
 
@@ -43,9 +43,9 @@ const PaymentBrick = ({
 
   // Carregue o SDK do Mercado Pago dinamicamente
   useEffect(() => {
-    if (ref.current) {
-      ref.current.value = valueDiff.toString();
-      setPrice(Number(ref.current.value));
+    if  (ref.current) {
+      ref.current.value = valueDiff.toString();;
+      setPrice(Number(ref.current.value));;
     }
 
     const script = document.createElement("script");
@@ -180,9 +180,9 @@ const PaymentBrick = ({
   };
 
   const handleCompletion = () => {
-    router.reload();
-    setShowPayment(false);
-  };
+    router.reload();;
+    setShowPayment(false);;
+  };;
 
   return (
     <div className="brick">
