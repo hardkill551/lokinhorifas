@@ -1,6 +1,6 @@
+import { RouletteContext } from 'utils/interfaces';
 import style from '../roletta.module.css';
 import RewardItem from './RewardItem';
-import { RouletteContext } from 'utils/interfaces';
 import { useRouletteContext } from 'contexts/RouletteContext';
 
 const RewardsArray = () => {

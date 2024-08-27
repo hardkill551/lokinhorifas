@@ -127,7 +127,7 @@ export const RaffleProvider = ({children} : {children: ReactNode}) =>{
       return {
         id: `${i}`,
         name: `SORTEIO #${i.toString().padStart(6, '0')}`,
-        state: "em espera",
+        state: "Em espera",
         totalValue: tempTotalValue,
         unitValue: unitValue,
         skins: tempArray,
@@ -153,7 +153,7 @@ export const RaffleProvider = ({children} : {children: ReactNode}) =>{
     return {
       id: `${i}`,
       name: `SORTEIO #${i.toString().padStart(6, '0')}`,
-      state: randomStateValue as "ativada" | "desativada" | "em espera",
+      state: randomStateValue as "Ativa" | "Inativa" | "Em espera",
       totalValue: randomTotal,
       unitValue: randomUnit,
       skins: selectRandomWeapons(Math.floor(Math.random() * 5 + 1)),

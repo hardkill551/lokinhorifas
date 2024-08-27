@@ -4,11 +4,12 @@ import cn from 'classnames';
 import GOLDIcon from '../../../assets/GOLD.svg';
 import SILVERIcon from '../../../assets/SILVER.svg';
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
-import defaultGunPic from '../../../assets/defaultProfilePic.svg'
+import defaultGunPic from '../../../images/Roleta/Prizes/DefaultGunPic.png'
 //! ATENÇÃO TODAS AS IMAGENS DAS ARMAS DEVEM ESTAR NA SEGUINTE RESOLUÇÃO: 165x135!
 
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import { LastEarnFrontEndType } from 'utils/interfaces';
+import { useEffect, useState } from 'react';
 
 const LastEarnedPrizes = ({ props }: { props: {item: LastEarnFrontEndType, index: number} }) => {
   if (!props) {
@@ -25,15 +26,21 @@ const LastEarnedPrizes = ({ props }: { props: {item: LastEarnFrontEndType, index
     ItemValue = '0.00' // Default item value
   } = props.item;
 
+  const [ imgSrc, setImgSrc ] = useState<string | StaticImageData>(itemImageUrl)
+
+  useEffect(() => {
+    setImgSrc(itemImageUrl)
+  }, [itemImageUrl])
+
   return (
     <div className={cn(props.index > 2 && style.desktop, style.EarnedPrizeItem, style?.[PoolType])}>
       <div className={style.EarnedPrizeItemWrapper}>
         <div className={style.ItemMetaInfo}>
           <p>Foi sorteado há<br />{TimeOfEarning}</p>
-          <p>Chance<br />{ChanceOfEarning}%</p>
+          <p>Chance<br />{ChanceOfEarning}</p>
         </div>
         <div className={style.ImageWrapperBox}>
-          <Image src={typeof itemImageUrl === 'string' ? defaultGunPic : itemImageUrl} alt={`Imagem de ${ItemName}`} />
+          <Image width={165} height={135} src={imgSrc} alt={`Imagem de ${ItemName}`} onError={() => setImgSrc(defaultGunPic)}/>
         </div>
         <div className={style.ItemDescription}>
           <div className={style.PrizePoolType}>

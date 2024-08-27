@@ -93,9 +93,7 @@ const PaymentBrick = ({
           paymentMethods: {
             creditCard: "all",
             debitCard: "all",
-            ticket: "all",
-            bankTransfer: "all",
-            atm: "all",
+            bankTransfer: "pix",
             maxInstallments: 1,
           },
           visual: {

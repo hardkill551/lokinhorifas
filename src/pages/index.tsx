@@ -7,9 +7,9 @@ import History from "./homeComponents/History";
 import { useEffect, useState } from "react";
 import { useUserStateContext } from "../contexts/UserContext";
 import axios from "axios";
-import UserContextType from "../utils/interfaces";
 import { RouletteProvider } from "contexts/RouletteContext";
 import PaymentBrick from "components/PaymentSteps";
+import { UserContextType } from "utils/interfaces";
 
 const Homepage = () => {
   const { userInfo, setUserInfo, showPayment, setShowPayment } = useUserStateContext() as UserContextType;

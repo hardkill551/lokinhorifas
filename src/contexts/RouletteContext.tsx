@@ -25,15 +25,13 @@ export const useRouletteContext = () => {
 export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // ? Init variables
   const [availableRaffles, setAvailableRaffles] = useState<Raffle[]>([]);
-  const [purchasableRaffles, setPurchasableRaffles] = useState<raffleItem[]>(
-    []
-  );
+  const [purchasableRaffles, setPurchasableRaffles] = useState<raffleItem[]>([]);
   const [raffle, setRaffle] = useState<Raffle>();
   // ? Init variables
 
   // ? Necessary variables
-  const [participants, setParticipants] = useState<Participant[]>();
-  const [rewards, setRewards] = useState<RaffleReward[]>();
+  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [rewards, setRewards] = useState<RaffleReward[]>([]);
 
   const [animationState, setAnimationState] = useState<Animation>();
   const [isMockWin, setIsMockWin] = useState<boolean>(false);
@@ -369,13 +367,12 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     newRewardsArray.map((item: RaffleSkin) => {
       const newItem = {
         id: item.skin_id,
-        type: item.skinValue >= 1500 ? "Gold" : "Silver",
-        itemImageUrl: "",
+        type: item.skinValue >= 1000 ? "Gold" : "Silver",
+        itemImageUrl: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${item.skinPicture}`,
         itemName: item.skinName,
         itemType: item.skinType,
         itemValue: String(item.skinValue),
       };
-
       tempArray.push(newItem);
     });
 
@@ -410,7 +407,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
       itemsTempArray.map((item) =>
         finalArray.push(
           `${item.quantity > 1 ? item.quantity + "x " : ""}${item.name}${
-            item.quantity > 1 ? "s" : ""
+            item.quantity > 1 ? "'s" : ""
           }`
         )
       );
@@ -442,9 +439,9 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
         0
       );
 
-      const bannerSkin: string = raffleSkins.reduce((max, skin) =>
+      const bannerSkin: string = `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${raffleSkins.reduce((max, skin) =>
         skin.skinValue > max.skinValue ? skin : max
-      ).skinPicture;
+      ).skinPicture}`
 
       const tempObject: raffleItem = {
         id,

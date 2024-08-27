@@ -4,9 +4,9 @@ import Image from "next/image";
 import style from "./styles/PopUpChangeInformation.module.css";
 import MaskedInput from "react-text-mask";
 import { UserContext } from "../../utils/contextUser";
-import UserContextType, { UserData } from "../../utils/interfaces";
 import axios from "axios";
 import { Phone } from "@mui/icons-material";
+import { UserContextType } from "utils/interfaces";
 
 export default function PopUpChangeInformation({ setPopUpInfo }:any) {
     const { userInfo, setUserInfo } = useContext(UserContext) as UserContextType;
