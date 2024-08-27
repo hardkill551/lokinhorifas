@@ -5,20 +5,18 @@ import Roulette from './Roulette';
 
 import HEROBACK from '../../../images/Roleta/Hero/HEROBACKGROUND.png';
 import LINES from '../../../images/Roleta/Hero/Lines.png';
-import { usePersonCardState } from 'contexts/PersonCardContext';
-import { useRewardState } from 'contexts/RewardContext';
-import { Participant, RewardItemType } from 'utils/interfaces';
-import { useEffect } from 'react';
+import { RouletteContext } from 'utils/interfaces';
+import { useRouletteContext } from 'contexts/RouletteContext';
 
 
 const Hero = () => {
-  const { manageMockWinner, isButtonActive, manageWinner, participants = [] } = usePersonCardState() as { manageMockWinner: Function, isButtonActive: boolean, manageWinner: Function, participants: Participant[] };
-  
-  const { rewards = [] } = useRewardState() as { rewards: RewardItemType[] };
-
-  // useEffect(() => {
-  //   console.log(participants.filter(item => item.isWinner))
-  // }, [participants])
+  const { 
+    manageWinner, 
+    manageMockWinner, 
+    isButtonActive, 
+    participants = [], 
+    rewards = [] 
+  } = useRouletteContext() as RouletteContext
 
   return (
     <section className={style.Roleta}>

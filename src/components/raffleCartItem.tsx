@@ -1,21 +1,14 @@
 import Image from "next/image";
 import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
-import { ChangeEvent, Dispatch, useEffect, useState } from "react";
+import shine from '../images/Roleta/WinnerPopup/shine.png'
+import { ChangeEvent, useEffect, useState } from "react";
+import { raffleItem } from "utils/interfaces";
 
 const RaffleCartItem = ({props}: {props: { 
-  item: {
-    id: number,
-    skins: string[],
-    value: number,
-    quantity: number
-  },
+  item: raffleItem,
   handleChangeQuantity: Function} }) => {
-  // Aqui devem ser recebidos:
-  // todas as skins das armas
-  // a rifa em q estão presentes
-  // O valor da rifa
 
-  const { id, quantity, skins, value } = props.item
+  const { id, quantity, value, name, maxQuantity, skins, bannerSkin, bundleValue } = props.item
   const { handleChangeQuantity } = props
 
   const [ defaultValue, setDefaultValue ] = useState(quantity)
@@ -25,45 +18,30 @@ const RaffleCartItem = ({props}: {props: {
   }, [defaultValue])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if(maxQuantity < Number(e.target.value)) return
     setDefaultValue(Number(e.target.value) == 0 ? 1 : Number(e.target.value))
   }
 
+  const newValue = value.toString().includes('.') ? `${value.toString().split('.')[0]},${value.toString().split('.')[1][0]}${value.toString().split('.')[1][1] ? value.toString().split('.')[1][1] : '0'}` : `${value.toString()},00`
+
   return (
     <div className="cartItem">
-      <div className="raffleBanner">
-        <div className="imageGroup">
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-          <div className="imageBox">
-            <Image src={defaultGunPic} width={95} alt="banner com skin"/>
-          </div>
-        </div>
+      <div className="raffleBanner desktop">
         <div className="glowGroup">
-          <div className="glow-1"></div>
-          <div className="glow-2"></div>
+        <div className={`glow-1 ${bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
+        <div className={`glow-2 ${bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
         </div>
+        {typeof bannerSkin === 'string' ? 
+        <Image className='skin' src={defaultGunPic} alt='Skin principal padrão'/> 
+        : <Image className='skin' src={bannerSkin} alt='Skin principal'/>
+        }
+        <Image className="shine" src={shine} alt="Brilho"/>
       </div>
 
       <div className="raffleMetaData">
         <div className="raffleTitleContent">
-          <h3>Rifa 6x Neon lights!</h3>
-          <p>6x Neon lights</p>
+          <h3>{name}</h3>
+          <p>{skins.join(', ')}</p>
         </div>
 
         <div className="raffleQuantity">
@@ -72,7 +50,7 @@ const RaffleCartItem = ({props}: {props: {
             <input min={1} onChange={e => handleInputChange(e)} type="number" name="quantidade"  value={defaultValue} required/>
           </label>
 
-          <h3>x R$ {value.toFixed(2).toString().replace('.', ',')}</h3>
+          <h3>x R$ {newValue}</h3>
         </div>
       </div>
 

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import ExternalSVG from '../../assets/ExternalLink.svg';
 import Background from '../../images/Homepage/Hero/HERO.png';
 import Faixas from './Faixa';
 import style from '../homepage.module.css';
@@ -33,7 +32,7 @@ const Hero = ({ props }: { props: { isVisible: boolean, setIsVisible: React.Disp
               <span className={style.highlight}>Transforme</span> seu <br /> inventário com <br className={style.mobile} />o <span className={style.highlight}>Lokinho</span>
             </h1>
             <p>Fazemos upgrade, compra e venda. Precisa de uma skin específica? Também fazemos encomendas</p>
-            <button onClick={handleShowRaffles}>Compre sua Rifa <Image src={ExternalSVG} alt="Link externo" /></button>
+            <button onClick={handleShowRaffles}>Compre sua Rifa</button>
           </div>
           <div className={style.col2}></div>
         </div>

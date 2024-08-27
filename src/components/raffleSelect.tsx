@@ -1,9 +1,10 @@
 import { Dispatch } from "react";
 import RaffleCard from "./RaffleCard";
+import { raffleItem } from "utils/interfaces";
 
-const RaffleSelect = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>} }) => {
+const RaffleSelect = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>, rafflesData: raffleItem[], setRaffleDetails: Dispatch<React.SetStateAction<number>>} }) => {
 
-  const { setDetailsVisible } = moreDetails
+  const { setDetailsVisible, rafflesData, setRaffleDetails } = moreDetails
   
   return (
     <div className="raffleSelect">
@@ -13,7 +14,7 @@ const RaffleSelect = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch
     </div>
     <div className="cardGroup">
       <div className="cardGroupWrapper">
-        <RaffleCard moreDetails={{setDetailsVisible}} />
+        {rafflesData && rafflesData.map(raffle => <RaffleCard key={raffle.id} props={{raffle}} moreDetails={{setDetailsVisible, setRaffleDetails}} />)}
       </div>
     </div>
   </div>

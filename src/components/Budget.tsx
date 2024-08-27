@@ -1,127 +1,136 @@
-import MaskedInput from "react-text-mask";
-import thanksShield from '../assets/checkmark.shield.svg'
-import Image from "next/image";
-import { useState } from "react";
+import { useUserStateContext } from "contexts/UserContext";
+import { Dispatch, useState } from "react";
+import { LastPayment } from "utils/interfaces";
+import UserContextType from "utils/interfaces";
+import PaymentBrick from "./PaymentSteps";
 
-const Budget = ({ props }: { props: {showBudget: boolean, setShowBudget: React.Dispatch<React.SetStateAction<boolean>>} }) => {
+const Budget = () => {
+  const { userInfo, setShowPayment, setShowBudget } = useUserStateContext() as UserContextType;
 
-  const { showBudget, setShowBudget } = props
-  const [ step, setStep ] = useState<number>(0)
+  const formatarDataHoraAtual = (): string => {
+    const agora = new Date();
 
-  const addStep = () => {
-    setStep(oldValue => oldValue += 1)
-  }
+    const dia = String(agora.getDate()).padStart(2, "0");
+    const mes = String(agora.getMonth() + 1).padStart(2, "0");
+    const ano = agora.getFullYear();
+    const horas = String(agora.getHours()).padStart(2, "0");
+    const minutos = String(agora.getMinutes()).padStart(2, "0");
 
-  const validadeForm = () => {
+    return `${dia}/${mes}/${ano}, às ${horas}:${minutos}`;
+  };
 
-    // TODO fazer validação
-
-    console.log('here', step)
-
-    if(step == 0) addStep()
-  }
+  const lastPayments: LastPayment[] = [
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+    {
+      date: formatarDataHoraAtual(),
+      type: "Compra de saldo",
+      moneySpent: 15,
+      totalBudgetThen: 0,
+    },
+  ];
 
   return (
     <div className="budget">
-      <div className="statusBar">
-        <div className="error"></div>
-      </div>
-      <div className="budgetViewport">
-        <div className={`budgetWrapper  ${step == 1 ? 'step-2' : ''}`}>
-          <div className="budgetRecharge">
-            <div className='titleWrapper'>
-              <h2>Pagamento</h2>
-              <p>Preencha os dados para confirmar sua compra</p>
-            </div>
-
-            {/* <label>
-              <p>Forma de Pagamento</p>
-              <select name="paymentType">
-                <option value="">--Selecione uma forma de pagamento--</option>
-                <option value="credit">Crédito</option>
-                <option value="debit">Débito</option>
-                <option value="pix">Pix</option>
-              </select>
-            </label> */}
-
-            <label>
-              <p>Número do Cartão</p>
-              <MaskedInput
-                mask={[
-                  /[1-9]/, /[0-9]/, /[0-9]/, /[0-9]/, ' ',
-                  /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, ' ',
-                  /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/, ' ',
-                  /[0-9]/, /[0-9]/, /[0-9]/, /[0-9]/
-                ]}
-                // onChange={}
-                // value={userData.phoneNumber}
-                placeholder="1234 5678 9012 3456"
-                name="cardNumber"
-              />
-            </label>
-            <label>
-              <p>CCV</p>
-              <MaskedInput
-                mask={[
-                  /[0-9]/, /[0-9]/, /[0-9]/,
-                  // /\s?/,
-                  // /[0-9]/,
-                ]}
-                // onChange={}
-                // value={userData.phoneNumber}
-                placeholder="123"
-                name="ccv"
-              />
-            </label>
-            <label>
-              <p>Nome escrito no cartão</p>
-              <input
-              // onChange={}
-              // value={userData.phoneNumber}
-                placeholder="João Carlos Freitas"
-                name="name"
-              />
-            </label>
-            <label>
-              <p>CPF do Titular</p>
-              <MaskedInput
-                mask={[
-                  /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '.', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/
-                ]}
-                // onChange={}
-                // value={userData.phoneNumber}
-                placeholder="123.123.123-12"
-                name="cpf"
-              />
-            </label>
-            <label>
-              <p>Data de expiração</p>
-              <MaskedInput
-                mask={[
-                  /[0-1]/, /[0-9]/, '/', /[0-9]/, /[0-9]/
-                ]}
-                // onChange={}
-                // value={userData.phoneNumber}
-                placeholder="DD/MM"
-                name="expiryDate"
-              />
-            </label>
-
-            <button onClick={() => validadeForm()}>Confirmar pagamento</button>
-          </div>
-
-          <div className="thanksScreen">
-            <Image src={thanksShield} alt="Agradecimento"/>
-            <h2>Obrigado</h2>
-            <p>Seu saldo novo estará disponível em breve</p>
-
-            <button onClick={() => setShowBudget(false)} >Continuar</button>
-          </div>
+      <div className="budgetWrapper">
+        <div className="currentBudget">
+          <h1>R$ {userInfo.saldo.toFixed(2).toString().replace(".", ",")}</h1>
+          <h2>Saldo Atual</h2>
         </div>
+
+        <div className="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Data da Movimentação</th>
+                <th>Tipo da Movimentação</th>
+                <th className="price">Débito/Crédito</th>
+                <th className="price">Saldo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {lastPayments.length > 0 &&
+                lastPayments.map((payment, index) => (
+                  <tr key={index}>
+                    <th>{payment.date}</th>
+                    <th>{payment.type}</th>
+                    <th className="price loss">
+                      -R${" "}
+                      {payment.moneySpent
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")}
+                    </th>
+                    <th className="price">
+                      R${" "}
+                      {payment.totalBudgetThen
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")}
+                    </th>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+
+        <button onClick={() => setShowPayment(true)}>Comprar Saldo</button>
       </div>
       <div onClick={() => setShowBudget(false)} className="background"></div>
     </div>
   );
-}
- 
+};
+
 export default Budget;

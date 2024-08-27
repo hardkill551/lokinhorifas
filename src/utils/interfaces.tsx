@@ -1,17 +1,22 @@
-import { StaticImageData } from "next/image";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { Dispatch } from "react";
 
-export interface TextContextType{
+export interface TextContextType {
   textInfo: {
-    text:string,
-    id:number
+    text: string;
+    id: number;
   };
   setTextInfo: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface UserContextType {
-    userInfo: UserInfoType;
-    setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
-    logOut: Function
+  userInfo: UserInfoType;
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfoType>>;
+  logOut: Function;
+  showPayment: boolean;
+  setShowPayment: React.Dispatch<React.SetStateAction<boolean>>;
+  showBudget: boolean;
+  setShowBudget: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type UserInfoType = {
@@ -23,7 +28,8 @@ export type UserInfoType = {
   isAdmin: boolean;
   phoneNumber: string;
   tradeLink: string;
-}
+  saldo: number;
+};
 
 export type UserInfoTable = {
   id: string;
@@ -32,9 +38,9 @@ export type UserInfoTable = {
   isAdmin: boolean;
   tradeLink: string;
   created: string;
-}
+};
 
-export type UserSettingsType = { 
+export type UserSettingsType = {
   profile: {
     name: string;
     tradeLink: string;
@@ -47,22 +53,22 @@ export type UserSettingsType = {
   setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
   image: File | null;
   setImage: React.Dispatch<React.SetStateAction<File | null>>;
-}
+};
 
 export type UserData = {
-    tradeLink: string;
-    phoneNumber: string;
-    oldPassword: string;
-    newPassword: string;
-    picture: File | null;
-}
+  tradeLink: string;
+  phoneNumber: string;
+  oldPassword: string;
+  newPassword: string;
+  picture: File | null;
+};
 
 export type ServicesCardType = {
-  ImageSVG:string;
-  ImageAlt:string;
-  CardTitle:string;
-  CardContent:string;
-}
+  ImageSVG: string;
+  ImageAlt: string;
+  CardTitle: string;
+  CardContent: string;
+};
 
 export type CardItemType = {
   profilePicture: string;
@@ -70,7 +76,7 @@ export type CardItemType = {
   nickName: string;
   isWinner: boolean;
   number: number;
-}
+};
 
 export type RewardItemType = {
   type: string;
@@ -78,10 +84,10 @@ export type RewardItemType = {
   itemName: string;
   itemType: string;
   itemValue: string;
-}
+};
 
 export type LastEarnedPrizeType = {
-  itemImageUrl: string;
+  itemImageUrl: string | StaticImport;
   TimeOfEarning: string;
   ChanceOfEarning: string;
   PoolType: string;
@@ -91,14 +97,14 @@ export type LastEarnedPrizeType = {
   WinnerID: number;
   WinnerName: string;
   WinnerPicture: string;
-}
+};
 
 export type PersonInfoCard = {
   id: number;
-  name: string; 
+  name: string;
   number: number;
   picture: string;
-}
+};
 
 export type Participant = {
   id: number;
@@ -107,30 +113,30 @@ export type Participant = {
   nickName: string;
   number: number;
   isWinner: boolean;
-}
+};
 
 export type PersonCardContextType = {
   participants: PersonInfoCard[];
   setNewParticipants: (dataArray: Participant[]) => void;
-}
+};
 
 export type SkinType = {
   id: number;
   name: string;
   value: number;
   type: string;
-  picture: string;
-}
+  picture: string | StaticImport;
+};
 
 export type RewardItemContextType = {
   rewards: RewardItemType[];
   setNewRewards: (dataArray: SkinType[]) => void;
-}
+};
 
 export type LastEarnedWinnerType = {
   winner: WinnerType;
   raffle: RaffleType;
-}
+};
 
 export type WinnerType = {
   id: number;
@@ -140,7 +146,7 @@ export type WinnerType = {
   picture: string;
   tradeLink: string | null;
   isAdmin: boolean;
-}
+};
 
 export type RaffleType = {
   id: number;
@@ -149,12 +155,12 @@ export type RaffleType = {
   skin: SkinType;
   item_chance: string;
   updatedAt: string;
-}
+};
 
 export type RaffleInfoTable = {
   id: string;
   name: string;
-  state: 'ativada' | 'em espera' | 'desativada';
+  state: "ativada" | "em espera" | "desativada";
   totalValue: number;
   isFree: boolean;
   unitValue: number;
@@ -163,7 +169,7 @@ export type RaffleInfoTable = {
   skins: string[];
   ocurred: string | false;
   created: string;
-}
+};
 
 export type LastEarnFrontEndType = {
   itemImageUrl: string;
@@ -173,7 +179,7 @@ export type LastEarnFrontEndType = {
   ItemName: string;
   ItemType: string;
   ItemValue: string;
-}
+};
 
 export interface FormDataType {
   email: string;
@@ -185,7 +191,6 @@ export interface FormDataType {
   picture: null | File | string;
 }
 
-
 export interface skinDataType {
   value: number;
   type: string;
@@ -193,12 +198,24 @@ export interface skinDataType {
   picture: null | File | string;
 }
 
+export type raffleItem = {
+  id: number;
+  skins: string[];
+  name: string;
+  value: number;
+  quantity: number;
+  maxQuantity: number;
+  isSelected: boolean;
+  bannerSkin: string | StaticImport;
+  bundleValue: number;
+};
 export interface RaffleNumberType {
   key: number;
   number: number;
   isSelected: boolean;
   isAvailable: boolean;
-}[]
+}
+[];
 
 //interface temporaria para os users da tela do admin
 export interface UsersProps {
@@ -224,7 +241,7 @@ export type RegisterRifa = {
   name: string;
   value: number;
   picture: string;
-}
+};
 
 export interface InterRegisterRifa {
   id: number;

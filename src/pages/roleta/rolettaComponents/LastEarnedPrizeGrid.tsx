@@ -3,22 +3,11 @@ import style from '../roletta.module.css';
 import Image from 'next/image';
 import GIFTIcon from '../../../assets/gift.svg';
 import PRIZESBACKGROUND from '../../../images/Roleta/Prizes/PRIZESBACKGROUND.png';
-import axios from 'axios';
-import { useEffect } from 'react';
 import { useLastEarnedState } from 'contexts/LastEarnedContext';
 import { LastEarnFrontEndType } from 'utils/interfaces';
 
 const LastEarnedPrizeGrid = () => {
-  const { lastEarnedList, setNewLastEarnedList } = useLastEarnedState() as { lastEarnedList: LastEarnFrontEndType[], setNewLastEarnedList: Function };
-
-  useEffect(() => {
-    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/winners", { params: { page: 1 } })
-      .then((res: any) => { 
-        console.log(res.data);
-        setNewLastEarnedList(res.data);
-      })
-      .catch((err: any) => console.error(err));
-  }, []);
+  const { lastEarnedList } = useLastEarnedState() as { lastEarnedList: LastEarnFrontEndType[]};
 
   return (
     <section className={style.LastPrizes}>

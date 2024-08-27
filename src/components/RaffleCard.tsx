@@ -1,55 +1,38 @@
 import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
+import shine from '../images/Roleta/WinnerPopup/shine.png'
 import checkMark from '../assets/checkmark.svg'
 import Image from "next/image";
-import { Dispatch, useState } from 'react';
+import { Dispatch } from 'react';
+import { raffleItem } from 'utils/interfaces';
 
-const RaffleCard = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>} }) => {
+const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>, setRaffleDetails: Dispatch<React.SetStateAction<number>>}, props: { raffle: raffleItem } }) => {
 
-  const { setDetailsVisible } = moreDetails
-  const [ isSelected, setIsSelected ] = useState(false)
+  const { setDetailsVisible, setRaffleDetails } = moreDetails
+  const { raffle } = props
+
+  const handleCardClick = () => {
+    setDetailsVisible(true)
+    setRaffleDetails(raffle.id)
+  }
 
   return (
-    <div className="card" onClick={() => setDetailsVisible(true)}>
-      <div className="imageGroup">
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-        <div className="imageBox">
-          <Image src={defaultGunPic} width={150} alt="banner com skin"/>
-        </div>
-      </div>
+    <div className="card" onClick={() => handleCardClick()}>
+      {typeof raffle.bannerSkin === 'string' ? 
+      <Image className='skin' src={defaultGunPic} alt='Skin principal padrão'/> 
+      : <Image className='skin' src={raffle.bannerSkin} alt='Skin principal'/>
+      }
+      <Image className='shine' src={shine} alt='Skin principal'/>
 
-      {isSelected && <div className="selectCheck">
+      {raffle.isSelected && <div className="selectCheck">
         <Image src={checkMark} alt='check'/>
       </div>}
 
       <div className="glowGroup">
-        <div className="glow-1"></div>
-        <div className="glow-2"></div>
+        <div className={`glow-1 ${raffle.bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
+        <div className={`glow-2 ${raffle.bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
       </div>
 
-      <h3>Rifa 6x Neon lights!</h3>
+      <h3 className={`${raffle.bundleValue > 1000 ? 'Gold' : 'Silver'}`}>{raffle.name}</h3>
     </div>
   );
 }

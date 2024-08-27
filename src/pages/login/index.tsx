@@ -29,11 +29,15 @@ const Login = () => {
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         axios
-          .post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth", {}, {
-            headers: {
-              Authorization: `Bearer ${storedToken}`,
-            },
-          })
+          .post(
+            process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${storedToken}`,
+              },
+            }
+          )
           .then((res: any) => {
             router.push("/");
           })
@@ -61,7 +65,9 @@ const Login = () => {
 
   const checkEmail = async () => {
     let tempBool = await axios
-      .post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/verify", { email: formDataValue.email })
+      .post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/verify", {
+        email: formDataValue.email,
+      })
       .then((res) => {
         push(`./cadastro?email=${formDataValue.email}`);
         return false;
@@ -144,7 +150,9 @@ const Login = () => {
 
               {error && <div className={style.errorBox}>{error}</div>}
 
-              <div className={cn(style.box, step == 0 ? style?.["step-1"] : "")}>
+              <div
+                className={cn(style.box, step == 0 ? style?.["step-1"] : "")}
+              >
                 <div className={style.boxWrapper}>
                   <label>
                     E-mail:
@@ -204,7 +212,11 @@ const Login = () => {
               alt="Imagem de fundo"
             />
           </div>
-          <Image className={style?.["background-1"]} src={Lines} alt="Linhas de fundo" />
+          <Image
+            className={style?.["background-1"]}
+            src={Lines}
+            alt="Linhas de fundo"
+          />
         </div>
         <div className={style.glowGroup}>
           <div className={style?.["glow-0"]}>

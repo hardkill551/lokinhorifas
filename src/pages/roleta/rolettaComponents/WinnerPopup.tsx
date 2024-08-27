@@ -2,20 +2,16 @@ import style from '../roletta.module.css'
 import Image from 'next/image';
 
 import defaultGunPicture from '../../../assets/defaultProfilePic.svg'
-import glitter from '../../../images/Roleta/WinnerPopup/GLITTERS.png'
+// import glitter from '../../../images/Roleta/WinnerPopup/GLITTERS.png'
 import shine from '../../../images/Roleta/WinnerPopup/shine.png'
 
 
-import { usePersonCardState } from 'contexts/PersonCardContext';
-import { Participant, RewardItemType } from 'utils/interfaces';
+import { RouletteContext } from 'utils/interfaces';
 import { useEffect, useState } from 'react';
-import { useRewardState } from 'contexts/RewardContext';
+import { useRouletteContext } from 'contexts/RouletteContext';
 
 const RoletaWinner = () => {
-
-  const { winnerPopupVisible, manageCloseResult, winner, participants, isMockWin } = usePersonCardState() as { winnerPopupVisible: boolean, manageCloseResult: Function, winner: HTMLElement, participants: Participant[], isMockWin: boolean }
-
-  const { rewards } = useRewardState() as { rewards: RewardItemType[] }
+  const { rewards = [], winnerPopupVisible, manageCloseResult, winner, participants, isMockWin } = useRouletteContext() as RouletteContext
 
   const [ localWinner, setLocalWinner ] = useState({
       id: 1,
@@ -59,7 +55,7 @@ const RoletaWinner = () => {
     <div className={style.WinnerPopup} style={{display:`${winnerPopupVisible ? 'flex' : 'none'}`}}>
     <div className={style.WinnerPopupWrapper}>
       <div className={style.SkinImageBox}>
-        <Image src={localWinner.prize.itemImageUrl != "" ? localWinner.prize.itemImageUrl : defaultGunPicture} alt="Imagem de Skin"/>
+        <Image src={typeof localWinner.prize.itemImageUrl === "string" ? defaultGunPicture : localWinner.prize.itemImageUrl} alt="Imagem de Skin"/>
         <Image src={shine} alt="Brilho de fundo"/>
       </div>
       <h2>Parabéns!</h2>

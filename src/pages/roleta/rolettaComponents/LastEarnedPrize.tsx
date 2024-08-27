@@ -16,7 +16,7 @@ const LastEarnedPrizes = ({ props }: { props: {item: LastEarnFrontEndType, index
   }
 
   const {
-    itemImageUrl = "",
+    itemImageUrl,
     TimeOfEarning = 'há pouco', // Default value for TimeOfEarning
     ChanceOfEarning = '0%', // Default value for ChanceOfEarning
     PoolType = 'Silver', // Default to 'Silver' if PoolType is not provided
@@ -26,14 +26,14 @@ const LastEarnedPrizes = ({ props }: { props: {item: LastEarnFrontEndType, index
   } = props.item;
 
   return (
-    <div className={cn(props.index > 3 && style.desktop, style.EarnedPrizeItem, style?.[PoolType])}>
+    <div className={cn(props.index > 2 && style.desktop, style.EarnedPrizeItem, style?.[PoolType])}>
       <div className={style.EarnedPrizeItemWrapper}>
         <div className={style.ItemMetaInfo}>
           <p>Foi sorteado há<br />{TimeOfEarning}</p>
           <p>Chance<br />{ChanceOfEarning}%</p>
         </div>
         <div className={style.ImageWrapperBox}>
-          <Image src={itemImageUrl ? itemImageUrl : defaultGunPic} alt={`Imagem de ${ItemName}`} />
+          <Image src={typeof itemImageUrl === 'string' ? defaultGunPic : itemImageUrl} alt={`Imagem de ${ItemName}`} />
         </div>
         <div className={style.ItemDescription}>
           <div className={style.PrizePoolType}>

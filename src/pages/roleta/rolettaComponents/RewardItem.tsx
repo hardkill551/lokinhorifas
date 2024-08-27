@@ -25,7 +25,7 @@ const RewardItem = ({ props }: { props: {item: RewardItemType, index:number} }) 
   } = props.item;
 
   return (
-    <div className={cn(props.index > 1 && style.desktop, style.Reward, style?.[type])}>
+    <div className={cn(props.index > 0 && style.desktop, style.Reward, style?.[type])}>
       <div className={style.RewardItemWrapper}>
         <div className={style.RewardType}>
           <Image

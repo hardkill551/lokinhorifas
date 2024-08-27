@@ -252,6 +252,8 @@ header {
   width: 100%;
   height: fit-content;
 
+  white-space: nowrap;
+
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -263,6 +265,8 @@ header {
 
   width: 100%;
   height: 0;
+
+  white-space: nowrap;
 
   text-overflow: ellipsis;
   overflow: hidden;
@@ -561,7 +565,7 @@ header {
   background-color: black;
 }
 
-.Profile .budget {
+.budget {
   display: flex;
 
   justify-content: center;
@@ -573,21 +577,117 @@ header {
 
   width: 100%;
   height: 100vh;
+
+  z-index: 10;
 }
 
-.Profile .budget .statusBar {
-  position: absolute;
+.budgetWrapper {
+  display: flex;
 
-  height: 685px;
+  flex-direction: column;
 
-  width: 705px;
+  width: 1235px;
+  height: 800px;
 
-  /* outline: 2px solid orange; */
+  border-radius: 20px;
 
-  overflow: hidden;
+  padding: 70px 45px;
+
+  background-color: white;
+
+  gap: 60px;
 }
 
-.Profile .budget .background {
+.budget .currentBudget {
+  width: 100%;
+  text-align: center;
+}
+
+.budget .currentBudget h1 {
+  font-size: 68px;
+  font-weight: 600;
+}
+
+.budget .currentBudget h2 {
+  font-size: 22px;
+  font-weight: 500;
+
+  opacity: .5;
+}
+
+.budget .tableWrapper {
+  height: 500px;
+  overflow: auto;
+}
+
+.budget table {
+  border-spacing: 0;
+
+  width: 100%;
+}
+
+.budget table thead {
+  position: sticky;
+  top: 0;
+
+  background-color: #F3F3F3;
+  font-weight: 600;
+}
+
+.budget table tbody {
+  height: fit-content;
+}
+
+.budget table tbody th {
+  border-top: 2px solid #EAECF0;
+  background-color: rgb(251, 251, 251);
+
+  font-weight: 500;
+}
+
+.budget table tbody tr:last-of-type th {
+  border-bottom: 2px solid #EAECF0;
+}
+
+.budget .price {
+  text-align: end;
+}
+
+.budget tbody .loss {
+  color: #E21A1A;
+}
+
+.budget table th {
+  white-space: nowrap;
+
+  padding: 16px 30px;
+}
+
+.budget button {
+  font-size: 18px;
+  color: white;
+
+  background: linear-gradient(90deg, #1AE222, #13a118);
+
+  width: fit-content;
+
+  border: none;
+  border-radius: 4px;
+
+  align-self: center;
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+  transition: 200ms ease-out;
+}
+
+.budget button:hover {
+  filter: brightness(80%);
+}
+
+.budget > .background {
   position: absolute;
   left: 0;
   top: 0;
@@ -603,41 +703,75 @@ header {
   cursor: pointer;
 }
 
-.Profile .budgetViewport {
-  width: 712px;
-
-  overflow: hidden;
-
-  border: 5px solid #222;
-
-  border-radius: 11px;
-}
-
-.Profile .budgetWrapper {
+.brick {
   display: flex;
 
-  /* width: 712px; */
-  width: 1424px;
-  /* height: 600px; */
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
   height: 100%;
 
-  align-items: center;
+  z-index: 20;
+}
+
+.brick button {
+  padding: 15px 9px;
+  font-size: 24px;
+  font-weight: 500;
+
+  border-radius: 7px;
+  border: grey;
+
+  background: linear-gradient(90deg, #1AE22299, #13a11899);
+  background-color: black;
+  color: white;
+
+  cursor: pointer;
+}
+
+.brick .step-2 .paymentWrapper {
+  width: 100%;
+  height: 100%;
+
+  overflow: auto;
+}
+
+.brickWrapper {
+  z-index: 1;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 12px;
 
   background-color: white;
 
-  color: black;
-  overflow-y: auto;
-  
-  position: relative;
-
-  transition: translate 600ms ease-in;
+  overflow: hidden;
 }
 
-.Profile .budgetWrapper.step-2 {
-  translate: -712px;
+.brickContent {
+  display: flex;
+
+  width: fit-content;
+  height: 500px;
+
+  transition: translate 400ms ease-out;
 }
 
-.Profile .thanksScreen {
+.brickContent.step-2-wrap {
+  translate: calc(-100% / 3);
+}
+
+.brickContent.step-3-wrap {
+  translate: calc(-200% / 3);
+}
+
+.brick .step-1, .brick .step-2, .brick .step-3 {
   display: flex;
 
   flex-direction: column;
@@ -645,109 +779,96 @@ header {
   justify-content: center;
   align-items: center;
 
-  width: 712px;
-  height: 100%;
-
-  gap: 30px;
-
-  padding: 16px 63px;
-}
-
-.Profile .thanksScreen h2 {
-  font-size: 36px;
-
-  width: fit-content;
-}
-
-.Profile .thanksScreen p {
-  font-size: 14px;
-
-  width: fit-content;
-}
-
-.Profile .thanksScreen button {
-
-  padding: 15px 65px;
-}
-
-.budgetRecharge {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  gap: 30px;
-
-  width: 712px;
-  height: fit-content;
-
-  padding: 16px 63px;
-}
-
-.Profile .budgetWrapper label {
-  font-size: 20px;
-}
-
-.Profile .budgetWrapper input, .Profile .budgetWrapper select {
-  display: block;
-
-  margin-top: 5px;
-
-  width: 590px;
-  height: 48px;
-
-  padding: 14px;
-
-  font-size: 20px;
-
-  border-radius: 4px;
-  border: none;
-  outline: 2px solid;
-
-  color: grey;
-}
-
-.Profile .budgetWrapper input:focus-within, .Profile .budgetWrapper select:focus-within {
-  outline: 2px solid #ff1c1c;
-}
-
-.budgetWrapper button {
-  background: linear-gradient(90deg, #1AE22295, #00A31095);
-  background-color: #000;
-  font-size: 24px;
-
-  outline: #1AE222;
-
-  width: fit-content;
-
-  padding: 15px;
-}
-
-.budgetWrapper button:hover {
-  box-shadow: 0 0 15px #1AE222;
-}
-
-.budgetWrapper .titleWrapper {
-  display: flex;
-
-  flex-direction: column;
-
-  width: 100%;
-
   gap: 10px;
 
+  width: 500px;
+  height: 100%;
 }
 
-.budgetWrapper h2 {
-  font-size: 36px;
-  width: 100%;
+.brick .step-1 h2 {
+  width: 400px;
+  text-align: center;
+
+  font-weight: 500;
 }
 
-.budgetWrapper p {
+.brick .step-1 input {
+  padding: 5px 15px;
+
+  border-radius: 4px;
+
+  font-size: 18px;
+}
+
+.brick .step-1 button {
+  width: 250px;
+}
+
+.brick .step-1 button:disabled {
+  filter: grayscale(100%);
+}
+
+.brick .step-1 p {
+  font-size: 12px;
+  font-weight: 400;
+
+  opacity: .5;
+}
+
+.brick .step-2 {
+  padding: 30px;
+}
+
+.brick .step-2 a {
+  margin-top: auto;
+  color: black;
+
+  cursor: pointer;
+}
+
+.brick .step-3 {
+  padding: 30px;
+}
+
+.brick .step-3 img {
+  width: 200px;
+  height: auto;
+}
+
+.brick .step-3 h2 {
+  font-weight: 500;
+}
+
+.brick .step-3 p {
   font-size: 14px;
-  width: 100%;
+  font-weight: 400;
+
+  opacity: .5;
+
+  margin-bottom: auto;
 }
+
+.brick .step-3 h2, .brick .step-3 p {
+  width: 300px;
+  text-align: center;
+}
+
+.brick .background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: .4;
+
+  width: 100%;
+  height: 100%;
+
+  background: radial-gradient(#333, black);
+
+  z-index: 0;
+
+  cursor: pointer;
+}
+
 
 .Profile .accountContent {
   display: flex;
@@ -1004,6 +1125,87 @@ footer nav div {
   z-index: 10;
 }
 
+.PopupBuy .prompt {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+}
+
+.prompt .promptWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+
+  padding: 30px;
+
+  gap: 30px;
+
+  border-radius: 12px;
+  outline: 2px solid grey;
+}
+
+.prompt .promptWrapper .buttonGroup {
+  display: flex;
+
+  gap: 15px;
+}
+
+.prompt .promptWrapper .buttonGroup button {
+  padding: 10px;
+
+  font-size: 20px;
+
+  border-radius: 8px;
+
+  border: none;
+
+  outline: 1px solid #E21A1A;
+
+  background: linear-gradient(90deg, #E21A1A, #A30006);
+  color: white;
+
+  cursor: pointer;
+
+  transition: 200ms ease-out;
+
+  white-space: nowrap;
+}
+
+.prompt .promptWrapper .buttonGroup button:hover {
+  filter: brightness(50%);
+}
+
+.prompt .background {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: #00000050;
+
+  backdrop-filter: blur(2px);
+
+  z-index: -1;
+
+  cursor: pointer;
+}
+
 .PopupBuy .PopupBuyWrapper > .background {
   position: absolute;
 
@@ -1130,7 +1332,7 @@ footer nav div {
   display: flex;
   flex-direction: row;
 
-  width: 1420px;
+  width: 2840px;
   height: 100%;
 
   transition: translate 400ms ease-in;
@@ -1223,6 +1425,41 @@ footer nav div {
   cursor: pointer;
 }
 
+.PopupBuyContent .card .skin {
+  position: absolute;
+
+  justify-self: center;
+  align-self: center;
+
+  width: 70%;
+  height: auto;
+
+  z-index: 2;
+
+  transition: scale 400ms ease-out;
+}
+
+.PopupBuyContent .card:hover .skin {
+  scale: 1.2;
+}
+
+.PopupBuyContent .card .shine {
+  position: absolute;
+  top: 0;
+
+  justify-self: center;
+  align-self: center;
+
+  scale: 2;
+
+  width: 100%;
+  height: auto;
+
+  z-index: 1;
+
+  animation: 12s linear 0s infinite normal both running spin;
+}
+
 .PopupBuyContent .card::after {
   content: '';
 
@@ -1234,71 +1471,6 @@ footer nav div {
   background: linear-gradient(0deg, black 5%, transparent 75%);
 }
 
-.PopupBuyContent .card .imageGroup {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
-
-  position: absolute;
-  top: 0;
-
-  z-index: 1;
-}
-
-.PopupBuyContent .card .imageBox {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 55px;
-
-  transition: 400ms ease-in-out;
-}
-
-.PopupBuyContent .card .imageBox:nth-of-type(5) {
-  z-index: 2;
-}
-
-.PopupBuyContent .card:hover .imageBox:nth-of-type(5) {
-  scale: 1.4;
-}
-
-.PopupBuyContent .card .imageBox img {
-  width: 150px;
-  height: auto;
-
-  opacity: .8;
-  rotate: 40deg;
-
-  transition: 300ms ease-in-out;
-}
-
-.PopupBuyContent .card:hover .imageBox img {
-  width: 150px;
-  height: auto;
-
-  opacity: .8;
-  rotate: 40deg;
-
-  filter: brightness(50%);
-
-  transition: 300ms ease-in-out;
-}
-
-.PopupBuyContent .card .imageBox:nth-of-type(5) img {
-  filter: brightness(100%);
-
-}
-
-.PopupBuyContent .card:hover .imageBox:nth-of-type(5) img {
-  opacity: 1;
-  /* rotate: 0deg; */
-}
 
 .PopupBuyContent .card h3 {
   width: 100%;
@@ -1309,6 +1481,14 @@ footer nav div {
   font-weight: 500;
 
   z-index: 3;
+}
+
+.PopupBuyContent .card h3.Gold {
+  color: #EFBC84;
+}
+
+.PopupBuyContent .card h3.Silver {
+  color: #EBEBEB;
 }
 
 .PopupBuyContent .card:hover h3 {
@@ -1322,6 +1502,8 @@ footer nav div {
 
   width: 50px;
   height: 50px;
+
+  z-index: 10;
 }
 
 .PopupBuyContent .selectCheck img {
@@ -1347,11 +1529,17 @@ footer nav div {
   left: -20%;
   top: -10%;
 
-  background-color: #E21A1A;
-
   border-radius: 50%;
 
   filter: blur(22px);
+}
+
+.PopupBuy .card .glow-1.Gold, .PopupBuy .cartItem .glow-1.Gold {
+  background-color: #EFBC84;
+}
+
+.PopupBuy .card .glow-1.Silver, .PopupBuy .cartItem .glow-1.Silver {
+  background-color: #cdcccc;
 }
 
 .PopupBuy .card .glow-2 {
@@ -1362,11 +1550,18 @@ footer nav div {
   top: -33%;
   right: -20%;
 
-  background-color: #A30006;
-
   border-radius: 50%;
 
   filter: blur(22px);
+}
+
+
+.PopupBuy .card .glow-2.Gold, .PopupBuy .cartItem .glow-2.Gold {
+  background-color: #6B5333;
+}
+
+.PopupBuy .card .glow-2.Silver, .PopupBuy .cartItem .glow-2.Silver {
+  background-color: #6A6A69;
 }
 
 .PopupBuy .details {
@@ -1402,43 +1597,6 @@ footer nav div {
   outline: 1px solid grey;
 }
 
-.PopupBuy .detailsWrapper .imageGroup {
-  display: flex;
-
-  justify-content: center;
-  align-items: flex-start;
-
-  width: 100%;
-  height: 90px;
-
-  padding-top: 20px;
-
-  background: linear-gradient(90deg, #E21A1A, #A30006);
-
-  border-bottom: 1px solid grey;
-
-  z-index: 1;
-
-  overflow: hidden;
-}
-
-.PopupBuy .detailsWrapper .imageBox {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-
-  width: 55px;
-
-  transition: 400ms ease-in-out;
-}
-
-.PopupBuy .detailsWrapper .imageBox img {
-  rotate: 40deg;
-
-  width: 150px;
-  height: auto;
-}
 
 .PopupBuy .detailsWrapper .contentGroup {
   display: flex;
@@ -1454,6 +1612,12 @@ footer nav div {
 
 .PopupBuy .detailsWrapper .contentGroup h2 {
   font-weight: 500;
+  width: 100%;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .PopupBuy .detailsWrapper .contentGroup > p {
@@ -1587,6 +1751,14 @@ footer nav div {
 
 .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleTitleContent h3 {
   font-size: 24px;
+  
+  width: 100%;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   font-weight: 500;
 }
 
@@ -1594,6 +1766,13 @@ footer nav div {
   opacity: .5;
   font-weight: 500;
   font-size: 18px;
+
+  width: 80%;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity {
@@ -1637,6 +1816,11 @@ footer nav div {
 }
 
 .PopupBuy .raffleBuyQuantity .raffleBanner {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
   width: 200px;
   height: 130px;
 
@@ -1649,20 +1833,46 @@ footer nav div {
   position: relative;
 }
 
-.PopupBuy .raffleBuyQuantity .imageGroup {
-  display: flex;
 
-  justify-content: center;
-  align-items: center;
+.PopupBuy .raffleBuyQuantity .raffleBanner .skin {
+  width: 140px;
+  height: auto; 
 
+  z-index: 2;
+
+  transition: scale 400ms ease-out;
+}
+
+.PopupBuy .raffleBuyQuantity .raffleBanner .shine {
   position: absolute;
-  top: 0;
 
   width: 100%;
-  height: 100%;
+  height: auto; 
+
+  scale: 2;
 
   z-index: 1;
+
+  animation: 12s linear 0s infinite normal both running spin;
+
+  /* opacity: 0; */
 }
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+    filter: brightness(200%);
+  }
+  50% {
+    scale: 1.5;
+    opacity: .5;
+  }
+  100% {
+    rotate: 360deg;
+    filter: brightness(200%);
+  }
+}
+
 
 .PopupBuyContent .raffleBuyQuantity .glowGroup {
   width: 100%;
@@ -1704,31 +1914,147 @@ footer nav div {
   filter: blur(22px);
 }
 
-.PopupBuyContent .raffleBuyQuantity .imageBox {
+.PopupBuy .rafflePayment {
+  display: flex;
+  flex-direction: column;
+
+  width: 710px;
+
+  gap: 41px;
+}
+
+.PopupBuy .rafflePayment .userPaymentData,
+.PopupBuy .rafflePayment .itemTable,
+.PopupBuy .rafflePayment .purchaseDetails {
+  padding-inline: 60px;
+}
+
+.PopupBuy .userPaymentData .value {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.PopupBuy .userPaymentData .value h3 {
   display: flex;
 
   justify-content: center;
   align-items: center;
 
-  width: 35px;
+  gap: 6px;
 
-  transition: 400ms ease-in-out;
+  margin-bottom: 10px;
 }
 
-.PopupBuyContent .raffleBuyQuantity .imageBox img {
-  width: 95px;
-  height: auto;
-
-  opacity: .8;
-  rotate: 40deg;
-
-  transition: 300ms ease-in-out;
+.PopupBuy .userPaymentData .value h3 img {
+  height: 24px;
+  width: auto;
 }
 
-.PopupBuyContent .card .imageBox:nth-of-type(5) img {
-  filter: brightness(100%);
+.PopupBuy .userPaymentData .value h3 span {
+  font-weight: 500;
+
+  opacity: .5;
 }
 
+.PopupBuy .userPaymentData .value h2 {
+  font-weight: 600;
+}
+
+.PopupBuy .userPaymentData .userBudget {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.PopupBuy .userPaymentData .userBudget h3 {
+  font-weight: 400;
+
+  font-size: 16px;
+}
+
+.PopupBuy .userPaymentData .userBudget h3:last-of-type {
+  color: #E21A1A;
+}
+
+.PopupBuy .itemTable {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.PopupBuy .itemTable .header {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 24px;
+}
+
+.PopupBuy .itemTable .item {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 20px;
+}
+
+.PopupBuy .itemTable .item .name {
+  display: block;
+  width: 350px;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+
+.PopupBuy .itemTable .item h3 {
+  display: flex;
+  font-weight: 400;
+}
+
+.PopupBuy .purchaseDetails {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.PopupBuy .account h3, .PopupBuy .dateOfPurchase h3 {
+  font-size: 22px;
+}
+
+.PopupBuy .account p, .PopupBuy .dateOfPurchase p {
+  font-size: 20px;
+}
+
+.PopupBuy .raffleConfirmation {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 32px;
+
+  width: 710px;
+}
+
+.PopupBuy .raffleConfirmation h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.PopupBuy .raffleConfirmation p {
+  width: 355px;
+
+  text-align: center;
+
+  font-size: 18px;
+}
 
 
 .PopupBuy .bottomSection {
@@ -1748,6 +2074,12 @@ footer nav div {
   background-color: white;
 }
 
+.PopupBuy .bottomSection.end {
+  background-color: transparent;
+
+  translate: 0 -45px;
+}
+
 .PopupBuy .bottomSection button {
   padding: 15px 9px;
   font-size: 24px;
@@ -1761,6 +2093,10 @@ footer nav div {
   color: white;
 
   cursor: pointer;
+}
+
+.PopupBuy .bottomSection button:disabled {
+  filter: grayscale(100%);
 }
 
 .PopupBuy .bottomSection a {
@@ -2009,8 +2345,6 @@ footer nav div {
     translate: 0 0;
     scale: 1;
 
-    z-index: 2;
-
     transition: all 400ms ease-out;
   }
 
@@ -2035,6 +2369,14 @@ footer nav div {
     rotate: 90deg;
 
     font-size: 30px;
+  }
+
+  .Profile .budget {
+    z-index: 10;
+  }
+
+  .Profile .budget .background {
+    top: -90px;
   }
 
   .HeaderWrapper button:hover {
@@ -2286,6 +2628,435 @@ footer nav div {
   .Credits p {
     white-space: nowrap;
   }
+
+  .budget {
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .budgetWrapper {
+    border-radius: 40px 40px 0 0;
+    width: 100%;
+    height: fit-content;
+
+    padding: 30px 0;
+
+    translate: 0 100%;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+
+  .budgetWrapper .tableWrapper {
+    width: 100%;
+    height: fit-content;
+  }
+
+  .budget .currentBudget h1 {
+    white-space: nowrap;
+  }
+
+  .budget table th {
+    padding: 5px;
+
+    white-space: wrap;
+
+    text-align: center;
+
+    font-size: 2.5vmin;
+  }
+
+  .budget .price {
+    text-align: center;
+  }
+
+  .budget > .background {
+    opacity: .8;
+  }
+
+  .brick {
+    align-items: flex-end;
+  }
+
+  .brickWrapper {
+    width: 100%;
+
+    border-radius: 20px 20px 0 0;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .brick .step-1, .brick .step-2, .brick .step-3 {
+    width: 100vw;
+  }
+
+  .brick .step-1 {
+    justify-content: flex-start;
+
+    padding-top: 30px;
+  }
+
+  .brick .step-1 h2 {
+    font-size: 7vmin;
+    width: 90%;
+  }
+
+  .brick .step-1 input {
+    font-size: 4.5vmin;
+  }
+
+  .brick .step-1 button {
+    font-size: 4.5vmin;
+    width: fit-content;
+  }
+
+  .brick .step-1 p {
+    font-size: 3vmin;
+    width: 90%;
+
+    text-align: center;
+  }
+
+  .brick .step-2 a {
+    font-size: 5vmin;
+  }
+
+  .brick .step-3 img {
+    width: 70%;
+    height: auto;
+  }
+
+  .brick .step-3 h2 {
+    font-size: 6vmin;
+  }
+
+  .brick .step-3 p {
+    font-size: 4vmin;
+
+    margin-bottom: 20px;
+  }
+
+  .brick .step-3 button {
+    font-size: 4.5vmin;
+    width: fit-content;
+  }
+
+  .Profile .config {
+    align-items: flex-end;
+  }
+
+  .Profile .configWrapperContent {
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+
+    border: none;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .Profile .configWrapperContent h2 {
+    font-size: 5.5vmin;
+    text-align: center;
+  }
+
+  .Profile .config .imageBox img {
+    border: 2px solid black;
+  }
+
+  .Profile .configWrapperContent .accountInfo {
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .Profile .config .box {
+    width: 100%;
+  }
+
+  .Profile .config .box h3 {
+    text-align: center;
+  }
+
+  .Profile .config .box input {
+    width: 100%;
+  }
+
+  .Profile .config .box button {
+    width: 100%;
+  }
+
+  .Profile .config .box:last-of-type p {
+    text-align: justify;
+  }
+
+  .PopupBuy {
+    align-items: flex-end;
+  }
+
+  .PopupBuy .stepCounter.desktop {
+    display: none;
+  }
+
+  .PopupBuyContent {
+    border-radius: 20px 20px 0 0;
+
+    width: 100%;
+
+    height: 500px;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .PopupBuyWrapper {
+    width: 100%;
+  }
+
+  .PopupBuy .PopupBuyWrapper > .background {
+    background: black;
+
+    opacity: .7;
+  }
+
+  .PopupBuyContent .sessionInfo {
+    width: 100%;
+  }
+
+  .PopupBuyContentWrapper {
+    width: calc(100% * 4);
+  }
+
+  .PopupBuy .raffleSelect,
+  .PopupBuy .raffleBuyQuantity,
+  .PopupBuy .rafflePayment,
+  .PopupBuy .raffleConfirmation {
+    width: calc(100% / 4);
+  }
+
+  .PopupBuyContent .sessionInfo h2 {
+    font-size: 9vmin;
+  }
+
+  .PopupBuyContent .sessionInfo p {
+    font-size: 5vmin;
+  }
+
+  .PopupBuyContent .raffleSelect .cardGroup {
+    height: 270px;
+  }
+
+  .PopupBuy .raffleBuyQuantity .cartGroup {
+    height: 200px;
+  }
+
+  .raffleSelect .cardGroupWrapper, .PopupBuyContent .raffleSelect .cardGroup {
+    width: 100%;
+  }
+
+  .raffleSelect .cardGroupWrapper .card {
+    width: 100%;
+  }
+
+  .raffleSelect .cardGroupWrapper .card .skin {
+    height: 100%;
+    width: auto;
+  }
+
+  .raffleSelect .cardGroupWrapper .card .shine {
+    height: 100%;
+    width: auto;
+  }
+
+  .PopupBuy .card .glow-1, .PopupBuy .card .glow-2 {
+    width: 80%;
+  }
+
+  .PopupBuy .details {
+    align-items: flex-end;
+  }
+
+  .PopupBuy .detailsWrapper {
+    width: 100%;
+
+    border-radius: 20px 20px 0 0;
+
+    border-top: 1px solid grey;
+
+    animation: 300ms ease-out 0s 1 forwards showUp;
+  }
+
+  .PopupBuy .details .background {
+    background: black;
+
+    opacity: .8;
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup {
+    align-items: center;
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup h2 {
+    text-align: center;
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup button {
+    align-self: center;
+  }
+
+  .PopupBuy .bottomSection {
+    flex-direction: column-reverse;
+
+    justify-content: center;
+
+    gap: 10px;
+    width: 100%;
+  }
+
+  .PopupBuy .bottomSection .totalValue h3 {
+    font-size: 8vmin;
+    width: 100%;
+
+    text-align: center;
+  }
+
+  .PopupBuy .bottomSection button,
+  .PopupBuy .bottomSection a {
+    font-size: 5vmin;
+
+    white-space: nowrap;
+  }
+
+  .PopupBuyContentWrapper.step-1 {
+    translate: 0;
+  }
+  
+  .PopupBuyContentWrapper.step-2 {
+    translate: calc(-100% / 4);
+  }
+  
+  .PopupBuyContentWrapper.step-3 {
+    translate: calc(-200% / 4);
+  }
+  
+  .PopupBuyContentWrapper.step-4 {
+    translate: calc(-300% / 4);
+  }
+
+  .PopupBuy .raffleBuyQuantity .raffleBanner.desktop {
+    display: none;
+  }
+
+  .PopupBuy .raffleBuyQuantity .raffleMetaData {
+    width: 100%;
+  }
+
+  .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity h3 {
+    font-size: 6vmin;
+  }
+
+  .PopupBuy .rafflePayment {
+    align-items: center;
+  }
+
+  .PopupBuy .rafflePayment .userPaymentData,
+  .PopupBuy .rafflePayment .itemTable,
+  .PopupBuy .rafflePayment .purchaseDetails {
+    padding-inline: 0;
+
+    width: 80%;
+  }
+
+  .PopupBuy .rafflePayment {
+    gap: 0;
+  }
+
+  .PopupBuy .rafflePayment .userBudget h3 {
+    font-size: 5vmin;
+  }
+
+  .rafflePaymentWrapper {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 100%;
+    height: 270px;
+
+    background-color: #ddd;
+
+    padding-block: 10px;
+
+    overflow: auto;
+
+
+    gap: 41px;
+  }
+
+  .PopupBuy .itemTable .header {
+    font-size: 4.5vmin;
+  }
+
+  .PopupBuy .itemTable .item {
+    font-size: 4vmin;
+  }
+
+  .PopupBuy .itemTable .item h3 {
+    display: flex;
+
+    align-items: center;
+
+    width: 50%;
+  }
+
+  .PopupBuy .itemTable .item h3 .quantity {
+    display: block;
+
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .PopupBuy .itemTable .item h3:last-of-type {
+    justify-content: flex-end;
+  }
+
+  .PopupBuy .account h3, .PopupBuy .dateOfPurchase h3 {
+    font-size: 5vmin;
+  }
+
+  .PopupBuy .account p, .PopupBuy .dateOfPurchase p {
+    font-size: 4vmin;
+  }
+
+  .PopupBuy .raffleConfirmation img {
+    width: 110px;
+    height: auto;
+  }
+
+  .PopupBuy .raffleConfirmation p {
+    font-size: 5vmin;
+
+    width: 80%;
+
+    margin-bottom: 95px;
+  }
+
+
+
+
+  @keyframes showUp {
+    0% {
+      translate: 0 100%;
+    }
+    100% {
+      translate: 0;
+    }
+  }
+
+
+
 
   .mobile {
     display: block;
