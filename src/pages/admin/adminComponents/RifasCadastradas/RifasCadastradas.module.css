@@ -12,9 +12,6 @@
 
 
 
-
-
-
 /* 
 #########################################################################################
 card da rifa                                                                            #
@@ -62,6 +59,19 @@ PopUp da rifa                                                                   
     padding: 0%;
 }
 
+.ContainerPopUpUpdateRifa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 0%;
+}
+
 .ContentPopUpRifa{
     width: 500px;
     height: 300px;
@@ -95,11 +105,12 @@ PopUp da rifa                                                                   
 }
 
 .ButtonPopUpRifa {
-    width: 33.33%; 
-    height: 30px;
+    width: 33.333%; 
+    height: 34px;
     border: none;
     color: #fff;
     cursor: pointer;
+    
 }
 
 .ButtonPopUpRifa:nth-child(1) {
@@ -119,4 +130,101 @@ PopUp da rifa                                                                   
 
 .EstateRaffle{
     color: rgb(189, 192, 5);
+}
+
+/*
+#########################################################################################
+PopUp update rifa                                                                            #
+#########################################################################################
+*/
+
+.ContentUsersPopUp {
+    max-height: 400px; 
+    overflow-y: auto; 
+    overflow-x:hidden;
+    width: 1080px;
+    margin-left: 20px;
+    color: #000; 
+}
+.ContentPopUpUpdateRifa{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1100px;
+    height: 510px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.ContainerSearchMember {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+
+.ButtonExitPopUpUpdate {
+    width: 100%;
+    margin-right: 5px;
+    display: flex;
+    justify-content: end;
+}
+.inputNavBarContainer {
+    position: relative;
+    width: 1000px;
+    display: flex;
+    gap: 15px;
+}
+
+.inputNavBarMember {
+    width: 100%;
+    height: 40px;
+    background-color: #d3d0d0;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    padding-left: 20px;
+    padding-right: 40px; 
+}
+
+.ButtonAddMember{
+    background-color: #32CCFF;
+    width: 45px;
+    height: 40px;
+    font-size: 25px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+}
+.searchIconMember {
+    position: absolute;
+    right: 60px; 
+    top: 50%;
+    transform: translateY(-50%); 
+    color: #000;
+    width: 25px;
+    height: 25px;
+}
+
+
+.LineMember{
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+    margin-top: 10px;
+}
+.Data{
+    display: flex;
+    flex-direction: column;
+    width: 1100px;
+    justify-content: center;
+    align-items: center;
 }

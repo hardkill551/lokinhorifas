@@ -31,8 +31,6 @@ const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard
           Authorization: `Bearer ${token}`
         }
       });
-      console.log('Raffle created:', response.data);
-      // Reset form and skinsCard after successful creation
       setRaffleName('');
       setNumberOfTickets(0);
       setSkinsCard([]);

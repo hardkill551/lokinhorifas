@@ -21,7 +21,7 @@ const PaymentBrick = ({
   const [price, setPrice] = useState(0);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const ref = useRef<HTMLInputElement>(null);
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const router = useRouter()
 
   const { setShowPayment, valueDiff = 0 } = props;
