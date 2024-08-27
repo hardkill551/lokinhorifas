@@ -249,3 +249,41 @@ export interface InterRegisterRifa {
   value: number;
   picture: string;
 }
+
+export type Raffle = {
+  createdAt: string;
+  free: boolean;
+  id: number;
+  is_active: string;
+  name: string;
+  participants: RaffleParticipant[];
+  raffleSkins: RaffleSkin[];
+  updatedAt: string;
+  users_quantity: number;
+  value: number;
+};
+
+export type RaffleSkin = {
+  id: number;
+  raffle_id: number;
+  skinName: string;
+  skinPicture: string;
+  skinType: string;
+  skinValue: number;
+  skin_id: number;
+  winner_id: null;
+};
+
+export type RaffleParticipant = {
+  number: number;
+  id: number;
+  user: {
+    id: number;
+    name: string;
+    picture: string;
+  };
+};
+
+export type RaffleReward = RewardItemType & {
+  id: number;
+};

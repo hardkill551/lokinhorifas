@@ -17,6 +17,10 @@
   padding: 30px;
 }
 
+.tosWrapper * {
+  color: white;
+}
+
 .tos h1 {
   font-size: 32px;
 }
@@ -26,7 +30,8 @@
   margin-bottom: 12px;
 }
 
-.tos p, .tos li {
+.tos p,
+.tos li {
   line-height: 140%;
 }
 
