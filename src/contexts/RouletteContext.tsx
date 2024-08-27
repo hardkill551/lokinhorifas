@@ -347,7 +347,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
       tempArray.push({
         id,
         isWinner: false,
-        profilePicture: user.picture == "default" ? "" : user.picture,
+        profilePicture: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${user.picture}`,
         personName: user.name,
         nickName: user.name.toLowerCase() + "#" + number,
         number: number,
