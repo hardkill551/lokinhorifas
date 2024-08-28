@@ -25,7 +25,14 @@ export default function ScreenUsers() {
     const handleDeleteUser = (userId: number) => {
         setUsers(users.filter(user => user.id !== userId));
     };
+   
+    const handleAddUser = () => {
+       
+    };
+    
+    const onDeleteUserRaffle=()=>{
 
+    }
     const filterUsers = users.filter(user => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return (
@@ -63,7 +70,10 @@ export default function ScreenUsers() {
                                     tradLink={person.tradLink}
                                     charge={person.charge}
                                     onChargeChange={handleChargeChange}
-                                    onDelete={handleDeleteUser}
+                                    onDeleteUser={handleDeleteUser}
+                                    onAddUser={handleAddUser}
+                                    onDeleteUserRaffle={onDeleteUserRaffle}
+                                    context="Users"  
                                 />
                             )}
                         </div>

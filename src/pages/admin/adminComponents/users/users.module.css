@@ -72,3 +72,20 @@
     cursor: pointer;
     font-size: 25px;
 }
+
+.AddUser{
+    background-color: #32CCFF;
+    color: #fff;
+    border-radius: 10px;
+    width: 130px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 500;
+}
+.AddUser:hover{
+    background-color: #00bfff;
+}

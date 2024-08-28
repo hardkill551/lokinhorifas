@@ -247,8 +247,11 @@ export interface UsersProps {
   name: string;
   tradLink: string;
   charge: string;
+  context: string;
   onChargeChange: (id: number, newCharge: string) => void;
-  onDelete: (id: number) => void;
+  onDeleteUser: (id: number) => void;
+  onDeleteUserRaffle:(id: number) => void;
+  onAddUser: (id: number) => void;
 }
 
 export interface User {

@@ -204,6 +204,11 @@ PopUp update rifa                                                               
     cursor: pointer;
     color: #fff;
 }
+
+.ButtonAddMember:hover{
+    background-color: #00bfff;
+}
+
 .searchIconMember {
     position: absolute;
     right: 60px; 

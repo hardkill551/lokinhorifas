@@ -16,7 +16,7 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle }: any) {
         { id: 8, image: "", name: "Esta na rifa", email: "juliana.martins@lifecon.com", charge: "Gerente" }
     ]);
 
-    const [userRegister, UserRegister] = useState([
+    const [userRegister, setUserRegister] = useState([
         { id: 1, image: "", name: "Não esta na rifa", email: "elisson.siqueira@lifecon.com", charge: "Admin" },
         { id: 2, image: "", name: "Não esta na rifa", email: "Lucas.Oliveira@lifecon.com", charge: "Admin" },
         { id: 3, image: "", name: "Não esta na rifa ", email: "Guilhotina.Sousa@lifecon.com", charge: "Gerente" },
@@ -34,9 +34,16 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle }: any) {
         setusersRegisterReffla(usersRegisterReffla.map(user => user.id === userId ? { ...user, charge: newCharge } : user));
     };
 
-    const handleDeleteUser = (userId: number) => {
+    const handleDeleteUserRaffle = (userId: number) => {
         setusersRegisterReffla(usersRegisterReffla.filter(user => user.id !== userId));
     };
+
+    const handleAddUser = () => {
+       //fazer a função de add participante na rifa
+    };
+    
+    const onDeleteUser = () => {
+     };
 
     const filteredUsers = (addUser ? usersRegisterReffla : userRegister).filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -67,18 +74,21 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle }: any) {
                     <div className={style.LineMember}></div>
                     <div className={style.ContentUsersPopUp}>
                         {filteredUsers.map(person =>
-                            <Users
-                                key={person.id}
-                                id={person.id}
-                                image={person.image}
-                                name={person.name}
-                                email={person.email}
-                                charge={person.charge}
-                                onChargeChange={handleChargeChange}
-                                onDelete={handleDeleteUser}
-                            />
+                        <Users
+                        key={person.id}
+                        id={person.id}
+                        image={person.image}
+                        name={person.name}
+                        charge={person.charge}
+                        onChargeChange={handleChargeChange}
+                        tradLink=""
+                        onDeleteUserRaffle={handleDeleteUserRaffle}
+                        onAddUser={handleAddUser}
+                        onDeleteUser={onDeleteUser}
+                        context={addUser ? "ParticipantsRafle": "addParticipantsRaflle" }
+                         />
                         )}
-                    </div>
+                </div>
                 </div>
             </div>
         </div>
