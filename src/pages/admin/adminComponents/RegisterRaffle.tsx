@@ -11,7 +11,7 @@ interface RegisterRaffleProps {
 
 const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard }) => {
   const [raffleName, setRaffleName] = useState('');
-  const [numberOfTickets, setNumberOfTickets] = useState(0);
+  const [numberOfTickets, setNumberOfTickets] = useState(1);
 
   const calculateTotalPrice = () => {
     return skinsCard.reduce((total, skin) => total + skin.value, 0).toFixed(2).replace('.', ',');
@@ -32,7 +32,7 @@ const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard
         }
       });
       setRaffleName('');
-      setNumberOfTickets(0);
+      setNumberOfTickets(1);
       setSkinsCard([]);
     } catch (error) {
       console.error('Error creating raffle:', error);
@@ -50,7 +50,7 @@ const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard
         <div>
           <div className={style.DivInputRegisterRifa}>
             <label>Nome Da Rifa:</label>
-            <input type='text' value={raffleName} onChange={(e) => setRaffleName(e.target.value)} required />
+            <input type='text' value={raffleName} onChange={(e) => setRaffleName(e.target.value)} required placeholder='Digite o Nome da Rifa'/>
           </div>
           <div className={style.DivInputRegisterRifa}>
             <label>Quantidade de Numeros:</label>

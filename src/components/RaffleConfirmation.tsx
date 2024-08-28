@@ -1,7 +1,13 @@
 import Image from 'next/image';
 import checkMark from '../assets/checkmark.shield.svg'
+import { useEffect } from 'react';
+import { raffleItem } from 'utils/interfaces';
 
-const RaffleConfirmation = () => {
+const RaffleConfirmation = (rafflesData: raffleItem[]) => {
+
+  useEffect(()=>{
+    console.log(rafflesData) 
+  },[])
   return (
     <div className="raffleConfirmation">
       <Image src={checkMark} width={220} alt='confirmação'/>
