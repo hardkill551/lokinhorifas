@@ -134,8 +134,31 @@ export type RewardItemContextType = {
 };
 
 export type LastEarnedWinnerType = {
-  winner: WinnerType;
-  raffle: RaffleType;
+  raffle: {
+    createdAt: string,
+    id: number,
+    is_active: "Ativa" | "Em espera" | "Inativa",
+    name: string,
+    skinsWithWinners: {
+      skin: {
+        id: number,
+        skinName: string,
+        skinPicture: string,
+        skinType: string,
+        skinValue: number
+      },
+      winner: {
+        email: string,
+        id: number,
+        isAdmin: boolean,
+        name: string,
+        phoneNumber?: string,
+        picture: string,
+        saldo: number
+      }
+    }[],
+    updatedAt: string
+  };
 };
 
 export type WinnerType = {
@@ -151,7 +174,7 @@ export type WinnerType = {
 export type RaffleType = {
   id: number;
   value: number;
-  is_active: boolean;
+  is_active: "Ativa" | "Em espera" | "Inativa";
   skin: SkinType;
   item_chance: string;
   updatedAt: string;
@@ -206,7 +229,7 @@ export type raffleItem = {
   quantity: number;
   maxQuantity: number;
   isSelected: boolean;
-  bannerSkin: string | StaticImport;
+  bannerSkin: string;
   bundleValue: number;
 };
 export interface RaffleNumberType {
@@ -286,4 +309,39 @@ export type RaffleParticipant = {
 
 export type RaffleReward = RewardItemType & {
   id: number;
+};
+
+export type RouletteContext = {
+  availableRaffles: Raffle[];
+  purchasableRaffles: raffleItem[];
+  raffle: Raffle;
+  winnerPopupVisible: boolean;
+  isButtonActive: boolean;
+  isMockWin: boolean;
+  winner: HTMLElement;
+  participants: Participant[];
+  rewards: RaffleReward[];
+  toggleSelection: (id: number) => void;
+  handleChangeQuantity: (id: number, newQuantity: number) => void;
+  removeReward: Function;
+  setWinner: Dispatch<React.SetStateAction<HTMLElement>>;
+  loadFillerCards: (position: number) => JSX.Element[] | undefined;
+  manageWinner: Function;
+  manageMockWinner: Function;
+  manageCloseResult: Function;
+  selectRaffle: (id: number) => void;
+};
+
+export interface LastPayment {
+  date: string;
+  type: string;
+  moneySpent: number;
+  totalBudgetThen: number;
+}
+
+export type rafflePayment = {
+  key: number;
+  name: string;
+  quantity: number;
+  value: number;
 };

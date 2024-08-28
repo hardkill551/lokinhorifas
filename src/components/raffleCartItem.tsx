@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
 import shine from '../images/Roleta/WinnerPopup/shine.png'
 import { ChangeEvent, useEffect, useState } from "react";
@@ -12,6 +12,12 @@ const RaffleCartItem = ({props}: {props: {
   const { handleChangeQuantity } = props
 
   const [ defaultValue, setDefaultValue ] = useState(quantity)
+
+  const [ imgSrc, setImgSrc ] = useState<string | StaticImageData>(bannerSkin)
+
+  useEffect(() => {
+    setImgSrc(bannerSkin)
+  }, [bannerSkin])
 
   useEffect(() => {
     handleChangeQuantity(id, defaultValue)
@@ -31,10 +37,7 @@ const RaffleCartItem = ({props}: {props: {
         <div className={`glow-1 ${bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
         <div className={`glow-2 ${bundleValue > 1000 ? 'Gold' : 'Silver'}`}></div>
         </div>
-        {typeof bannerSkin === 'string' ? 
-        <Image className='skin' src={defaultGunPic} alt='Skin principal padrão'/> 
-        : <Image className='skin' src={bannerSkin} alt='Skin principal'/>
-        }
+        <Image className='skin' width={165} height={135} src={imgSrc} alt='Skin principal' onError={() => setImgSrc(defaultGunPic)}/>
         <Image className="shine" src={shine} alt="Brilho"/>
       </div>
 

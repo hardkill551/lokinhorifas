@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from './live.module.css';
 import { TwitchEmbed } from "react-twitch-embed";
-import TextContextType from "../../utils/interfaces";
 import axios from "axios";
 import { TextContext } from "contexts/TextContext";
+import { TextContextType } from "utils/interfaces";
 
 const Twitch = () => {
   const [isLoading, setIsLoading] = useState(false);

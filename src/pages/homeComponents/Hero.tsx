@@ -4,8 +4,8 @@ import Faixas from './Faixa';
 import style from '../homepage.module.css';
 import { useContext } from 'react';
 import { UserContext } from 'contexts/UserContext';
-import UserContextType from '../../utils/interfaces';
 import { useRouter } from 'next/router';
+import { UserContextType } from 'utils/interfaces';
 
 const Hero = ({ props }: { props: { isVisible: boolean, setIsVisible: React.Dispatch<React.SetStateAction<boolean>> } }) => {
   if (!props || !props.setIsVisible) {

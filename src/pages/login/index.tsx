@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { useUserStateContext } from "contexts/UserContext";
-import UserContextType from "../../utils/interfaces";
 import style from "./login.module.css";
 import cn from "classnames";
 
 import SingUpBG from "../../images/Cadastro/CADASTROBG.png";
 import Lines from "../../images/Cadastro/Lines.png";
 import Image from "next/image";
+import { UserContextType } from "utils/interfaces";
 
 const Login = () => {
   const { userInfo, setUserInfo } = useUserStateContext() as UserContextType;

@@ -24,9 +24,9 @@ const RouletteArray = () => {
 
   return (
     <div className={style.RouletteArray} id='Roulette'>
-      {loadFillerCards(-1)}
-      {participants.map(item => <RouletteItem key={item.id + '' + item.number} props={item} />)}
-      {loadFillerCards(1)}
+      {loadFillerCards && loadFillerCards(-1)}
+      {participants && participants.map(item => <RouletteItem key={item.id + '' + item.number} props={item} />)}
+      {loadFillerCards && loadFillerCards(1)}
     </div>
   );
 }

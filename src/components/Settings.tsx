@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import xmark from '../assets/xmark.svg';
 import editPencil from '../assets/editPencil.svg';
-import { UserSettingsType } from 'utils/interfaces';
+import { UserContextType, UserSettingsType } from 'utils/interfaces';
 import { useRef, useState } from 'react';
 import { useUserStateContext } from 'contexts/UserContext';
-import UserContextType from '../utils/interfaces';
 import axios from 'axios';
 import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';

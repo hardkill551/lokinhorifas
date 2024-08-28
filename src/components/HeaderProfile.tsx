@@ -1,5 +1,5 @@
 import { useUserStateContext } from "contexts/UserContext";
-import UserContextType, { UserInfoType }  from '../utils/interfaces'
+import { UserInfoType }  from '../utils/interfaces'
 import Image from "next/image";
 
 import defaultProfilePicture from '../assets/defaultProfilePic.svg'

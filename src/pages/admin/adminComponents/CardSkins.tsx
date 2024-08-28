@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import PopUpUpdateSkins from './PopUpUpdateSkins';
 import { RegisterRifa } from 'utils/interfaces'; // Certifique-se de importar a interface correta
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 export default function CardSkins({
     name,
@@ -20,7 +21,7 @@ export default function CardSkins({
     name: string;
     type: string;
     value: number;
-    picture: string;
+    picture: string | StaticImport;
     id: number;
     onDelete: (id: number) => void;
     reloadSkins: () => void;
@@ -34,7 +35,7 @@ export default function CardSkins({
     const handleAddToRaffle = () => {
         const newSkin: RegisterRifa = {
             id,
-            picture,
+            picture: picture.toString(),
             name,
             value
         };

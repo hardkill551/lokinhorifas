@@ -1408,7 +1408,7 @@ footer nav div {
 
   flex-direction: column;
 
-  justify-content: flex-end;
+  justify-content: center;
 
   width: 340px;
   height: 220px;
@@ -1427,8 +1427,7 @@ footer nav div {
 
 .PopupBuyContent .card .skin {
   position: absolute;
-
-  justify-self: center;
+  
   align-self: center;
 
   width: 70%;
@@ -1437,6 +1436,10 @@ footer nav div {
   z-index: 2;
 
   transition: scale 400ms ease-out;
+}
+
+.PopupBuyContent .card h3 {
+  margin-top: auto;
 }
 
 .PopupBuyContent .card:hover .skin {

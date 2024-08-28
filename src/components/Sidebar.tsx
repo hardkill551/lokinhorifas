@@ -3,9 +3,9 @@ import { useSidebarState } from "../contexts/SidebarContext";
 
 import { useRouter } from "next/router";
 import { useUserStateContext } from "contexts/UserContext";
-import UserContextType from "../utils/interfaces";
 import axios from "axios";
 import HeaderProfileMobile from "./HeaderProfileMobile";
+import { UserContextType } from "utils/interfaces";
 
 const Sidebar = () => {
   const { sidebarView, toggleSidebar } = useSidebarState() as {

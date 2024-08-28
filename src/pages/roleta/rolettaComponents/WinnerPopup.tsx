@@ -1,8 +1,7 @@
 import style from '../roletta.module.css'
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
-import defaultGunPicture from '../../../assets/defaultProfilePic.svg'
-// import glitter from '../../../images/Roleta/WinnerPopup/GLITTERS.png'
+import defaultGunPic from '../../../images/Roleta/Prizes/DefaultGunPic.png'
 import shine from '../../../images/Roleta/WinnerPopup/shine.png'
 
 
@@ -26,7 +25,12 @@ const RoletaWinner = () => {
       }
     }
   )
+  const [ imgSrc, setImgSrc ] = useState<string | StaticImageData>(localWinner.prize.itemImageUrl)
 
+  useEffect(() => {
+    setImgSrc(localWinner.prize.itemImageUrl)
+  }, [localWinner])
+  
   useEffect(() => {
     if(!winner) return
     if(!participants.filter(item => item.number == Number(winner.dataset.number) && item.isWinner == true)[0]) return
@@ -34,6 +38,8 @@ const RoletaWinner = () => {
     
     const person = participants.filter(item => item.number == Number(winner.dataset.number) && item.isWinner == true)[0]
     const gun = rewards[0]
+
+    console.log(gun)
     
     const tempObject = {
       id: person.id,
@@ -55,7 +61,7 @@ const RoletaWinner = () => {
     <div className={style.WinnerPopup} style={{display:`${winnerPopupVisible ? 'flex' : 'none'}`}}>
     <div className={style.WinnerPopupWrapper}>
       <div className={style.SkinImageBox}>
-        <Image src={typeof localWinner.prize.itemImageUrl === "string" ? defaultGunPicture : localWinner.prize.itemImageUrl} alt="Imagem de Skin"/>
+      <Image width={775} height={637} src={imgSrc} alt={`Imagem de ${localWinner.prize.itemName}`} onError={() => setImgSrc(defaultGunPic)}/>
         <Image src={shine} alt="Brilho de fundo"/>
       </div>
       <h2>Parabéns!</h2>

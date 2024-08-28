@@ -1,7 +1,6 @@
 import { useUserStateContext } from "contexts/UserContext";
 import { Dispatch, useState } from "react";
-import { LastPayment } from "utils/interfaces";
-import UserContextType from "utils/interfaces";
+import { LastPayment, UserContextType } from "utils/interfaces";
 import PaymentBrick from "./PaymentSteps";
 
 const Budget = () => {
