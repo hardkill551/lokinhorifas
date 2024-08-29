@@ -263,6 +263,8 @@ export interface User {
   name: string;
   tradLink: string;
   charge: string;
+  email:string;
+  number: string;
 }
 
 export type RegisterRifa = {

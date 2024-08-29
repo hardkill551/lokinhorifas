@@ -137,23 +137,24 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
                             <Users
                                 key={person.id}
                                 image={person.picture === "default" ? defaultProfilePicture :
-                                (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
-                                person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
+                                    (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
+                                        person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
                                 name={person.name}
                                 email={person.email}
-                                number={person.number}
                                 tradLink={person.tradeLink}
-                                onnumberChange={() => {}}
+                                onnumberChange={() => { } }
                                 onDeleteUserRaffle={() => handleDeleteUserRaffle(person.id)}
                                 onAddUser={() => handleAddUser(person.id)}
-                                onDeleteUser={() => {}}
-                                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"} 
-                                id={0} 
-                                charge={""} 
+                                onDeleteUser={() => { } }
+                                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"}
+                                id={0}
+                                charge={""}
                                 onChargeChange={function (id: number, newCharge: string): void {
                                     throw new Error("Function not implemented.");
-                                }} 
+                                } } 
+                                number={""}                                
                             />
+                      
                         ))}
                         {loading && <p>Carregando...</p>}
                     </div>

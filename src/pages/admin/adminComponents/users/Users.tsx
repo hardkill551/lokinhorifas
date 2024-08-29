@@ -7,9 +7,9 @@ export default function Users({ id, image, name, tradLink, email, charge, contex
         <div className={styles.ContainerUser}>
             <Image width={55} height={55} src={image} className={styles.ImageUser} alt='Foto de perfil' />
             <div className={styles.UserDate}>
-                <p className={styles.FullNameUser}>{name}</p>
-                <p className={styles.EmailUser}>{email}</p>
-                <p className={styles.EmailUser}>{tradLink}</p> {/* Exibe o tradeLink do usuário */}
+                <p className={ context == "Users" ? styles.FullNameUser : styles.FullNameUser2}>{name}</p>
+                <p className={ context == "Users" ? styles.EmailUser :styles.EmailUser2 }>{email}</p>
+                <p className={styles.EmailUser}>{tradLink}</p> 
             </div>
             <div className={styles.management}>
                  {context === "Users" && (
@@ -21,7 +21,7 @@ export default function Users({ id, image, name, tradLink, email, charge, contex
                 )}
                 {/* Deletar o usuario do site */}
                 {context == "Users" && (
-                    <div className={styles.deleteUser} onClick={() => onDeleteUser(id)}>x</div>
+                    <div className={styles.deleteUser} onClick={() => onDeleteUser(id)}>Remover</div>
                 )}
                 {/* Adicionar ou remover usuário da rifa, conforme contexto */}
                 {context === "ParticipantsRafle" && (

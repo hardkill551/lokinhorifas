@@ -27,10 +27,23 @@
     color: red;
 }
 
+.FullNameUser2{
+    font-family: "archivo black";
+    font-size: 20px;
+    margin-bottom: 3px;
+    color: rgb(2, 2, 2);
+}
+
 .EmailUser {
     font-family: "archivo";
     font-size: 15px;
     color: #ffffffd1;
+}
+
+.EmailUser2 {
+    font-family: "archivo";
+    font-size: 15px;
+    color: #000000d1;
 }
 
 .management {
