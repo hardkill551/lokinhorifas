@@ -1,51 +1,101 @@
-import { useState } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import style from "./RifasCadastradas.module.css";
 import { IoSearch } from "react-icons/io5";
 import Users from "../users/Users";
+import axios from "axios";
+import defaultProfilePicture from '../../../../assets/defaultProfilePic.svg'
 
-export default function PopUpUpdateRifa({ setPopUpUpdateRaffle }: any) {
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    number: string;
+    picture: string;
+    tradeLink: string;
+}
 
-    const [usersRegisterReffla, setusersRegisterReffla] = useState([
-        { id: 1, image: "", name: "Esta na rifa", email: "elisson.siqueira@lifecon.com", charge: "Admin" },
-        { id: 2, image: "", name: "Esta na rifa", email: "Lucas.Oliveira@lifecon.com", charge: "Admin" },
-        { id: 3, image: "", name: "Esta na rifa ", email: "Guilhotina.Sousa@lifecon.com", charge: "Gerente" },
-        { id: 4, image: "", name: "Esta na rifa", email: "maria.rodrigues@lifecon.com", charge: "Diretor" },
-        { id: 5, image: "", name: "Esta na rifa", email: "carlos.mendes@lifecon.com", charge: "Usuario" },
-        { id: 6, image: "", name: "Esta na rifa", email: "ana.paula@lifecon.com", charge: "Usuario" },
-        { id: 7, image: "", name: "Esta na rifa", email: "roberto.silva@lifecon.com", charge: "Usuario" },
-        { id: 8, image: "", name: "Esta na rifa", email: "juliana.martins@lifecon.com", charge: "Gerente" }
-    ]);
+interface PopUpUpdateRifaProps {
+    setPopUpUpdateRaffle: (value: boolean) => void;
+    raffleId: string;
+}
 
-    const [userRegister, setUserRegister] = useState([
-        { id: 1, image: "", name: "Não esta na rifa", email: "elisson.siqueira@lifecon.com", charge: "Admin" },
-        { id: 2, image: "", name: "Não esta na rifa", email: "Lucas.Oliveira@lifecon.com", charge: "Admin" },
-        { id: 3, image: "", name: "Não esta na rifa ", email: "Guilhotina.Sousa@lifecon.com", charge: "Gerente" },
-        { id: 4, image: "", name: "Não esta na rifa", email: "maria.rodrigues@lifecon.com", charge: "Diretor" },
-        { id: 5, image: "", name: "Não esta na rifa", email: "carlos.mendes@lifecon.com", charge: "Usuario" },
-        { id: 6, image: "", name: "Não esta na rifa", email: "ana.paula@lifecon.com", charge: "Usuario" },
-        { id: 7, image: "", name: "Não esta na rifa", email: "roberto.silva@lifecon.com", charge: "Usuario" },
-        { id: 8, image: "", name: "Não esta na rifa", email: "juliana.martins@lifecon.com", charge: "Gerente" }
-    ]);
+export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopUpUpdateRifaProps) {
+    const [usersRegisterRaffle, setUsersRegisterRaffle] = useState<User[]>([]);
+    const [userRegister, setUserRegister] = useState<User[]>([]);
+    const [addUser, setAddUser] = useState<boolean>(true);
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [page, setPage] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const [addUser, setAddUser] = useState(true);
-    const [searchQuery, setSearchQuery] = useState("");
+    useEffect(() => {
+        fetchUsers();
+    }, [page, searchQuery, addUser]); // Adicione `addUser` à dependência
 
-    const handleChargeChange = (userId: number, newCharge: string) => {
-        setusersRegisterReffla(usersRegisterReffla.map(user => user.id === userId ? { ...user, charge: newCharge } : user));
+    const fetchUsers = async (): Promise<void> => {
+        setLoading(true);
+        try {
+            const response = await axios.get<{ users: User[] }>(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users`, {
+                params: { 
+                    page, 
+                    search: searchQuery.length >= 3 ? searchQuery : undefined 
+                },
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+            
+            if (addUser) {
+                setUserRegister(prev => page === 1 ? response.data.users : [...prev, ...response.data.users]);
+            } else {
+                setUsersRegisterRaffle(prev => page === 1 ? response.data.users : [...prev, ...response.data.users]);
+            }
+        } catch (error) {
+            console.error("Erro ao buscar usuários:", error);
+        }
+        setLoading(false);
     };
 
-    const handleDeleteUserRaffle = (userId: number) => {
-        setusersRegisterReffla(usersRegisterReffla.filter(user => user.id !== userId));
+    const handleScroll = (e: React.UIEvent<HTMLDivElement>): void => {
+        if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight && !loading) {
+            setPage(prev => prev + 1);
+        }
     };
 
-    const handleAddUser = () => {
-       //fazer a função de add participante na rifa
-    };
-    
-    const onDeleteUser = () => {
-     };
+    const handleAddUser = async (userId: number): Promise<void> => {
+        try {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/raffle/add-user`, {
+                raffleId: raffleId,
+                userId: userId,
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
 
-    const filteredUsers = (addUser ? usersRegisterReffla : userRegister).filter(user =>
+            if (response.status === 200) {
+                alert('Usuário adicionado à rifa com sucesso!');
+                setUsersRegisterRaffle(prev => [...prev, response.data]);
+            }
+        } catch (error) {
+            console.error('Erro ao adicionar usuário à rifa:', error);
+            alert('Falha ao adicionar usuário à rifa.');
+        }
+    };
+
+    const handleDeleteUserRaffle = async (userId: number): Promise<void> => {
+        try {
+            const response = await axios.delete(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/raffle/remove-user`, {
+                data: { raffleId: raffleId, userId: userId },
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+
+            if (response.status === 200) {
+                alert('Usuário removido da rifa com sucesso!');
+                setUsersRegisterRaffle(prev => prev.filter(user => user.id !== userId));
+            }
+        } catch (error) {
+            console.error('Erro ao remover usuário da rifa:', error);
+            alert('Falha ao remover usuário da rifa.');
+        }
+    };
+
+    const filteredUsers = (addUser ? userRegister : usersRegisterRaffle).filter(user =>
         user.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -60,35 +110,53 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle }: any) {
                         <div className={style.inputNavBarContainer}>
                             <IoSearch className={style.searchIconMember} />
                             <input
-                                type='text'
+                                type="text"
                                 className={style.inputNavBarMember}
                                 placeholder="Pesquisar por nome"
                                 value={searchQuery}
-                                onChange={e => setSearchQuery(e.target.value)}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    setSearchQuery(e.target.value);
+                                    setPage(1);
+                                    if (addUser) {
+                                        setUsersRegisterRaffle([]);
+                                    } else {
+                                        setUserRegister([]);
+                                    }
+                                }}
                             />
-                            <div className={style.ButtonAddMember} onClick={() => setAddUser(false)}>+</div>
+                            <div className={style.ButtonAddMember} onClick={() => setAddUser(!addUser)}>
+                                {addUser ? "+" : "-"}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className={style.Data}>
+                <div className={style.Data} onScroll={handleScroll}>
                     <div className={style.LineMember}></div>
                     <div className={style.ContentUsersPopUp}>
-                        {filteredUsers.map(person =>
-                        <Users
-                        key={person.id}
-                        id={person.id}
-                        image={person.image}
-                        name={person.name}
-                        charge={person.charge}
-                        onChargeChange={handleChargeChange}
-                        tradLink=""
-                        onDeleteUserRaffle={handleDeleteUserRaffle}
-                        onAddUser={handleAddUser}
-                        onDeleteUser={onDeleteUser}
-                        context={addUser ? "ParticipantsRafle": "addParticipantsRaflle" }
-                         />
-                        )}
-                </div>
+                        {filteredUsers.map((person: User) => (
+                            <Users
+                                key={person.id}
+                                image={person.picture === "default" ? defaultProfilePicture :
+                                (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
+                                person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
+                                name={person.name}
+                                email={person.email}
+                                number={person.number}
+                                tradLink={person.tradeLink}
+                                onnumberChange={() => {}}
+                                onDeleteUserRaffle={() => handleDeleteUserRaffle(person.id)}
+                                onAddUser={() => handleAddUser(person.id)}
+                                onDeleteUser={() => {}}
+                                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"} 
+                                id={0} 
+                                charge={""} 
+                                onChargeChange={function (id: number, newCharge: string): void {
+                                    throw new Error("Function not implemented.");
+                                }} 
+                            />
+                        ))}
+                        {loading && <p>Carregando...</p>}
+                    </div>
                 </div>
             </div>
         </div>

@@ -31,7 +31,7 @@ export type UserInfoType = {
   saldo: number;
 };
 
-export type UserInfoTable = {
+export type InfoTable = {
   id: string;
   email: string;
   phoneNumber: string;
@@ -245,6 +245,7 @@ export interface UsersProps {
   id: number;
   image: string;
   name: string;
+  email:string;
   tradLink: string;
   charge: string;
   context: string;
@@ -252,6 +253,8 @@ export interface UsersProps {
   onDeleteUser: (id: number) => void;
   onDeleteUserRaffle:(id: number) => void;
   onAddUser: (id: number) => void;
+  onnumberChange:(id: number) => void;
+  number: string;
 }
 
 export interface User {

@@ -63,17 +63,18 @@
 .deleteUser {
     background-color: red;
     color: #fff;
-    border-radius: 100%;
-    width: 30px;
-    height: 30px;
+    width: 130px;
+    height: 40px;
+    border-radius: 10PX;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 25px;
+    font-weight: 500;
 }
 
-.AddUser{
+.AddUser {
     background-color: #32CCFF;
     color: #fff;
     border-radius: 10px;
@@ -86,6 +87,7 @@
     font-size: 25px;
     font-weight: 500;
 }
-.AddUser:hover{
+
+.AddUser:hover {
     background-color: #00bfff;
 }

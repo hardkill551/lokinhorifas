@@ -14,9 +14,8 @@ export default function RifasCadastradas() {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         } )
-        .then((res) => {
+        .then((res:any) => {
             setRifasCadastradas(res.data);
-    
         })
         .catch((err) => {
             setError(err.response.data);
@@ -39,7 +38,7 @@ export default function RifasCadastradas() {
     return(
         <div className={style.ContainerRifasCadastradas}>
         {rifascadastradas.map((rifa:any) =>
-            <CardRifas key={rifa.id} id={rifa.id} name={rifa.name} type={rifa.type}/>
+            <CardRifas key={rifa.id} rifa={rifa} />
         )}
         </div>
     );
