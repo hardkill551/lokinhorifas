@@ -1,85 +1,20 @@
 import { useUserStateContext } from "contexts/UserContext";
-import { Dispatch, useState } from "react";
-import { LastPayment, UserContextType } from "utils/interfaces";
-import PaymentBrick from "./PaymentSteps";
+import { UserContextType } from "utils/interfaces";
 
 const Budget = () => {
-  const { userInfo, setShowPayment, setShowBudget } = useUserStateContext() as UserContextType;
+  const { userInfo, setShowPayment, setShowBudget, lastestTransactions } = useUserStateContext() as UserContextType;
 
-  const formatarDataHoraAtual = (): string => {
-    const agora = new Date();
+  const formatarDataHoraAtual = (date: string): string => {
+    const getDate = new Date(date)
 
-    const dia = String(agora.getDate()).padStart(2, "0");
-    const mes = String(agora.getMonth() + 1).padStart(2, "0");
-    const ano = agora.getFullYear();
-    const horas = String(agora.getHours()).padStart(2, "0");
-    const minutos = String(agora.getMinutes()).padStart(2, "0");
+    const dia = String(getDate.getDate()).padStart(2, "0");
+    const mes = String(getDate.getMonth() + 1).padStart(2, "0");
+    const ano = getDate.getFullYear();
+    const horas = String(getDate.getHours()).padStart(2, "0");
+    const minutos = String(getDate.getMinutes()).padStart(2, "0");
 
     return `${dia}/${mes}/${ano}, às ${horas}:${minutos}`;
   };
-
-  const lastPayments: LastPayment[] = [
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-    {
-      date: formatarDataHoraAtual(),
-      type: "Compra de saldo",
-      moneySpent: 15,
-      totalBudgetThen: 0,
-    },
-  ];
 
   return (
     <div className="budget">
@@ -94,32 +29,28 @@ const Budget = () => {
             <thead>
               <tr>
                 <th>Data da Movimentação</th>
-                <th>Tipo da Movimentação</th>
+                <th>Status</th>
+                <th>Método</th>
                 <th className="price">Débito/Crédito</th>
-                <th className="price">Saldo</th>
               </tr>
             </thead>
             <tbody>
-              {lastPayments.length > 0 &&
-                lastPayments.map((payment, index) => (
-                  <tr key={index}>
-                    <th>{payment.date}</th>
-                    <th>{payment.type}</th>
-                    <th className="price loss">
-                      -R${" "}
-                      {payment.moneySpent
-                        .toFixed(2)
-                        .toString()
-                        .replace(".", ",")}
-                    </th>
-                    <th className="price">
-                      R${" "}
-                      {payment.totalBudgetThen
-                        .toFixed(2)
-                        .toString()
-                        .replace(".", ",")}
-                    </th>
-                  </tr>
+              {lastestTransactions.length > 0 &&
+                lastestTransactions.map((payment) => (
+                  <>
+                    <tr key={payment.id}>
+                      <th>{formatarDataHoraAtual(payment.date)}</th>
+                      <th>{payment.status.toUpperCase()}</th>
+                      <th>{payment.method}</th>
+                      <th className={`price ${payment.type == 'credit' ? 'earn' : 'loss'}`}>
+                        {payment.type == 'credit' ? '+ ' : '- '}R${" "}
+                        {payment.exchanged
+                          .toFixed(2)
+                          .toString()
+                          .replace(".", ",")}
+                      </th>
+                    </tr>
+                  </>
                 ))}
             </tbody>
           </table>

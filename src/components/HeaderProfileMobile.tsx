@@ -10,8 +10,6 @@ import Budget from "./Budget";
 
 const HeaderProfileMobile = () => {
   const { userInfo, setUserInfo, setShowBudget } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, setShowBudget: Dispatch<React.SetStateAction<boolean>>  }
-  const [ budget, setBudget ] = useState<number>(0)
-  const [ budgetString, setBudgetString ] = useState<string>()
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
   const [ showSettings, setShowSettings ] = useState<boolean>(false)
   const [ image, setImage ] = useState<File | null>(null)
@@ -24,13 +22,11 @@ const HeaderProfileMobile = () => {
     
     html?.classList.toggle('scrollOff', showSettings)
   }, [showSettings])
-  
-  useEffect(() => {
-    setBudget(randomValue)
-    setBudgetString(budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ",00")
-  }, [])
 
-  const { name, email, picture, tradeLink, phoneNumber } = userInfo
+  const { name, email, picture, tradeLink, phoneNumber, saldo } = userInfo
+
+  const saldoString = saldo.toString()
+
   const router = useRouter()
   const profile = {
     name: name != '' ? name : 'notloggedinuser',
@@ -40,7 +36,7 @@ const HeaderProfileMobile = () => {
     picture: picture === "default" ? defaultProfilePicture :
     (picture).startsWith('https://static-cdn.jtvnw.net') ?
     picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`,
-    budget: budgetString
+    budget: saldoString.includes('.') ? `${saldoString.split('.')[0]},${saldoString.split('.')[1][0]}${saldoString.split('.')[1][1] ? saldoString.split('.')[1][1] : '0'}` : `${saldoString},00`
   }
 
   const toggleOnDropdownVisibility = () => {
@@ -50,14 +46,6 @@ const HeaderProfileMobile = () => {
     const dropdown = document.getElementById('headerDropdownInput')
 
     dropdown?.focus()
-  }
-
-  const toggleOffDropdownVisibility = () => {
-    if(!showDropdown) return
-
-    setTimeout(() => {
-      setShowDropdow(oldValue => !oldValue)
-    }, 400);
   }
 
   const openConfig = () => {

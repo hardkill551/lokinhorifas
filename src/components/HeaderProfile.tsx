@@ -1,5 +1,5 @@
 import { useUserStateContext } from "contexts/UserContext";
-import { UserInfoType }  from '../utils/interfaces'
+import { UserContextType, UserInfoType }  from '../utils/interfaces'
 import Image from "next/image";
 
 import defaultProfilePicture from '../assets/defaultProfilePic.svg'
@@ -8,14 +8,10 @@ import Settings from "./Settings";
 import { useRouter } from "next/router";
 
 const HeaderProfile = () => {
-  const { userInfo, setUserInfo, setShowBudget } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, setShowBudget: Dispatch<React.SetStateAction<boolean>>  }
-  const [ budget, setBudget ] = useState<number>(0)
-  const [ budgetString, setBudgetString ] = useState<string>()
+  const { userInfo, setUserInfo, setShowBudget, logOut } = useUserStateContext() as UserContextType
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
   const [ showSettings, setShowSettings ] = useState<boolean>(false)
   const [ image, setImage ] = useState<File | null>(null)
-  
-  const randomValue = Math.floor(Math.random() * 5000)
 
   useEffect(() => {
     const html = document.querySelector('html')
@@ -23,13 +19,11 @@ const HeaderProfile = () => {
     
     html?.classList.toggle('scrollOff', showSettings)
   }, [showSettings])
-  
-  useEffect(() => {
-    setBudget(randomValue)
-    setBudgetString(budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ",00")
-  }, [])
 
-  const { name, email, picture, tradeLink, phoneNumber } = userInfo
+  const { name, email, picture, tradeLink, phoneNumber, saldo } = userInfo
+
+  const saldoString = saldo.toString()
+
   const router = useRouter()
   const profile = {
     name: name != '' ? name : 'notloggedinuser',
@@ -39,7 +33,7 @@ const HeaderProfile = () => {
     picture: picture === "default" ? defaultProfilePicture :
     (picture).startsWith('https://static-cdn.jtvnw.net') ?
     picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`,
-    budget: budgetString
+    budget: saldoString.includes('.') ? `${saldoString.split('.')[0]},${saldoString.split('.')[1][0]}${saldoString.split('.')[1][1] ? saldoString.split('.')[1][1] : '0'}` : `${saldoString},00`
   }
 
   const toggleOnDropdownVisibility = () => {
@@ -64,9 +58,7 @@ const HeaderProfile = () => {
   }
 
   function handleLogout() {
-    localStorage.setItem("token", "");
-    setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
-    router.push('/cadastro');
+    logOut()
   };
 
   const openBudgetPayment = () => {

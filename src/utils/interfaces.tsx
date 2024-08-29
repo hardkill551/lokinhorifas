@@ -17,6 +17,8 @@ export interface UserContextType {
   setShowPayment: React.Dispatch<React.SetStateAction<boolean>>;
   showBudget: boolean;
   setShowBudget: React.Dispatch<React.SetStateAction<boolean>>;
+  lastestTransactions: LastPayment[];
+  getLatestTransactions: Function;
 }
 
 export type UserInfoType = {
@@ -333,10 +335,29 @@ export type RouletteContext = {
 };
 
 export interface LastPayment {
+  id: number;
   date: string;
-  type: string;
-  moneySpent: number;
-  totalBudgetThen: number;
+  status: string;
+  type: 'credit' | 'debit';
+  qrCodeBase64: string | null;
+  exchanged: number;
+  method: string;
+}
+
+export interface LastPaymentBack {
+  dateApproved: string;
+  dateCreated: string;
+  dateLastUpdated: string;
+  id: number;
+  paymentMethod: string;
+  qrCode: string | null;
+  qrCodeBase64: string | null;
+  raffle_id: number | null;
+  status: string;
+  status_detail: string | null;
+  transactionAmount: number;
+  type: 'credit' | 'debit';
+  user_id: number;
 }
 
 export type rafflePayment = {

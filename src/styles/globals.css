@@ -657,6 +657,10 @@ header {
   color: #E21A1A;
 }
 
+.budget tbody .earn {
+  color: #13a118;
+}
+
 .budget table th {
   white-space: nowrap;
 
@@ -764,14 +768,18 @@ header {
 }
 
 .brickContent.step-2-wrap {
-  translate: calc(-100% / 3);
+  translate: calc(-100% / 4);
 }
 
 .brickContent.step-3-wrap {
-  translate: calc(-200% / 3);
+  translate: calc(-200% / 4);
 }
 
-.brick .step-1, .brick .step-2, .brick .step-3 {
+.brickContent.step-4-wrap {
+  translate: calc(-300% / 4);
+}
+
+.brick .step-1, .brick .step-2, .brick .step-3, .brick .step-4 {
   display: flex;
 
   flex-direction: column;
@@ -819,7 +827,7 @@ header {
   padding: 30px;
 }
 
-.brick .step-2 a {
+.brick a {
   margin-top: auto;
   color: black;
 

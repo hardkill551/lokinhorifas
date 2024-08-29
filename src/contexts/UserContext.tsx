@@ -1,21 +1,22 @@
-import axios from "axios";
-import { useRouter } from "next/router";
+import axios from "axios"
+import { useRouter } from "next/router"
 import {
   ReactNode,
   createContext,
   useContext,
   useEffect,
   useState,
-} from "react";
+} from "react"
+import { LastPayment, LastPaymentBack } from "utils/interfaces"
 
-export const UserContext = createContext({});
+export const UserContext = createContext({})
 
 export const useUserStateContext = () => {
-  return useContext(UserContext);
-};
+  return useContext(UserContext)
+}
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const router = useRouter();
+  const router = useRouter()
   const [userInfo, setUserInfo] = useState({
     name: "",
     id: "",
@@ -26,26 +27,47 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     phoneNumber: "",
     tradeLink: "",
     saldo: 0,
-  });
+  })
 
-  const [showBudget, setShowBudget] = useState<boolean>(false);
+  const [ showBudget, setShowBudget ] = useState<boolean>(false)
   const [ showPayment, setShowPayment ] = useState<boolean>(false)
-  const [ lastestTransactions, setLatestTransactions ] = useState()
+  const [ lastestTransactions, setLatestTransactions ] = useState<LastPayment[]>([])
+
+  const cleanTransactions = (data: LastPaymentBack[]) => {
+    const tempArray: LastPayment[] = []
+
+    data.map(transaction => {
+      const { id, dateLastUpdated, status, transactionAmount, type, paymentMethod, qrCodeBase64 } = transaction
+
+      const tempObj: LastPayment = {
+        id,
+        date: dateLastUpdated,
+        status: status,
+        type,
+        qrCodeBase64,
+        exchanged: transactionAmount > 0 ? transactionAmount : transactionAmount * -1,
+        method: paymentMethod,
+      }
+
+      tempArray.push(tempObj)
+    })
+
+    setLatestTransactions(tempArray)
+  }
 
   const getLatestTransactions = () => {
-    if(!userInfo.email) return
     axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/transaction`, {
       headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    }).then(res => console.log(res))
+    }).then(res => cleanTransactions(res.data))
     .catch(err => console.log(err))
   }
 
   const logOut = () => {
     if (typeof window !== "undefined") {
-      const storedToken = localStorage.getItem("token");
-      if (storedToken) localStorage.setItem("token", "");
+      const storedToken = localStorage.getItem("token")
+      if (storedToken) localStorage.setItem("token", "")
     }
     setUserInfo({
       id: "",
@@ -57,10 +79,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       phoneNumber: "",
       tradeLink: "",
       saldo: 0,
-    });
+    })
 
-    router.push("/login");
-  };
+    router.push("/login")
+  }
+
+  useEffect(() => {
+    getLatestTransactions()
+  }, [])
+
+  // useEffect(() => {
+  //   console.log(lastestTransactions)
+  // }, [lastestTransactions])
 
   const value = {
     userInfo,
@@ -69,8 +99,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     showBudget,
     setShowBudget,
     showPayment, 
-    setShowPayment
-  };
+    setShowPayment,
+    lastestTransactions,
+    getLatestTransactions
+  }
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
-};
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+}

@@ -20,7 +20,7 @@ const RafflePayment = ({props}: {props: {rafflesData: raffleItem[], setValueDiff
     }
   })
 
-  setValueDiff((userInfo.saldo - value) * -1)
+  userInfo.saldo < value && setValueDiff((userInfo.saldo - value) * -1)
 
 
   function formatDate() {

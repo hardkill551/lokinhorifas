@@ -25,7 +25,9 @@ export const useRouletteContext = () => {
 export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // ? Init variables
   const [availableRaffles, setAvailableRaffles] = useState<Raffle[]>([]);
-  const [purchasableRaffles, setPurchasableRaffles] = useState<raffleItem[]>([]);
+  const [purchasableRaffles, setPurchasableRaffles] = useState<raffleItem[]>(
+    []
+  );
   const [raffle, setRaffle] = useState<Raffle>();
   // ? Init variables
 
@@ -57,9 +59,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
     if (numberOfFillerCards <= 0) return;
 
-    const winnerlessCards = participants.filter(
-      (item) => item.isWinner == false
-    );
+    const winnerlessCards = participants.filter((item) => !item.isWinner);
 
     let tempArray: Participant[] = [];
 
@@ -96,7 +96,6 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
       window.innerWidth / 2;
 
     const timing = 30000;
-    // const timing = 300
 
     const randomSide = Math.floor(Math.random() * 2) == 1 ? -1 : 1;
 
@@ -283,7 +282,9 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   const loadUniqueWinners = (participantsArray: Participant[]) => {
     if (!raffle) return;
     if (!participantsArray) return;
-    if (participantsArray.length == 0) return setParticipants([]);
+    // if (participantsArray.length == 0) return setParticipants([]);
+
+    // console.log(participantsArray)
 
     const winnersTempArray: Participant[] = [];
 
@@ -297,23 +298,25 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
         // ? Selects a random Participant from participants array
         const tempParticipant = tempParticipantArray[random];
 
-        if (!tempParticipant) return;
+        if (tempParticipant) {
+          const finalParticipant = { ...tempParticipant, isWinner: true };
+  
+  
+          // ? Loads choosen participant to winnersTempArray
+          if (
+            winnersTempArray.filter(
+              (item) => item.id == tempParticipant.id
+            ).length == 0
+          ) {
+            winnersTempArray.push(finalParticipant);
+          }
+          
+          // ? Removes all duplicate raffle numbers of winner
+          tempParticipantArray = tempParticipantArray.filter(
+            (item) => item.id !== tempParticipant.id
+          );
+        };
 
-        const finalParticipant = { ...tempParticipant, isWinner: true };
-
-        // ? Loads choosen participant to winnersTempArray
-        if (
-          winnersTempArray.filter(
-            (item) => item.number == tempParticipant.number
-          ).length == 0
-        ) {
-          winnersTempArray.push(finalParticipant);
-        }
-
-        // ? Removes all duplicate raffle numbers of winner
-        tempParticipantArray = tempParticipantArray.filter(
-          (item) => item.number != tempParticipant.number
-        );
       }
 
       // ? In case there are more winners than raffle.raffleSkins available, it shortens the array of winner to the size of the Rewards array
@@ -331,6 +334,8 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
           !winnersTempArray.some((originalItem) => originalItem.id == item.id)
       )
       .concat(winnersTempArray);
+
+      console.log(winnersTempArray)
 
     setParticipants(shuffleArray(finalArray));
   };
@@ -439,9 +444,11 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
         0
       );
 
-      const bannerSkin: string = `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${raffleSkins.reduce((max, skin) =>
-        skin.skinValue > max.skinValue ? skin : max
-      ).skinPicture}`
+      const choosenSkinBanner = raffleSkins.reduce((max, skin) => {
+        return skin.skinValue >= max.skinValue ? skin : max;
+      }).skinPicture;
+
+      const bannerSkin: string = `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${choosenSkinBanner}`;
 
       const tempObject: raffleItem = {
         id,
@@ -483,10 +490,17 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!raffle) return;
 
+    // console.log(raffle);
+
     setNewParticipants(raffle.participants);
     setNewRewards(raffle.raffleSkins);
     filterPurchasableRaffles();
   }, [raffle]);
+
+  // useEffect(() => {
+  //   if (!participants) return;
+  //   console.log(participants);
+  // }, [raffle]);
 
   // ! DEBUGGING
   // useEffect(() => {
