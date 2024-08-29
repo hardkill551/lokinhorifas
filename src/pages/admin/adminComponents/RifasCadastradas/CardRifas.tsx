@@ -26,7 +26,7 @@ export default function CardRifas({ rifa }: any) {
             <div className={style.ContainerCardRifa} onClick={() => setPopUpRifaRifa(true)}>
                 <Image src={imagem} width={180} height={100} alt="Card rifa" />
                 <div className={style.NomeRifa}>
-                    <p>{rifa.name}</p>
+                    <p className={style.TitleRaffle}>{rifa.name}</p>
                 </div>
                 <div className={style.DivType}>
                     <p>{rifa.type}</p>
