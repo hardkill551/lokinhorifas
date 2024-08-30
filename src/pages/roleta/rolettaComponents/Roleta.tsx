@@ -27,20 +27,20 @@ const Hero = () => {
         <Roulette />
 
         <div className={style.ButtonGroup}>
-          <button disabled={isButtonActive || participants.length === 0} onClick={() => manageMockWinner()} >Giro Teste</button>
-          <button disabled={isButtonActive || rewards.length === 0 || participants.length === 0} onClick={() => manageWinner()} >Girar Roleta</button>
+          <button disabled={!isButtonActive || participants.length === 0} onClick={() => manageMockWinner()} >Giro Teste</button>
+          <button disabled={!isButtonActive || rewards.length === 0 || participants.length === 0} onClick={() => manageWinner()} >Girar Roleta</button>
         </div>
       </div>
 
       <div className={style.background}>
-        <Image src={HEROBACK} alt='Imagem de fundo'/>
+        <Image priority={false} src={HEROBACK} alt='Imagem de fundo'/>
       </div>
       <div className={style.glowGroup}>
         <div className={style.growGroupWrapper}>
           <div className={style?.["glow-0"]}></div>
         </div>
       </div>
-      <Image src={LINES} alt='Imagem de fundo'/>
+      <Image src={LINES} priority={false} alt='Imagem de fundo'/>
     </section>
   );
 }

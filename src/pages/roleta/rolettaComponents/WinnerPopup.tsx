@@ -10,12 +10,11 @@ import { useRouletteContext } from "contexts/RouletteContext";
 
 const RoletaWinner = () => {
   const {
-    raffle,
     rewards = [],
     winnerPopupVisible,
     manageCloseResult,
-    participants,
     isMockWin,
+    winnerProperties,
   } = useRouletteContext() as RouletteContext;
 
   const [localWinner, setLocalWinner] = useState({
@@ -54,38 +53,23 @@ const RoletaWinner = () => {
   }, [localWinner]);
 
   useEffect(() => {
-    setTimeout(() => {
-      const winner = document.getElementById('winner')
-      if(!winner) return
+    if(!winnerProperties) return
 
-      const person = participants.filter(item => item.number == Number(winner.dataset.number))[0]
-      if(!person) return
+    setLocalWinner({
+      id: winnerProperties.id,
+      isWinner: true,
+      nickName: winnerProperties.nickName,
+      prize: {
+        itemImageUrl: rewards[0].itemImageUrl,
+        itemName: rewards[0].itemName,
+        itemType: rewards[0].itemType,
+        itemValue: rewards[0].itemValue,
+        type: Number(rewards[0].itemValue) >= 1000 ? 'Gold' : 'Silver',
+      }
+    })
 
-      // const person = participants.filter(item => item.isWinner)[0]
-      const gun = rewards[0];
 
-      const tempObject = {
-        id: person.id,
-        isWinner: person.isWinner,
-        nickName: person.nickName,
-        prize: {
-          itemImageUrl: gun.itemImageUrl,
-          itemName: gun.itemName,
-          itemType: gun.itemType,
-          itemValue: gun.itemValue,
-          type: gun.type,
-        },
-      };
-
-      console.log((Math.round(winner.getBoundingClientRect().right) -
-          Math.round(winner.getBoundingClientRect().left)) /
-          2 +
-        Math.round(winner.getBoundingClientRect().left) -
-        window.innerWidth / 2)
-
-      setLocalWinner(tempObject);
-    }, 5000);
-  }, [raffle]);
+  }, [winnerProperties]);
 
   return (
     <div

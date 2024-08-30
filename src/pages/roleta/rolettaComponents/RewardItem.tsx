@@ -26,7 +26,20 @@ const RewardItem = ({
   const [imgSrc, setImgSrc] = useState<string | StaticImageData>(itemImageUrl);
 
   useEffect(() => {
-    setImgSrc(itemImageUrl);
+    const checkImageExists = async (url: string) => {
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        if (response.ok) {
+          setImgSrc(url);
+        }
+      } catch (error) {
+        setImgSrc(defaultGunPic);
+      }
+    };
+
+    if (itemImageUrl && !itemImageUrl.includes('default')) {
+      checkImageExists(itemImageUrl);
+    }
   }, [itemImageUrl]);
 
   return (

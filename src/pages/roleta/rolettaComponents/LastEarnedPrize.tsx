@@ -38,8 +38,6 @@ const LastEarnedPrizes = ({
         const response = await fetch(url, { method: "HEAD" });
         if (response.ok) {
           setImgSrc(url);
-        } else {
-          setImgSrc(defaultGunPic);
         }
       } catch (error) {
         setImgSrc(defaultGunPic);
@@ -48,8 +46,6 @@ const LastEarnedPrizes = ({
 
     if (itemImageUrl && !itemImageUrl.includes('default')) {
       checkImageExists(itemImageUrl);
-    } else {
-      setImgSrc(defaultGunPic);
     }
   }, [itemImageUrl]);
 

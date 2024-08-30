@@ -313,12 +313,17 @@ export type RaffleReward = RewardItemType & {
   id: number;
 };
 
+export type WinnerProperties = Participant & {
+  distanceFromCenter: number;
+}
+
 export type RouletteContext = {
   availableRaffles: Raffle[];
   purchasableRaffles: raffleItem[];
   fillerParticipants: Participant[];
   raffle: Raffle;
   winnerPopupVisible: boolean;
+  winnerProperties: WinnerProperties;
   isButtonActive: boolean;
   isMockWin: boolean;
   winner: HTMLElement;
@@ -333,6 +338,7 @@ export type RouletteContext = {
   manageMockWinner: Function;
   manageCloseResult: Function;
   selectRaffle: (id: number) => void;
+  getWinner: (winner: HTMLElement) => void;
 };
 
 export interface LastPayment {

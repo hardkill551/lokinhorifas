@@ -13,6 +13,7 @@ import {
   RaffleParticipant,
   RaffleReward,
   RaffleSkin,
+  WinnerProperties,
 } from "utils/interfaces";
 
 export const RouletteStateContext = createContext({});
@@ -33,6 +34,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // ? Necessary variables
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [fillerParticipants, setFillerParticipants] = useState<Participant[]>([]);
+  const [winnerProperties, setWinnerProperties] = useState<WinnerProperties>();
   const [rewards, setRewards] = useState<RaffleReward[]>([]);
 
   const [animationState, setAnimationState] = useState<Animation>();
@@ -64,20 +66,11 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const playAnimation = () => {
-    if (!winner) return;
+    if (!winnerProperties) return;
 
     toggleIsButtonActive();
 
     const roulette = document.getElementById("Roulette");
-
-    const winnerCardCenter =
-      (Math.round(winner.getBoundingClientRect().right) -
-        Math.round(winner.getBoundingClientRect().left)) /
-        2 +
-      Math.round(winner.getBoundingClientRect().left) -
-      window.innerWidth / 2;
-    
-    const centerOfCard = winnerCardCenter < 0 ? winnerCardCenter * -1 : winnerCardCenter
 
     const timing = 5000;
 
@@ -99,7 +92,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
             { transform: `translateX(0px)`, offset: 0 },
             { transform: `translateX(80px)`, offset: 0.009 },
             {
-              transform: `translateX(-${centerOfCard}px)`,
+              transform: `translateX(-${winnerProperties.distanceFromCenter + random}px)`,
               offset: 1,
             },
           ],
@@ -127,7 +120,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
             { transform: `translateX(0px)`, offset: 0 },
             { transform: `translateX(80px)`, offset: 0.009 },
             {
-              transform: `translateX(-${centerOfCard}px)`,
+              transform: `translateX(-${winnerProperties.distanceFromCenter - random}px)`,
               offset: 1,
             },
           ],
@@ -152,8 +145,6 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
     setIsMockWin(false);
 
-    addLatestWinnerToTable();
-
     setAnimationState(playAnimation());
   };
 
@@ -174,6 +165,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     toggleWinnerPopupVisibility();
 
     if (isMockWin) return;
+    addLatestWinnerToTable();
     removeWinnerAndRaffleFromRoulette();
   };
 
@@ -220,8 +212,6 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
       // TODO: Fix the multiple loads required for starting the roulette
     )[0];
 
-    setParticipants(participants.filter(item => item.number != Number(winner.dataset.number)))
-
     const token = localStorage.getItem("token");
 
     try {
@@ -248,12 +238,10 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     if (!participants) return;
     if (!winner) return;
 
-    const participantWinner = participants.filter(
-      (item) => item.number != Number(winner.dataset.number)
-    );
+    setParticipants(participants.filter(item => item.number != Number(winner.dataset.number)))
 
     removeReward();
-    loadUniqueWinners(participantWinner);
+    loadUniqueWinners(participants);
   };
   // * Setting new winner
 
@@ -408,6 +396,30 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   };
   // * Available for purchase raffles
 
+  // * Only works on /roleta page
+  const getWinner = (winnerParam: HTMLElement) => {
+    if(!winnerParam) return
+    
+    setWinner(winnerParam)
+    const winnerStats = participants.filter(winnerArray => winnerArray.number == Number(winnerParam.dataset.number))[0]
+
+    const winnerCardCenter =
+      (Math.round(winnerParam.getBoundingClientRect().right) -
+        Math.round(winnerParam.getBoundingClientRect().left)) /
+        2 +
+      Math.round(winnerParam.getBoundingClientRect().left) -
+      window.innerWidth / 2;
+    
+    const centerOfCard = winnerCardCenter < 0 ? winnerCardCenter * -1 : winnerCardCenter
+
+    setWinnerProperties({
+      ...winnerStats,
+      isWinner: true,
+      distanceFromCenter: centerOfCard
+    })
+  }
+  // * Only works on /roleta page
+
   // * INIT
   const getRaffleList = () => {
     // * adicionar escolha de rifas com padrão caso não haja parâmetro
@@ -440,12 +452,18 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     loadFillerCards()
   }, [participants]);
 
+  useEffect(() => {
+    if(!winnerProperties) return
+    setIsButtonActive(true)
+  }, [winnerProperties])
+
   const value = {
     availableRaffles,
     purchasableRaffles,
     fillerParticipants,
     raffle,
     winnerPopupVisible,
+    winnerProperties,
     isButtonActive,
     isMockWin,
     winner,
@@ -460,6 +478,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     manageMockWinner,
     manageCloseResult,
     selectRaffle,
+    getWinner,
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import style from "../roletta.module.css";
 import RouletteItem from "./RouletteItem";
 import { RouletteContext } from "utils/interfaces";
@@ -11,7 +11,8 @@ const RouletteArray = () => {
     raffle,
     participants = [],
     fillerParticipants,
-    setWinner,
+    getWinner,
+    winnerProperties,
   } = useRouletteContext() as RouletteContext;
 
   useEffect(() => {
@@ -20,19 +21,13 @@ const RouletteArray = () => {
     setTimeout(() => {
       const winner = document.getElementById('winner')
       if(!winner) return
-      
-      console.log((Math.round(winner.getBoundingClientRect().right) -
-        Math.round(winner.getBoundingClientRect().left)) /
-        2 +
-      Math.round(winner.getBoundingClientRect().left) -
-      window.innerWidth / 2)
   
-      setWinner(winner);
-    }, 5000);
+      getWinner(winner)
+    }, 400);
 
+    // TODO!: Debug slower computers delay
   }, [raffle]);
-
-  // TODO!: Fix display of users showing wrong and random users
+  
 
   return (
     <div className={style.RouletteArray} id="Roulette">

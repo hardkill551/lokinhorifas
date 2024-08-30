@@ -27,8 +27,6 @@ const RouletteItem = ({ props }: { props: CardItemType }) => {
         const response = await fetch(url, { method: "HEAD" });
         if (response.ok) {
           setImgSrc(url);
-        } else {
-          setImgSrc(defaultPicture);
         }
       } catch (error) {
         setImgSrc(defaultPicture);
@@ -37,8 +35,6 @@ const RouletteItem = ({ props }: { props: CardItemType }) => {
 
     if (profilePicture && !profilePicture.includes('default')) {
       checkImageExists(profilePicture);
-    } else {
-      setImgSrc(defaultPicture);
     }
   }, [profilePicture]);
 
