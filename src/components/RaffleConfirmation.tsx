@@ -3,10 +3,10 @@ import checkMark from '../assets/checkmark.shield.svg'
 import { useEffect } from 'react';
 import { raffleItem } from 'utils/interfaces';
 
-const RaffleConfirmation = (rafflesData: raffleItem[]) => {
+const RaffleConfirmation = ({props}: {props: {rafflesData: raffleItem[]}}) => {
 
   useEffect(()=>{
-    console.log(rafflesData) 
+    console.log(props.rafflesData) 
   },[])
   return (
     <div className="raffleConfirmation">

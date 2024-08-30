@@ -12,17 +12,6 @@ export default function Users({ id, image, name, tradLink, email, charge, contex
                 <p className={styles.EmailUser}>{tradLink}</p> 
             </div>
             <div className={styles.management}>
-                 {context === "Users" && (
-                    <select className={styles.DropDownUser} value={charge} onChange={(e) => onChargeChange(id, e.target.value)}>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Desativo">Desativo</option>
-                        <option value="Gerente">Teste</option>
-                    </select>
-                )}
-                {/* Deletar o usuario do site */}
-                {context == "Users" && (
-                    <div className={styles.deleteUser} onClick={() => onDeleteUser(id)}>Remover</div>
-                )}
                 {/* Adicionar ou remover usuário da rifa, conforme contexto */}
                 {context === "ParticipantsRafle" && (
                     <div className={styles.deleteUser} onClick={() => onDeleteUserRaffle(id)}>Remover</div>

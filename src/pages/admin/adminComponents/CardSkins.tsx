@@ -48,7 +48,7 @@ export default function CardSkins({
                 <Image src={`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${picture}`} alt="Imagem do card" width={155} height={80} className={style.ImageCard} />
                 <div className={style.DivDataCard}>
                     <p>{type} | {name}</p>
-                    <p>R$: {value.toFixed(2).replace('.', ',')}</p>
+                    <p>R$: {value?.toFixed(2).replace('.', ',')}</p>
                 </div>
                 <div className={style.DivSettings}>
                 <AnimatePresence>

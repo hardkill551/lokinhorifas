@@ -19,10 +19,6 @@ const PaymentBrick = ({
     setShowPayment: Dispatch<React.SetStateAction<boolean>>;
     valueDiff: number;
   };
-  props: {
-    setShowPayment: Dispatch<React.SetStateAction<boolean>>;
-    valueDiff: number;
-  };
 }) => {
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const [price, setPrice] = useState(0);
