@@ -19,7 +19,7 @@ const Roulette = () => {
       </div>
 
       <select disabled={!isButtonActive} className={style.raffleSelector} onChange={(e) => selectRaffle(Number(e.target.value))}>
-        {availableRaffles.map(raffle => <option key={raffle.id} value={raffle.id}>{raffle.name}</option>)}
+        {availableRaffles && availableRaffles.map(raffle => <option key={raffle.id} value={raffle.id}>{raffle.name}</option>)}
       </select>
       
       <div className={style.background}>

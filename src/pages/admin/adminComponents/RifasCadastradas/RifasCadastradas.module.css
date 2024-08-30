@@ -38,7 +38,7 @@ card da rifa                                                                    
 }
 .DivType{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     color: #fff;
     margin-right: 8px;
     font-size: 18px;
@@ -74,7 +74,7 @@ PopUp da rifa                                                                   
 .ButtonExitUpdate {
     margin-right: 0px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .ButtonExitUpdateStyle {
@@ -209,7 +209,7 @@ PopUp update rifa                                                               
     width: 100%;
     margin-right: 5px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .inputNavBarContainer {
     position: relative;
