@@ -14,7 +14,7 @@ const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard
   const [numberOfTickets, setNumberOfTickets] = useState(1);
 
   const calculateTotalPrice = () => {
-    return skinsCard.reduce((total, skin) => total + skin.value, 0).toFixed(2).replace('.', ',');
+    return skinsCard?.reduce((total, skin) => total + skin.value, 0).toFixed(2).replace('.', ',');
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -62,7 +62,7 @@ const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard
       <div className={style.RegisterSkins}>
         <h1 className={style.TitleRegisterRifa}>Skins selecionadas</h1>
         <div className={style.ContainerCardSkinsCart}>
-          {skinsCard.map((skin) => (
+          {skinsCard?.map((skin) => (
             <CardSkinsCart
               key={skin.id}
               id={skin.id}

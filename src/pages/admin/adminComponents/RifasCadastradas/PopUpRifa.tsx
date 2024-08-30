@@ -52,11 +52,11 @@ export default function PopUpRifa({
                             <h2 className={style.NomeRifa}>{name}</h2>
                         </div>
                         <div className={style.BodyPopUpRifa}>
-                            <p className={style.TitleDescriptionPopUpRifa}>Quantidade de Participantes: <span>{participants.length}</span></p>
-                            <p className={style.TitleDescriptionPopUpRifa}>Limite de Participantes: <span>{participants.length}/{users_quantity}</span></p>
+                            <p className={style.TitleDescriptionPopUpRifa}>Quantidade de Participantes: <span>{participants?.length}</span></p>
+                            <p className={style.TitleDescriptionPopUpRifa}>Limite de Participantes: <span>{participants?.length}/{users_quantity}</span></p>
                             <p className={style.TitleDescriptionPopUpRifa}>Estado: <span className={style.EstateRaffle}>{is_active}</span></p>
                             <p className={style.TitleDescriptionPopUpRifa}>Valor Total: <span>R$: {value}</span> </p>
-                            <p className={style.TitleDescriptionPopUpRifa}>Valor por Rifa: <span>R$: {(value / users_quantity).toFixed(2)}</span></p>
+                            <p className={style.TitleDescriptionPopUpRifa}>Valor por Rifa: <span>R$: {(value / users_quantity)?.toFixed(2)}</span></p>
                             <p className={style.TitleDescriptionPopUpRifa}>Criado em: <span>{new Date(createdAt).toLocaleDateString()}</span></p>
                             <p className={style.TitleDescriptionPopUpRifa}>Modificada em: <span>{new Date(updatedAt).toLocaleDateString()}</span></p>
                         </div>
