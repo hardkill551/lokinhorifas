@@ -11,7 +11,6 @@
 }
 
 
-
 /* 
 #########################################################################################
 card da rifa                                                                            #
@@ -26,7 +25,6 @@ card da rifa                                                                    
     cursor: pointer;
 }
 .NomeRifa {
-    color: #fff;
     height: 65px;
     font-size: 18px;
     margin-top: 3px;
@@ -34,6 +32,10 @@ card da rifa                                                                    
     white-space: normal;   
 }
 
+.TitleRaffle{
+    color: #fff;
+    margin-top: 10px;
+}
 .DivType{
     display: flex;
     justify-content: end;
@@ -43,10 +45,10 @@ card da rifa                                                                    
 }
 /* 
 #########################################################################################
-PopUp da rifa                                                                            #
+PopUp da rifa                                                                           #
 #########################################################################################
 */
-.ContainerPopUpRifa{
+.ContainerPopUpRifa {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,27 +58,17 @@ PopUp da rifa                                                                   
     top: 0;
     left: 0;
     z-index: 10;
-    padding: 0%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
 }
 
-.ContainerPopUpUpdateRifa{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    padding: 0%;
-}
-
-.ContentPopUpRifa{
-    width: 500px;
-    height: 300px;
+.ContentPopUpRifa {
+    width: 90%;
+    max-width: 600px;
     background-color: #fff;
     border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .ButtonExitUpdate {
@@ -89,71 +81,117 @@ PopUp da rifa                                                                   
     background-color: transparent;
     border: none;
     color: #000;
-
     font-size: 20px;
     cursor: pointer;
     margin-right: 5px;
 }
 
+.HeaderPopUpRifa {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.NomeRifa {
+    font-size: 22px;
+    color: #333;
+    font-weight: bold;
+    word-break: break-word; 
+}
+
+.BodyPopUpRifa {
+    margin-bottom: 20px;
+}
+
 .TitleDescriptionPopUpRifa{
-    color: #000;
-    font-size: 25px;
+    color: #333;
+    font-size: 18px;
     display: flex;
     justify-content: space-between;
-    margin: 5px;
-    font-weight: 600;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.FooterPopUpRifa {
+    display: flex;
+    justify-content: space-between;
 }
 
 .ButtonPopUpRifa {
-    width: 33.333%; 
-    height: 34px;
+    width: 32%; 
+    height: 40px;
     border: none;
     color: #fff;
     cursor: pointer;
-    
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ButtonPopUpRifa:nth-child(1) {
     background-color: green;
-    border-bottom-left-radius: 10px;
 }
 
 .ButtonPopUpRifa:nth-child(2) {
     background-color: red;
 }
 
-
 .ButtonPopUpRifa:nth-child(3) {
     background-color: #000;
-   border-bottom-right-radius: 10px;
+}
+
+.ButtonPopUpRifa:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .EstateRaffle{
     color: rgb(189, 192, 5);
+    font-weight: bold;
 }
+
 
 /*
 #########################################################################################
-PopUp update rifa                                                                            #
+PopUp update rifa                                                                       #
 #########################################################################################
 */
 
 .ContentUsersPopUp {
-    max-height: 400px; 
+    height: 800px; 
     overflow-y: auto; 
     overflow-x:hidden;
-    width: 1080px;
+    width: 1040px;
     margin-left: 20px;
     color: #000; 
 }
-.ContentPopUpUpdateRifa{
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 20;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 1100px;
-    height: 510px;
-    background-color: #fff;
+}
+
+.ContainerPopUpUpdateRifa {
+    position: relative;
+    z-index: 30;
+    background-color: white;
+    padding: 20px;
     border-radius: 10px;
+    width: 1100px;
+    height: 82%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .ContainerSearchMember {
@@ -204,6 +242,11 @@ PopUp update rifa                                                               
     cursor: pointer;
     color: #fff;
 }
+
+.ButtonAddMember:hover{
+    background-color: #00bfff;
+}
+
 .searchIconMember {
     position: absolute;
     right: 60px; 
@@ -228,3 +271,5 @@ PopUp update rifa                                                               
     justify-content: center;
     align-items: center;
 }
+
+

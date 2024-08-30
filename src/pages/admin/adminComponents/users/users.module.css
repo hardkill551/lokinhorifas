@@ -27,10 +27,23 @@
     color: red;
 }
 
+.FullNameUser2{
+    font-family: "archivo black";
+    font-size: 20px;
+    margin-bottom: 3px;
+    color: rgb(2, 2, 2);
+}
+
 .EmailUser {
     font-family: "archivo";
     font-size: 15px;
     color: #ffffffd1;
+}
+
+.EmailUser2 {
+    font-family: "archivo";
+    font-size: 15px;
+    color: #000000d1;
 }
 
 .management {
@@ -63,12 +76,31 @@
 .deleteUser {
     background-color: red;
     color: #fff;
-    border-radius: 100%;
-    width: 30px;
-    height: 30px;
+    width: 130px;
+    height: 40px;
+    border-radius: 10PX;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-size: 25px;
+    font-weight: 500;
+}
+
+.AddUser {
+    background-color: #32CCFF;
+    color: #fff;
+    border-radius: 10px;
+    width: 130px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.AddUser:hover {
+    background-color: #00bfff;
 }

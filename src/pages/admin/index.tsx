@@ -6,7 +6,6 @@ import axios from 'axios';
 import { RegisterRifa, SkinType } from 'utils/interfaces';
 import { IoSearch } from "react-icons/io5";
 import RegisterRaffle from './adminComponents/RegisterRaffle';
-import ScreenUsers from './adminComponents/ScreenUsers';
 import RifasCadastradas from './adminComponents/RifasCadastradas/RifasCadastradas';
 import ChangeTextLive from './adminComponents/ChangeTextLive';
 
@@ -81,7 +80,6 @@ export default function Admin() {
       </div>
       <RegisterRaffle skinsCard={skinsCard} setSkinsCard={setSkinsCard}/>
       <RifasCadastradas/>
-      <ScreenUsers/>
       <ChangeTextLive/>
     </div>
   )

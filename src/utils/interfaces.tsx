@@ -33,7 +33,7 @@ export type UserInfoType = {
   saldo: number;
 };
 
-export type UserInfoTable = {
+export type InfoTable = {
   id: string;
   email: string;
   phoneNumber: string;
@@ -247,10 +247,16 @@ export interface UsersProps {
   id: number;
   image: string;
   name: string;
+  email:string;
   tradLink: string;
   charge: string;
+  context: string;
   onChargeChange: (id: number, newCharge: string) => void;
-  onDelete: (id: number) => void;
+  onDeleteUser: (id: number) => void;
+  onDeleteUserRaffle:(id: number) => void;
+  onAddUser: (id: number) => void;
+  onnumberChange:(id: number) => void;
+  number: string;
 }
 
 export interface User {
@@ -259,6 +265,8 @@ export interface User {
   name: string;
   tradLink: string;
   charge: string;
+  email:string;
+  number: string;
 }
 
 export type RegisterRifa = {
