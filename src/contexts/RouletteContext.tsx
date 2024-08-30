@@ -1,5 +1,4 @@
 import axios from "axios";
-import RouletteItem from "pages/roleta/rolettaComponents/RouletteItem";
 import {
   createContext,
   ReactNode,
@@ -33,6 +32,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   // ? Necessary variables
   const [participants, setParticipants] = useState<Participant[]>([]);
+  const [fillerParticipants, setFillerParticipants] = useState<Participant[]>([]);
   const [rewards, setRewards] = useState<RaffleReward[]>([]);
 
   const [animationState, setAnimationState] = useState<Animation>();
@@ -47,43 +47,25 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   // ? Functions
   const toggleIsButtonActive = () => setIsButtonActive((oldValue) => !oldValue);
-  const toggleWinnerPopupVisibility = () =>
-    setWinnerPopupVisible((oldValue) => !oldValue);
+  const toggleWinnerPopupVisibility = () => setWinnerPopupVisible((oldValue) => !oldValue);
 
-  const loadFillerCards = (position: number) => {
-    if (!participants) return;
+  const loadFillerCards = () => {
+    const winnerlessCards = participants.map((item) => ({ ...item, isWinner: false }));
 
-    const numberOfParticipants = participants.length;
+    let tempArray: Participant[] = []
 
-    const numberOfFillerCards = (600 - numberOfParticipants) / 2;
-
-    if (numberOfFillerCards <= 0) return;
-
-    const winnerlessCards = participants.filter((item) => !item.isWinner);
-
-    let tempArray: Participant[] = [];
-
-    for (let i = 0; i < numberOfFillerCards; i += winnerlessCards.length) {
-      tempArray = tempArray.concat(winnerlessCards);
+    if(winnerlessCards.length != Infinity &&  winnerlessCards.length > 0) {
+      while (tempArray.length < 600) {
+        tempArray = tempArray.concat(winnerlessCards)
+      }
     }
 
-    tempArray.splice(
-      numberOfFillerCards,
-      tempArray.length - numberOfFillerCards
-    );
-
-    tempArray = shuffleArray(tempArray);
-
-    return tempArray.map((item, index) => (
-      <RouletteItem
-        key={(index + participants.length) * position}
-        props={item}
-      />
-    ));
+    setFillerParticipants(tempArray);
   };
 
   const playAnimation = () => {
     if (!winner) return;
+
     toggleIsButtonActive();
 
     const roulette = document.getElementById("Roulette");
@@ -94,8 +76,10 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
         2 +
       Math.round(winner.getBoundingClientRect().left) -
       window.innerWidth / 2;
+    
+    const centerOfCard = winnerCardCenter < 0 ? winnerCardCenter * -1 : winnerCardCenter
 
-    const timing = 30000;
+    const timing = 5000;
 
     const randomSide = Math.floor(Math.random() * 2) == 1 ? -1 : 1;
 
@@ -115,7 +99,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
             { transform: `translateX(0px)`, offset: 0 },
             { transform: `translateX(80px)`, offset: 0.009 },
             {
-              transform: `translateX(-${winnerCardCenter + random}px)`,
+              transform: `translateX(-${centerOfCard}px)`,
               offset: 1,
             },
           ],
@@ -143,7 +127,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
             { transform: `translateX(0px)`, offset: 0 },
             { transform: `translateX(80px)`, offset: 0.009 },
             {
-              transform: `translateX(-${winnerCardCenter - random}px)`,
+              transform: `translateX(-${centerOfCard}px)`,
               offset: 1,
             },
           ],
@@ -232,8 +216,11 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
     const participantWinner = participants.filter(
       (item) => item.number == Number(winner.dataset.number)
-      // TODO!: Remover todos números da rifa
+      // TODO!: Fix the desync from winner
+      // TODO: Fix the multiple loads required for starting the roulette
     )[0];
+
+    setParticipants(participants.filter(item => item.number != Number(winner.dataset.number)))
 
     const token = localStorage.getItem("token");
 
@@ -282,60 +269,12 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   const loadUniqueWinners = (participantsArray: Participant[]) => {
     if (!raffle) return;
     if (!participantsArray) return;
-    // if (participantsArray.length == 0) return setParticipants([]);
 
-    // console.log(participantsArray)
+    const randomId = participantsArray[Math.floor(Math.random() * participantsArray.length)].id
 
-    const winnersTempArray: Participant[] = [];
-
-    let tempParticipantArray = participantsArray;
-
-    const winnersLeft = tempParticipantArray.filter((item) => item.isWinner);
-
-    if (!winnersLeft.length) {
-      for (let i = 0; i < raffle.raffleSkins.length; i++) {
-        let random = Math.floor(Math.random() * tempParticipantArray.length);
-        // ? Selects a random Participant from participants array
-        const tempParticipant = tempParticipantArray[random];
-
-        if (tempParticipant) {
-          const finalParticipant = { ...tempParticipant, isWinner: true };
-  
-  
-          // ? Loads choosen participant to winnersTempArray
-          if (
-            winnersTempArray.filter(
-              (item) => item.id == tempParticipant.id
-            ).length == 0
-          ) {
-            winnersTempArray.push(finalParticipant);
-          }
-          
-          // ? Removes all duplicate raffle numbers of winner
-          tempParticipantArray = tempParticipantArray.filter(
-            (item) => item.id !== tempParticipant.id
-          );
-        };
-
-      }
-
-      // ? In case there are more winners than raffle.raffleSkins available, it shortens the array of winner to the size of the Rewards array
-      if (winnersTempArray.length > raffle.raffleSkins.length)
-        winnersTempArray.splice(
-          raffle.raffleSkins.length,
-          winnersTempArray.length - raffle.raffleSkins.length
-        );
-    }
-
-    // ? Creates a single array with both winners and the rest of participants
-    const finalArray = participantsArray
-      .filter(
-        (item) =>
-          !winnersTempArray.some((originalItem) => originalItem.id == item.id)
-      )
-      .concat(winnersTempArray);
-
-      console.log(winnersTempArray)
+    const finalArray = participantsArray.map(item => {
+      return item.id == randomId ? {...item, isWinner: true} : {...item, isWinner: false}
+    })
 
     setParticipants(shuffleArray(finalArray));
   };
@@ -490,28 +429,21 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!raffle) return;
 
-    // console.log(raffle);
-
     setNewParticipants(raffle.participants);
     setNewRewards(raffle.raffleSkins);
     filterPurchasableRaffles();
   }, [raffle]);
 
-  // useEffect(() => {
-  //   if (!participants) return;
-  //   console.log(participants);
-  // }, [raffle]);
-
-  // ! DEBUGGING
-  // useEffect(() => {
-  //   if(!raffle) return
-  //   console.log(raffle)
-  // }, [raffle])
-  // ! DEBUGGING
+  useEffect(() => {
+    if(!participants) return
+    
+    loadFillerCards()
+  }, [participants]);
 
   const value = {
     availableRaffles,
     purchasableRaffles,
+    fillerParticipants,
     raffle,
     winnerPopupVisible,
     isButtonActive,

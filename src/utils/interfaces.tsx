@@ -316,6 +316,7 @@ export type RaffleReward = RewardItemType & {
 export type RouletteContext = {
   availableRaffles: Raffle[];
   purchasableRaffles: raffleItem[];
+  fillerParticipants: Participant[];
   raffle: Raffle;
   winnerPopupVisible: boolean;
   isButtonActive: boolean;

@@ -19,13 +19,27 @@ const RouletteItem = ({ props }: { props: CardItemType }) => {
     number = 0,
   } = props;
 
-  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(
-    profilePicture
-  );
+  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(defaultPicture);
 
   useEffect(() => {
-    if(profilePicture.includes('default')) setImgSrc(defaultPicture)
-    else setImgSrc(profilePicture);
+    const checkImageExists = async (url: string) => {
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        if (response.ok) {
+          setImgSrc(url);
+        } else {
+          setImgSrc(defaultPicture);
+        }
+      } catch (error) {
+        setImgSrc(defaultPicture);
+      }
+    };
+
+    if (profilePicture && !profilePicture.includes('default')) {
+      checkImageExists(profilePicture);
+    } else {
+      setImgSrc(defaultPicture);
+    }
   }, [profilePicture]);
 
   return (

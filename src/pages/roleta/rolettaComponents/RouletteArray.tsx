@@ -3,36 +3,49 @@ import style from "../roletta.module.css";
 import RouletteItem from "./RouletteItem";
 import { RouletteContext } from "utils/interfaces";
 import { useRouletteContext } from "contexts/RouletteContext";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const RouletteArray = () => {
   const {
     raffle,
     participants = [],
-    loadFillerCards,
+    fillerParticipants,
     setWinner,
   } = useRouletteContext() as RouletteContext;
 
   useEffect(() => {
     if (!raffle) return;
 
-    const winners = Array.from(
-      document.querySelectorAll("#winner")
-    ) as HTMLElement[];
-    if (winners.length <= 0) return;
+    setTimeout(() => {
+      const winner = document.getElementById('winner')
+      if(!winner) return
+      
+      console.log((Math.round(winner.getBoundingClientRect().right) -
+        Math.round(winner.getBoundingClientRect().left)) /
+        2 +
+      Math.round(winner.getBoundingClientRect().left) -
+      window.innerWidth / 2)
+  
+      setWinner(winner);
+    }, 5000);
 
-    setWinner(winners[Math.floor(Math.random() * winners.length)]);
   }, [raffle]);
 
   // TODO!: Fix display of users showing wrong and random users
 
   return (
     <div className={style.RouletteArray} id="Roulette">
-      {loadFillerCards && loadFillerCards(-1)}
+      {fillerParticipants && fillerParticipants.map((item) => (
+        <RouletteItem key={uuidv4()} props={item} />
+      ))}
       {participants &&
         participants.map((item) => (
-          <RouletteItem key={item.id + "" + item.number} props={item} />
+          <RouletteItem key={uuidv4()} props={item} />
         ))}
-      {loadFillerCards && loadFillerCards(1)}
+        {fillerParticipants && fillerParticipants.map((item) => (
+          <RouletteItem key={uuidv4()} props={item} />
+        ))}
     </div>
   );
 };

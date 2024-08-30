@@ -30,10 +30,27 @@ const LastEarnedPrizes = ({
     ItemValue = "0.00", // Default item value
   } = props.item;
 
-  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(itemImageUrl);
+  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(defaultGunPic);
 
   useEffect(() => {
-    setImgSrc(itemImageUrl);
+    const checkImageExists = async (url: string) => {
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        if (response.ok) {
+          setImgSrc(url);
+        } else {
+          setImgSrc(defaultGunPic);
+        }
+      } catch (error) {
+        setImgSrc(defaultGunPic);
+      }
+    };
+
+    if (itemImageUrl && !itemImageUrl.includes('default')) {
+      checkImageExists(itemImageUrl);
+    } else {
+      setImgSrc(defaultGunPic);
+    }
   }, [itemImageUrl]);
 
   return (

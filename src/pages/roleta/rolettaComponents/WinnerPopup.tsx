@@ -10,10 +10,10 @@ import { useRouletteContext } from "contexts/RouletteContext";
 
 const RoletaWinner = () => {
   const {
+    raffle,
     rewards = [],
     winnerPopupVisible,
     manageCloseResult,
-    winner,
     participants,
     isMockWin,
   } = useRouletteContext() as RouletteContext;
@@ -30,48 +30,62 @@ const RoletaWinner = () => {
       type: "Gold",
     },
   });
-  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(
-    localWinner.prize.itemImageUrl
-  );
+  const [imgSrc, setImgSrc] = useState<string | StaticImageData>(defaultGunPic);
 
   useEffect(() => {
-    setImgSrc(localWinner.prize.itemImageUrl);
+    const checkImageExists = async (url: string) => {
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        if (response.ok) {
+          setImgSrc(url);
+        } else {
+          setImgSrc(defaultGunPic);
+        }
+      } catch (error) {
+        setImgSrc(defaultGunPic);
+      }
+    };
+
+    if (localWinner.prize.itemImageUrl && !localWinner.prize.itemImageUrl.includes('default')) {
+      checkImageExists(localWinner.prize.itemImageUrl);
+    } else {
+      setImgSrc(defaultGunPic);
+    }
   }, [localWinner]);
 
   useEffect(() => {
-    if (!winner) return;
-    if (
-      !participants.filter(
-        (item) =>
-          item.number == Number(winner.dataset.number) && item.isWinner == true
-      )[0]
-    )
-      return;
-    if (!rewards[0]) return;
+    setTimeout(() => {
+      const winner = document.getElementById('winner')
+      if(!winner) return
 
-    const person = participants.filter(
-      (item) =>
-        item.number == Number(winner.dataset.number) && item.isWinner == true
-    )[0];
-    const gun = rewards[0];
+      const person = participants.filter(item => item.number == Number(winner.dataset.number))[0]
+      if(!person) return
 
-    // console.log(gun);
+      // const person = participants.filter(item => item.isWinner)[0]
+      const gun = rewards[0];
 
-    const tempObject = {
-      id: person.id,
-      isWinner: person.isWinner,
-      nickName: person.nickName,
-      prize: {
-        itemImageUrl: gun.itemImageUrl,
-        itemName: gun.itemName,
-        itemType: gun.itemType,
-        itemValue: gun.itemValue,
-        type: gun.type,
-      },
-    };
+      const tempObject = {
+        id: person.id,
+        isWinner: person.isWinner,
+        nickName: person.nickName,
+        prize: {
+          itemImageUrl: gun.itemImageUrl,
+          itemName: gun.itemName,
+          itemType: gun.itemType,
+          itemValue: gun.itemValue,
+          type: gun.type,
+        },
+      };
 
-    setLocalWinner(tempObject);
-  }, [participants]);
+      console.log((Math.round(winner.getBoundingClientRect().right) -
+          Math.round(winner.getBoundingClientRect().left)) /
+          2 +
+        Math.round(winner.getBoundingClientRect().left) -
+        window.innerWidth / 2)
+
+      setLocalWinner(tempObject);
+    }, 5000);
+  }, [raffle]);
 
   return (
     <div
