@@ -12,21 +12,21 @@ const RouletteArray = () => {
     participants = [],
     fillerParticipants,
     getWinner,
-    winnerProperties,
+    setIsButtonActive,
   } = useRouletteContext() as RouletteContext;
 
   useEffect(() => {
-    if (!raffle) return;
-
     setTimeout(() => {
       const winner = document.getElementById('winner')
+      console.log('ativado', winner)
+
       if(!winner) return
   
       getWinner(winner)
+      setIsButtonActive(true)
     }, 400);
-
     // TODO!: Debug slower computers delay
-  }, [raffle]);
+  }, [raffle, participants]);
   
 
   return (

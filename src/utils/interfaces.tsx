@@ -334,12 +334,12 @@ export type RouletteContext = {
   winnerProperties: WinnerProperties;
   isButtonActive: boolean;
   isMockWin: boolean;
-  winner: HTMLElement;
+  winner: number;
   participants: Participant[];
   rewards: RaffleReward[];
+  setIsButtonActive: React.Dispatch<React.SetStateAction<boolean>>
   toggleSelection: (id: number) => void;
   handleChangeQuantity: (id: number, newQuantity: number) => void;
-  removeReward: Function;
   setWinner: Dispatch<React.SetStateAction<HTMLElement>>;
   loadFillerCards: (position: number) => JSX.Element[] | undefined;
   manageWinner: Function;

@@ -55,20 +55,18 @@ const RoletaWinner = () => {
   useEffect(() => {
     if(!winnerProperties) return
 
-    setLocalWinner({
-      id: winnerProperties.id,
-      isWinner: true,
-      nickName: winnerProperties.nickName,
-      prize: {
-        itemImageUrl: rewards[0].itemImageUrl,
-        itemName: rewards[0].itemName,
-        itemType: rewards[0].itemType,
-        itemValue: rewards[0].itemValue,
-        type: Number(rewards[0].itemValue) >= 1000 ? 'Gold' : 'Silver',
-      }
-    })
-
-
+    if(rewards.length != 0) setLocalWinner({
+        id: winnerProperties.id,
+        isWinner: true,
+        nickName: winnerProperties.nickName,
+        prize: {
+          itemImageUrl: rewards[0].itemImageUrl,
+          itemName: rewards[0].itemName,
+          itemType: rewards[0].itemType,
+          itemValue: rewards[0].itemValue,
+          type: Number(rewards[0].itemValue) >= 1000 ? 'Gold' : 'Silver',
+        }
+      })
   }, [winnerProperties]);
 
   return (
