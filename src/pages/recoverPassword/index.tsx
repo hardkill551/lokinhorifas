@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { useUserStateContext } from "contexts/UserContext";
-import style from "./login.module.css";
+import style from "./recoverPassword.module.css";
 import cn from "classnames";
 
 import SingUpBG from "../../images/Cadastro/CADASTROBG.png";
@@ -12,7 +12,7 @@ import Lines from "../../images/Cadastro/Lines.png";
 import Image from "next/image";
 import { UserContextType } from "utils/interfaces";
 
-const Login = () => {
+const RecoverPassword = () => {
   const { userInfo, setUserInfo } = useUserStateContext() as UserContextType;
   const { query, push } = useRouter();
   const { email } = query;
@@ -146,7 +146,7 @@ const Login = () => {
           <div className={style.col1}></div>
           <div className={style.col2}>
             <form onSubmit={(e) => e.preventDefault()}>
-              <h2>Seja bem-vindo!</h2>
+              <h2>Recupere a sua senha!</h2>
 
               {error && <div className={style.errorBox}>{error}</div>}
 
@@ -161,6 +161,7 @@ const Login = () => {
                       name="email"
                       id="email"
                       value={formDataValue.email}
+                      placeholder="Digite o seu Email"
                       onChange={(e) =>
                         setFormDataValue((oldValue) => {
                           return { ...oldValue, email: e.target.value };
@@ -170,11 +171,24 @@ const Login = () => {
                     />
                   </label>
                   <label>
-                    Senha:
+                    Codigo de verificação:
+                    <input
+                      type="password"
+                      name="password"
+                      id="Codigo"
+                      placeholder="Digite o codigo de verificação"
+                      value={formDataValue.password}
+                      
+                      required
+                    />
+                  </label>
+                  <label>
+                    Nova Senha:
                     <input
                       type="password"
                       name="password"
                       id="password"
+                      placeholder="Nova senha"
                       value={formDataValue.password}
                       onChange={(e) =>
                         setFormDataValue((oldValue) => {
@@ -184,12 +198,11 @@ const Login = () => {
                       required
                     />
                   </label>
-                  <Link href={"/recoverPassword"}>Esqueceu a senha?</Link>
                 </div>
               </div>
 
               <button type="button" onClick={() => validateLogIn()}>
-                Entrar
+                Atualizar
               </button>
               <hr />
               <button
@@ -228,4 +241,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default RecoverPassword;
