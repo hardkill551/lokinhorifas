@@ -15,6 +15,9 @@ import editPencil from "../../assets/editPencil.svg";
 import { FormDataType } from "utils/interfaces";
 import MaskedInput from "react-text-mask";
 
+import Eye from '../../assets/eye.svg'
+import EyeSlashed from '../../assets/eye-slash.svg'
+
 const SignUp = () => {
   const { push, query } = useRouter();
   const { email } = query
@@ -34,7 +37,12 @@ const SignUp = () => {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
+  const [ passwordVisible, setPasswordVisible ] = useState(false)
+  const [ confirmPasswordVisible, setConfirmPasswordVisible ] = useState(false)
+  const [ showTutorial, setShowTutorial ] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const toggleTutorial = () => setShowTutorial(oldValue => !oldValue)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -189,6 +197,11 @@ const SignUp = () => {
     }
   };
 
+  const keyDownHandler = (key: string) => {
+    if(key != 'Enter') return
+    validateForm()
+  }
+
   const checkStep = () => {
     if(step == 1) return 'steps-3'
     else if(step == 2) return 'steps-4'
@@ -209,7 +222,7 @@ const SignUp = () => {
         return;
       }
       setFileName(URL.createObjectURL(file));
-      setSelectedFile(file); // Armazenar o arquivo na variável de estado selectedFile
+      setSelectedFile(file);
       setError("");
     }
     const { name, value } = e.target;
@@ -218,6 +231,11 @@ const SignUp = () => {
       [name]: value,
     }));
   };
+
+  const toggleStatePassword = (field: string) => {
+    if(field == 'password') setPasswordVisible(oldPassword => !oldPassword)
+    else setConfirmPasswordVisible(oldPassword => !oldPassword)
+  }
 
   const twitchAuth = () => {
     const TWITCH_URL = "https://id.twitch.tv/oauth2/authorize";
@@ -265,6 +283,7 @@ const SignUp = () => {
                       <label>
                         E-mail:
                         <input
+                        onKeyDown={e => keyDownHandler(e.key)}
                           type="email"
                           onChange={(e) =>
                             setFormDataValue((oldValue) => {
@@ -282,6 +301,7 @@ const SignUp = () => {
                       <label>
                         Apelido:
                         <input
+                        onKeyDown={e => keyDownHandler(e.key)}
                           type="text"
                           onChange={(e) =>
                             setFormDataValue((oldValue) => {
@@ -296,45 +316,70 @@ const SignUp = () => {
                       </label>
                       <label>
                         Senha:
-                        <input
-                          type="password"
-                          onChange={(e) =>
-                            setFormDataValue((oldValue) => {
-                              return {
-                                ...oldValue,
-                                password: String(e.target.value),
-                              };
-                            })
-                          }
-                          name="password"
-                          id="password"
-                          value={formDataValue.password}
-                        />
+                        <div className={style.inputWrapper}>
+                          <input
+                          onKeyDown={e => keyDownHandler(e.key)}
+                            type={passwordVisible ? 'text' : 'password'}
+                            onChange={(e) =>
+                              setFormDataValue((oldValue) => {
+                                return {
+                                  ...oldValue,
+                                  password: String(e.target.value),
+                                };
+                              })
+                            }
+                            name="password"
+                            id="password"
+                            value={formDataValue.password}
+                          />
+                          <button type="button" onClick={() => toggleStatePassword('password')}>
+                            {passwordVisible ?
+                            <Image src={EyeSlashed} alt="Hide password"/> : <Image src={Eye} alt="Show password"/>}
+                          </button>
+                        </div>
                       </label>
                       <label>
                         Confirmar Senha:
-                        <input
-                          type="password"
-                          onChange={(e) =>
-                            setFormDataValue((oldValue) => {
-                              return {
-                                ...oldValue,
-                                confirmPassword: String(e.target.value),
-                              };
-                            })
-                          }
-                          name="passwordConfirm"
-                          id="passwordConfirm"
-                          value={formDataValue.confirmPassword}
-                        />
+                        <div className={style.inputWrapper}>
+                          <input
+                          onKeyDown={e => keyDownHandler(e.key)}
+                            type={confirmPasswordVisible ? 'text' : 'password'}
+                            onChange={(e) =>
+                              setFormDataValue((oldValue) => {
+                                return {
+                                  ...oldValue,
+                                  confirmPassword: String(e.target.value),
+                                };
+                              })
+                            }
+                            name="passwordConfirm"
+                            id="passwordConfirm"
+                            value={formDataValue.confirmPassword}
+                          />
+                          <button type="button" onClick={() => toggleStatePassword('confirmPassword')}>
+                            {confirmPasswordVisible ?
+                            <Image src={EyeSlashed} alt="Hide password"/> : <Image src={Eye} alt="Show password"/>}
+                          </button>
+                        </div>
                       </label>
                     </div>
                   </div>
                   <div className={style?.["step-3"]}>
                     <div className={style.stepWrapper}>
                       <label>
-                        Tradelink da Steam: ?
+                        <p>Tradelink da Steam: <span>
+                          <button className={cn(style.tooltip, showTutorial ? style.active : '')} type="button" onClick={toggleTutorial} onBlur={toggleTutorial}>?</button>
+                          {showTutorial && <div className={style.tutorial}>
+                              <ol>
+                                <li>Vá até o seu inventário</li>
+                                <li>Clique em "Propostas de troca"</li>
+                                <li>Clique em "Quem pode me enviar propostas de troca?" </li>
+                                <li>Desça até achar o "URL de troca"</li>
+                              </ol>
+                            </div>}
+                        </span></p>
                         <input
+                        onKeyDown={e => keyDownHandler(e.key)}
                           type="text"
                           onChange={(e) =>
                             setFormDataValue((oldValue) => {
@@ -350,6 +395,7 @@ const SignUp = () => {
                       <label>
                         Celular:
                         <MaskedInput
+                          onKeyDown={e => keyDownHandler(e.key)}
                           defaultValue={""}
                           mask={[
                             "(",

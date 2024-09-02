@@ -24,7 +24,6 @@ const HeaderProfile = () => {
 
   const saldoString = saldo.toString()
 
-  const router = useRouter()
   const profile = {
     name: name != '' ? name : 'notloggedinuser',
     email: email != '' ? email : 'notloggedinuser@gmail.com',

@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import {
+  LastEarnedContextType,
   Participant,
   Raffle,
   raffleItem,
@@ -15,6 +16,7 @@ import {
   RaffleSkin,
   WinnerProperties,
 } from "utils/interfaces";
+import { useLastEarnedState } from "./LastEarnedContext";
 
 export const RouletteStateContext = createContext({});
 
@@ -25,10 +27,10 @@ export const useRouletteContext = () => {
 export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // ? Init variables
   const [availableRaffles, setAvailableRaffles] = useState<Raffle[]>([]);
-  const [purchasableRaffles, setPurchasableRaffles] = useState<raffleItem[]>(
-    []
-  );
+  const [purchasableRaffles, setPurchasableRaffles] = useState<raffleItem[]>([]);
   const [raffle, setRaffle] = useState<Raffle>();
+
+  const { NewAdditions } = useLastEarnedState() as LastEarnedContextType
   // ? Init variables
 
   // ? Necessary variables
@@ -168,7 +170,6 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     setIsButtonActive(false)
 
     addLatestWinnerToTable();
-    removeWinnerAndRaffleFromRoulette();
 
     setTimeout(() => {
       setIsButtonActive(true)
@@ -212,6 +213,37 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
       (item) => item.number == winner
     )[0];
 
+    const date = Date.now();
+
+    const earnedDateHours = Math.floor(
+      Math.abs(Date.now() - Number(date)) / (1000 * 60 * 60)
+    );
+    const earnedDateDays = Math.floor(
+      Math.abs(Date.now() - Number(date)) / (1000 * 60 * 60 * 24)
+    );
+
+    let time = "";
+
+    if (earnedDateHours < 1)
+      time = `Alguns minutos atrás`;
+    else if (earnedDateDays < 24) 
+      time = `${earnedDateHours} hora${earnedDateHours == 1 ? "" : "s"}`;
+    else if (earnedDateDays)
+      time = `${earnedDateDays} dia${earnedDateDays == 1 ? "" : "s"}`;
+
+    NewAdditions({
+      itemImageUrl: rewards[0].itemImageUrl,
+      TimeOfEarning: time,
+      ChanceOfEarning: ((1 / participants.length) * 100).toFixed(2) + '%',
+      PoolType: rewards[0].type,
+      ItemName: rewards[0].itemName,
+      ItemType: rewards[0].itemType,
+      ItemValue: rewards[0].itemValue,
+      WinnerID: participantWinner.id,
+      WinnerName: participantWinner.personName,
+      WinnerPicture: participantWinner.profilePicture,
+    })
+
     const token = localStorage.getItem("token");
 
     try {
@@ -229,7 +261,7 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
             },
           }
         )
-        .then((res) => console.log(res.data));
+        .then((res) => removeWinnerAndRaffleFromRoulette());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -239,10 +271,12 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     if (!winner) return;
     if (!rewards) return;
 
-    setParticipants(participants.filter(item => item.number != winner))
+    setParticipants((oldParticipants) => {
+      const updatedParticipants = oldParticipants.filter(item => item.number != winner)
+      loadUniqueWinners(updatedParticipants)
+      return updatedParticipants
+    })
     setRewards(rewards.filter(reward => reward != rewards[0]))
-
-    loadUniqueWinners(participants)
   };
   // * Setting new winner
 
@@ -465,11 +499,6 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     setNewRewards(raffle.raffleSkins);
     filterPurchasableRaffles();
   }, [raffle]);
-
-  // useEffect(() => {
-  //   if(rewards.length == 0) return
-    
-  // }, [rewards]);
 
   useEffect(() => {
     if(!participants) return

@@ -117,14 +117,18 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
 
   const [lastEarnedList, setLastEarnedList] = useState<LastEarnedPrizeType[]>(items);
 
+  const NewAdditions = (latestWinner: LastEarnedPrizeType) => {
+    const tempArray = [latestWinner]
+
+    setLastEarnedList(tempArray.concat(lastEarnedList))
+  }
+
   const setNewLastEarnedList = (dataArray: LastEarnedWinnerType[]) => {
     if (!dataArray) return;
 
     const tempArray: LastEarnedPrizeType[] = [];
 
     const filterPendingRaffles = dataArray.filter(item => item.raffle.is_active != 'Em espera')
-
-    // console.log(filterPendingRaffles)
     
     filterPendingRaffles.map((item: LastEarnedWinnerType) => {
       const { updatedAt, skinsWithWinners } = item.raffle;
@@ -150,12 +154,12 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
         time = `${earnedDateDays} dia${earnedDateDays == 1 ? "" : "s"}`;
 
       skinsWithWinners.map(win => {
-        const { skin, winner } = win
+        const { skin, winner, chance } = win
 
         const newItem = {
           itemImageUrl: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${skin.skinPicture}`,
           TimeOfEarning: time,
-          ChanceOfEarning: "25%",
+          ChanceOfEarning: chance,
           PoolType: skin.skinValue >= 1000 ? "Gold" : "Silver",
           ItemName: skin.skinName,
           ItemType: skin.skinType,
@@ -188,6 +192,7 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
 
   const value = {
     lastEarnedList,
+    NewAdditions,
   };
 
   // ! PARA DEBUGGING

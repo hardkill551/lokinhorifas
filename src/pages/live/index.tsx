@@ -19,8 +19,7 @@ const Twitch = () => {
 
     
     const handleResize = () => {
-      const isBigger = Number(window.innerWidth) > 1110 ? 1110 : Number(window.innerWidth - 200)
-      setVideoWidth(isBigger)
+      setVideoWidth(Number(window.innerWidth - 200))
       setIsLoading(true);
     };
 

@@ -1,7 +1,5 @@
 .live {
     display: flex;
-
-    justify-content: center;
     align-items: center;
 
     width: 100%;
@@ -18,7 +16,7 @@
 
     gap: 30px;
 
-    width: 1110px;
+    width: 100%;
     min-height: 900px;
 
     color: white;
@@ -32,5 +30,5 @@
 }
 
 .liveFeed {
-    max-width: 1110px;
+    max-width: fit-content;
 }

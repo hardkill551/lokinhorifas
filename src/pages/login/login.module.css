@@ -146,7 +146,7 @@
   margin-right: auto;
 }
 
-.LogIn input[type="email"], .LogIn input[type="password"], .LogIn input[type="tel"] {
+.LogIn input[type="email"], .LogIn input[type="password"], .LogIn input[type="text"], .LogIn input[type="tel"] {
   display: block;
 
   font-size: 18px;
@@ -159,6 +159,31 @@
   border-radius: 10px;
 
   padding: 5px 10px;
+}
+
+.LogIn .inputWrapper {
+  position: relative;
+}
+
+.LogIn .inputWrapper button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+
+  translate: 0 -50%;
+
+  width: fit-content;
+  height: fit-content;
+
+  background: none;
+  outline: none;
+
+  padding: 0 10px 0 0;
+}
+
+.LogIn .inputWrapper button:hover {
+  translate: 0 -50%;
+  box-shadow: none;
 }
 
 .LogIn input:focus-within {

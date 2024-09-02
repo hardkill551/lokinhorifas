@@ -80,8 +80,6 @@ const PopupBuy = ({
           quantity: raffle.quantity,
         }));
 
-        console.log(tempArray);
-
         axios
           .post(
             `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/raffle/buyRaffle`,
@@ -95,9 +93,8 @@ const PopupBuy = ({
             }
           )
           .then((res) => {
-            console.log(res);
-            // TODO!: Verificar se ao retorno a resposta está vindo correta, e atualizar o saldo local de forma correta
-            // setUserInfo(oldValue => {return {...oldValue, saldo: oldValue.saldo -= total}})
+            if(res.data.remainingBalance) setUserInfo(oldValue => ({...oldValue, saldo: res.data.remainingBalance}))
+            // * Verificar se ao retorno a resposta está vindo correta, e atualizar o saldo local de forma correta
             addStep();
           })
           .catch((err) => console.log(err));

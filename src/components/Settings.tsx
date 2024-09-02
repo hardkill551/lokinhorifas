@@ -8,6 +8,9 @@ import axios from 'axios';
 import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';
 
+import Eye from '../assets/eye.svg'
+import EyeSlashed from '../assets/eye-slash.svg'
+
 const Settings = ({ props }: { props: UserSettingsType }) => {
   const { profile, setShowSettings, image, setImage } = props;
   const inputRef = useRef<HTMLInputElement>(null);
@@ -22,10 +25,17 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
     newPassword: "",
     picture: null
   });
-
+  
   const router = useRouter()
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [ passwordVisible, setPasswordVisible ] = useState(false)
+  const [ confirmPasswordVisible, setConfirmPasswordVisible ] = useState(false)
+
+  const toggleStatePassword = (field: string) => {
+    if(field == 'password') setPasswordVisible(oldPassword => !oldPassword)
+    else setConfirmPasswordVisible(oldPassword => !oldPassword)
+  }
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -167,7 +177,7 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
               <h3>Alterar Trade Link</h3>
               <label>
                 Trade Link Atual:
-                <input disabled={true} name="tradeLink" id="2" value={userData.tradeLink} onChange={e => handleChange(e)} />
+                <p className='important'>{userData.tradeLink.split('?')[1] || 'Sem trade links registrados!'}</p>
               </label>
               <label>
                 Novo Trade Link:
@@ -178,32 +188,8 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
             <div className="box">
               <h3>Alterar telefone</h3>
               <label>
-                Número de celular antigo:
-                <MaskedInput
-                  defaultValue={""}
-                  mask={[
-                    "(",
-                    /[0-9]/,
-                    /\d/,
-                    ")",
-                    " ",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    "-",
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                    /\d/,
-                  ]}
-                  type="tel"
-                  onChange={(e: any) => handleChange(e)}
-                  value={userData.phoneNumber}
-                  disabled={true}
-                  name="phoneNumber"
-                />
+                Número de celular atual:
+                <p>{userData.phoneNumber || 'Nenhum celular registrado'}</p>
               </label>
               <label>
                 Novo número:
@@ -238,11 +224,23 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
               <h3>Alterar senha</h3>
               <label>
                 Senha antiga:
-                <input type="password" name="oldPassword" id="1" value={userData.oldPassword} onChange={(e => handleChange(e))} />
+                <div className="inputWrapper">
+                  <input type={passwordVisible ? 'text' : "password"} name="oldPassword" id="1" value={userData.oldPassword} onChange={(e => handleChange(e))} />
+                  <button onClick={() => toggleStatePassword('password')}>
+                    {passwordVisible ?
+                    <Image src={EyeSlashed} alt="Hide password"/> : <Image src={Eye} alt="Show password"/>}
+                  </button>
+                </div>
               </label>
               <label>
                 Nova senha:
-                <input type="password" name="newPassword" id="" value={userData.newPassword} onChange={(e => handleChange(e))} />
+                <div className="inputWrapper">
+                  <input type={confirmPasswordVisible ? 'text' : "password"} name="newPassword" id="" value={userData.newPassword} onChange={(e => handleChange(e))} />
+                  <button onClick={() => toggleStatePassword('confirmPassword')}>
+                    {confirmPasswordVisible ?
+                    <Image src={EyeSlashed} alt="Hide password"/> : <Image src={Eye} alt="Show password"/>}
+                  </button>
+                </div>
               </label>
               <button onClick={() => updateUser("password")}>Enviar código</button>
             </div>

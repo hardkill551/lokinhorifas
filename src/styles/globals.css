@@ -957,6 +957,15 @@ header {
   color: grey;
 }
 
+.config .inputWrapper {
+  position: relative;
+}
+
+.config .inputWrapper button:hover {
+  translate: 0 -50%;
+  box-shadow: none;
+}
+
 .Profile .box:first-of-type input,
 .Profile .box:first-of-type input {
   width: 100%;
@@ -970,6 +979,34 @@ header {
   font-size: 20px;
 
   text-align: center;
+}
+
+.Profile .config .inputWrapper button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+
+  translate: 0 -50%;
+
+  width: fit-content;
+  height: fit-content;
+
+  background: none;
+  outline: none;
+
+  padding: 5px 5px 0 0;
+}
+
+.Profile .config .box .important {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.Profile .config .box:nth-of-type(2) p {
+  opacity: .5;
+  font-size: 18px;
+
+  width: 100%;
 }
 
 .Profile .configBackground {

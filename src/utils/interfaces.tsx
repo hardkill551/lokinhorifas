@@ -142,6 +142,7 @@ export type LastEarnedWinnerType = {
     is_active: "Ativa" | "Em espera" | "Inativa",
     name: string,
     skinsWithWinners: {
+      chance: string;
       skin: {
         id: number,
         skinName: string,
@@ -162,6 +163,11 @@ export type LastEarnedWinnerType = {
     updatedAt: string
   };
 };
+
+export type LastEarnedContextType = {
+  lastEarnedList: LastEarnedPrizeType[],
+  NewAdditions: (latestWinner: LastEarnedPrizeType) => void,
+}
 
 export type WinnerType = {
   id: number;
@@ -323,6 +329,11 @@ export type RaffleReward = RewardItemType & {
 
 export type WinnerProperties = Participant & {
   distanceFromCenter: number;
+}
+
+export type SidebarContextType = {
+  sidebarView: boolean,
+  toggleSidebar: Function,
 }
 
 export type RouletteContext = {

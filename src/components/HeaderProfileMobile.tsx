@@ -1,5 +1,5 @@
 import { useUserStateContext } from "contexts/UserContext";
-import { UserInfoType }  from '../utils/interfaces'
+import { SidebarContextType, UserInfoType }  from '../utils/interfaces'
 import Image from "next/image";
 
 import defaultProfilePicture from '../assets/defaultProfilePic.svg'
@@ -7,12 +7,14 @@ import { Dispatch, useEffect, useState } from "react";
 import Settings from "./Settings";
 import { useRouter } from "next/router";
 import Budget from "./Budget";
+import { useSidebarState } from "contexts/SidebarContext";
 
 const HeaderProfileMobile = () => {
   const { userInfo, setUserInfo, setShowBudget } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, setShowBudget: Dispatch<React.SetStateAction<boolean>>  }
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
   const [ showSettings, setShowSettings ] = useState<boolean>(false)
   const [ image, setImage ] = useState<File | null>(null)
+  const {toggleSidebar } = useSidebarState() as SidebarContextType
   
   const randomValue = Math.floor(Math.random() * 5000)
 
@@ -56,6 +58,7 @@ const HeaderProfileMobile = () => {
     localStorage.setItem("token", "");
     setUserInfo({ id: "", name: "", email: "", picture: "", token: "", isAdmin: false, phoneNumber: "", tradeLink: "", saldo: 0 });
     router.push('/cadastro');
+    toggleSidebar();
   };
 
   const openBudgetPayment = () => {
