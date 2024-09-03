@@ -2,9 +2,9 @@ import { useUserStateContext } from "contexts/UserContext";
 import { UserContextType } from "utils/interfaces";
 
 const Budget = () => {
-  const { userInfo, setShowPayment, setShowBudget, lastestTransactions } = useUserStateContext() as UserContextType;
+  const { userInfo, setShowPayment, setShowBudget, lastestTransactions, setQrcode64, setValueDiff } = useUserStateContext() as UserContextType;
 
-  const formatarDataHoraAtual = (date: string): string => {
+  const formatarDataHora = (date: string): string => {
     const getDate = new Date(date)
 
     const dia = String(getDate.getDate()).padStart(2, "0");
@@ -15,6 +15,30 @@ const Budget = () => {
 
     return `${dia}/${mes}/${ano}, às ${horas}:${minutos}`;
   };
+
+  type Transaction = {
+    date: string;
+  }
+
+  const sortMechanism = (a: Transaction, b: Transaction) => {
+    if(a.date < b.date) return 1
+    else return -1
+  }
+
+  const handleClick = (qrcode64: string | null) => {
+    if(!qrcode64) return
+
+    setValueDiff(0)
+    setQrcode64(qrcode64)
+    setShowPayment(true)
+  }
+
+  const handlePaymentOpen = () => {
+    setValueDiff(0)
+    setQrcode64('')
+
+    setShowPayment(true)
+  }
 
   return (
     <div className="budget">
@@ -36,27 +60,25 @@ const Budget = () => {
             </thead>
             <tbody>
               {lastestTransactions.length > 0 &&
-                lastestTransactions.map((payment) => (
-                  <>
-                    <tr key={payment.id}>
-                      <th>{formatarDataHoraAtual(payment.date)}</th>
-                      <th>{payment.status.toUpperCase()}</th>
-                      <th>{payment.method}</th>
-                      <th className={`price ${payment.type == 'credit' ? 'earn' : 'loss'}`}>
-                        {payment.type == 'credit' ? '+ ' : '- '}R${" "}
-                        {payment.exchanged
-                          .toFixed(2)
-                          .toString()
-                          .replace(".", ",")}
-                      </th>
-                    </tr>
-                  </>
+                lastestTransactions.sort((a, b) => sortMechanism(a, b)).map((payment) => (
+                  <tr key={payment.id}>
+                    <th>{formatarDataHora(payment.date)}</th>
+                    <th className="status">{payment.status.toUpperCase()}{payment.status == 'pending' && <button className="finishPayment" onClick={() => handleClick(payment.qrCodeBase64)}>Finalizar pagamento</button>}</th>
+                    <th>{payment.method.toUpperCase()}</th>
+                    <th className={`price ${payment.type == 'credit' ? 'earn' : 'loss'}`}>
+                      {payment.type == 'credit' ? '+ ' : '- '}R${" "}
+                      {payment.exchanged
+                        .toFixed(2)
+                        .toString()
+                        .replace(".", ",")}
+                    </th>
+                  </tr>
                 ))}
             </tbody>
           </table>
         </div>
 
-        <button onClick={() => setShowPayment(true)}>Comprar Saldo</button>
+        <button onClick={() => handlePaymentOpen()}>Comprar Saldo</button>
       </div>
       <div onClick={() => setShowBudget(false)} className="background"></div>
     </div>

@@ -19,6 +19,10 @@ export interface UserContextType {
   setShowBudget: React.Dispatch<React.SetStateAction<boolean>>;
   lastestTransactions: LastPayment[];
   getLatestTransactions: Function;
+  qrcode64: string; 
+  setQrcode64: React.Dispatch<React.SetStateAction<string>>;
+  valueDiff: number;
+  setValueDiff: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export type UserInfoType = {

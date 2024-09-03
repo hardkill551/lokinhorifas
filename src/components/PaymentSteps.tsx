@@ -1,7 +1,11 @@
 import Image from "next/image";
 import { Dispatch, useEffect, useRef, useState } from "react";
 import shield from "../assets/checkmark.shield.svg";
+import copynpaste from "../assets/copynpaste.svg"
+import leftarrow from "../assets/arrowleft.svg"
 import { useRouter } from "next/router";
+import { useUserStateContext } from "contexts/UserContext";
+import { UserContextType } from "utils/interfaces";
 
 declare global {
   interface Window {
@@ -17,11 +21,11 @@ const PaymentBrick = ({
 }: {
   props: {
     setShowPayment: Dispatch<React.SetStateAction<boolean>>;
-    valueDiff: number;
   };
 }) => {
   const [sdkLoaded, setSdkLoaded] = useState(false);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
+  const [priceValue, setPriceValue] = useState(0);
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
   const ref = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState(1);
@@ -29,20 +33,32 @@ const PaymentBrick = ({
   const [qrCode, setQrCode] = useState("");
   const router = useRouter();
 
-  const { setShowPayment, valueDiff = 0 } = props;
+  useEffect(() => {
+    if(price == '') return
+    let tempNum = price.split('R$ ')[1]
+    tempNum = tempNum.replaceAll('.', '')
+    setPriceValue(Number(tempNum.replace(',', '.')))
+  }, [price])
+
+  const { setShowPayment } = props;
+  const { qrcode64, valueDiff, setQrcode64 } = useUserStateContext() as UserContextType
 
   const addStep = () => {
     setStep((oldValue) => oldValue + 1);
   };
 
-  const removeStep = () => {
-    setStep((oldValue) => oldValue - 1);
+  const removeStep = (number: number) => {
+    setStep((oldValue) => oldValue - number);
   };
   
   useEffect(() => {
-    if (ref.current) {
-      ref.current.value = valueDiff.toString();
-      setPrice(Number(ref.current.value));
+    if (valueDiff != 0) {
+      setPrice(maskValue(valueDiff.toFixed(2).toString()));
+    } else if (qrcode64 != '') {
+      setStep(3)
+      setQrCode64(qrcode64)
+      setQrcode64('')
+      // setQrCode(qrcodeReceived)
     }
 
     const script = document.createElement("script");
@@ -91,7 +107,7 @@ const PaymentBrick = ({
       const settings = {
         initialization: {
           preferenceId: preferenceId,
-          amount: price,
+          amount: priceValue,
         },
         customization: {
           paymentMethods: {
@@ -171,10 +187,25 @@ const PaymentBrick = ({
     };
   }, [sdkLoaded, preferenceId, step]);
 
-  const handlePriceChange = () => {
+  const handleInputChange = () => {
     if (ref.current === null) return;
-    setPrice(Number(ref.current.value));
-  };
+
+    const value = maskValue(ref.current.value)
+
+    setPrice(value);
+  }
+
+  const maskValue = (value: number | string) => {
+    
+    let changedValue = value.toString().replace(/\D/g, ''); 
+
+    changedValue = (Number(changedValue) / 100).toFixed(2); 
+    changedValue = changedValue.replace(".", ","); 
+    changedValue = changedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    changedValue = `R$ ${changedValue}`;
+
+    return changedValue
+  }
 
   const handleStepChange = () => {
     return `brickContent step-${step}-wrap`;
@@ -185,6 +216,10 @@ const PaymentBrick = ({
     setShowPayment(false);
   };
 
+  const handleClickCopynPaste = () => {
+    navigator.clipboard.writeText(qrCode)
+  }
+
   return (
     <div className="brick">
       <div className="brickWrapper">
@@ -192,12 +227,15 @@ const PaymentBrick = ({
           <div className="step-1">
             <h2>Quanto de saldo gostaria de adicionar à sua conta?</h2>
             <input
-              type="number"
-              placeholder="Valor em reais"
+              type='text' 
+              name="value" 
+              placeholder='R$ 0,00'
               ref={ref}
-              onChange={handlePriceChange}
-            />
-            <button disabled={price <= 0} onClick={addStep}>
+              value={price}
+              onChange={handleInputChange}
+              />
+            <p>Min: R$ 10,00</p>
+            <button disabled={priceValue < 10 || priceValue > 10000} onClick={addStep}>
               Continuar
             </button>
             <p>Poderá voltar para alterar esse valor depois</p>
@@ -206,7 +244,7 @@ const PaymentBrick = ({
             <div className="paymentWrapper">
               <div id="paymentBrick_container"></div>
             </div>
-            <a onClick={removeStep}>&lt;- Voltar</a>
+            <a onClick={() => removeStep(1)}><Image width={20} height={20} className="seta" src={leftarrow} alt="Voltar"/> Voltar</a>
           </div>
           <div className="step-3">
             <Image
@@ -215,10 +253,15 @@ const PaymentBrick = ({
               height={160}
               alt="qrcode"
             />
-            <input type="text" value={qrCode} />
+            {qrCode != '' && 
+            <label className="qrcodecopy">
+              <input type="text" onClick={handleClickCopynPaste} value={qrCode} />
+              <Image src={copynpaste} alt="pix copia e cola"/>
+            </label>
+            }
 
             <button onClick={addStep}>Terminou o pagamento?</button>
-            <a onClick={removeStep}>&lt;- Voltar</a>
+            <a onClick={() => removeStep(2)}><Image width={20} height={20} className="seta" src={leftarrow} alt="Voltar"/> Voltar</a>
           </div>
           <div className="step-4">
             <Image src={shield} alt="Ícone de confirmação" />

@@ -14,6 +14,7 @@ import defaultProfilePic from "../../assets/defaultProfilePic.svg";
 import editPencil from "../../assets/editPencil.svg";
 import { FormDataType } from "utils/interfaces";
 import MaskedInput from "react-text-mask";
+import leftarrow from '../../assets/arrowleft.svg'
 
 import Eye from '../../assets/eye.svg'
 import EyeSlashed from '../../assets/eye-slash.svg'
@@ -268,7 +269,7 @@ const SignUp = () => {
               <div className={style.LinkGroup}>
                 {step > 0 && (
                   <Link href={""} onClick={() => removeStep()}>
-                    &lt;- Voltar
+                    <Image width={20} height={20} className="seta" src={leftarrow} alt="Voltar"/> Voltar
                   </Link>
                 )}
                 <Link className={style.LastAnchor} href={"/login"}>

@@ -1,6 +1,8 @@
-import { Dispatch, useEffect, useState } from "react";
-import { raffleItem, RouletteContext, UserInfoType } from "utils/interfaces";
+import { Dispatch, useState } from "react";
+import { RouletteContext, UserInfoType } from "utils/interfaces";
 import Link from "next/link";
+
+import leftarrow from '../assets/arrowleft.svg'
 
 import RaffleDetails from "./RaffleDetails";
 import StepCounter from "./stepCounter";
@@ -12,7 +14,7 @@ import RaffleConfirmation from "./RaffleConfirmation";
 import { useRouletteContext } from "contexts/RouletteContext";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { headers } from "next/headers";
+import Image from "next/image";
 
 const PopupBuy = ({
   props,
@@ -21,7 +23,6 @@ const PopupBuy = ({
     isVisible: boolean;
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
     setShowPayment: React.Dispatch<React.SetStateAction<boolean>>;
-    setValueDiff: React.Dispatch<React.SetStateAction<number>>;
   };
 }) => {
   const {
@@ -31,7 +32,7 @@ const PopupBuy = ({
   } = useRouletteContext() as RouletteContext;
   const router = useRouter();
 
-  const { isVisible, setIsVisible, setShowPayment, setValueDiff } = props;
+  const { isVisible, setIsVisible, setShowPayment } = props;
   const { userInfo, setUserInfo } = useUserStateContext() as {
     userInfo: UserInfoType;
     setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>;
@@ -105,7 +106,7 @@ const PopupBuy = ({
   const handlePrompt = (redirect: boolean) => {
     setShowPrompt(false);
 
-    if (redirect) setShowPayment(true);
+    if (redirect) setShowPayment(true)
   };
 
   const newTotal = total.toString().includes(".")
@@ -146,7 +147,7 @@ const PopupBuy = ({
             {/* Raffle select quantity é a segunda, aqui ele poderá adicionar mais números referentes as rifas selecionadas na etapa anterior */}
 
             <RafflePayment
-              props={{ rafflesData: purchasableRaffles, setValueDiff }}
+              props={{ rafflesData: purchasableRaffles }}
             />
 
             {/* Raffle payment lidará com o pagamento através do saldo na conta, essa escolha foi feita pra evitar o possível assincronismo entre a pessoa ter ou não o valor em mãos, algo que à prontifica melhor */}
@@ -163,7 +164,7 @@ const PopupBuy = ({
             )}
             {step > 1 && step < 4 && (
               <Link href={""} onClick={removeStep}>
-                &lt;- Voltar
+                <Image width={20} height={20} className="seta" src={leftarrow} alt="Voltar"/> Voltar
               </Link>
             )}
             <button
@@ -201,7 +202,7 @@ const PopupBuy = ({
               <button onClick={() => handlePrompt(false)}>Cancelar</button>
             </div>
           </div>
-          <div onClick={() => handlePrompt(false)} className="background"></div>
+          <div onClick={() => setIsVisible(false)} className="background"></div>
         </div>
       )}
     </section>

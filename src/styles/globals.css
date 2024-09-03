@@ -645,6 +645,22 @@ header {
   font-weight: 500;
 }
 
+.budget .status {
+  display: flex;
+  
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.budget .status button {
+  background: #13a118;
+
+  padding: 5px 10px;
+
+  font-size: 14px;
+}
+
 .budget table tbody tr:last-of-type th {
   border-bottom: 2px solid #EAECF0;
 }
@@ -718,7 +734,7 @@ header {
   left: 0;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   z-index: 20;
 }
@@ -835,16 +851,69 @@ header {
 }
 
 .brick .step-3 {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
   padding: 30px;
 }
 
-.brick .step-3 img {
-  width: 200px;
+.brick .step-3 > img {
+  width: 250px;
   height: auto;
 }
 
-.brick .step-3 h2 {
+.brick .qrcodecopy {
+  position: relative;
+
+  width: 100%;
+}
+
+.brick .qrcodecopy img {
+  position: absolute;
+  right: 0;
+  top: 50%;
+
+  background-color: #eee;
+  
+  height: 100%;
+  width: 40px;
+
+  padding: 3px;
+
+  border-top: 2px solid grey;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+
+  border-radius: 0 4px 4px 0;
+
+  translate: 0 -50%;
+}
+
+.brick .step-3 input {
   font-weight: 500;
+
+  padding: 10px 5px;
+  width: 100%;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+}
+
+.brick .step-3 input:hover ~ img {
+  border-top: 2px solid green;
+  border-right: 2px solid green;
+  border-bottom: 2px solid green;
+  color: green;
+}
+
+.brick .step-3 input:hover {
+  border: 2px solid green;
+  color: green;
 }
 
 .brick .step-3 p {
@@ -859,6 +928,33 @@ header {
 .brick .step-3 h2, .brick .step-3 p {
   width: 300px;
   text-align: center;
+}
+
+.brick .step-3 button {
+  margin-top: auto;
+}
+
+.brick .step-4 img {
+  width: 200px;
+  height: auto;
+}
+
+.brick .step-4 h2 {
+  font-weight: 500;
+}
+
+.brick .step-4 p {
+  font-size: 14px;
+  font-weight: 400;
+
+  margin-bottom: 5px;
+
+  opacity: .5;
+}
+
+.brick .seta {
+  width: 25px;
+  height: auto;
 }
 
 .brick .background {
@@ -1167,7 +1263,12 @@ footer nav div {
   width: 100%;
   height: 100vh;
 
-  z-index: 10;
+  z-index: 9;
+}
+
+.PopupBuy .seta {
+  width: 35px;
+  height: auto;
 }
 
 .PopupBuy .prompt {
@@ -2417,10 +2518,6 @@ footer nav div {
     rotate: 90deg;
 
     font-size: 30px;
-  }
-
-  .Profile .budget {
-    z-index: 10;
   }
 
   .Profile .budget .background {

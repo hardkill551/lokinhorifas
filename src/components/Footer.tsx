@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from "next/router";
 
 import { useSidebarState } from "../contexts/SidebarContext";
+import Link from 'next/link';
 
 const Footer = () => {
   const { toggleSidebar } = useSidebarState() as { toggleSidebar:Function }
@@ -18,7 +19,7 @@ const Footer = () => {
             <div className="LogoBox">
               <Image className='Logo' src={Logo} alt="Logo da empresa Lokinho Skins" />
             </div>
-            <p>Loquinho Skins Ltda © 2024.<br />Todos os Direitos Reservados<br />CNPJ: 50.278.011/0001-06</p>
+            <p>Lokinho Skins Ltda © 2024.<br />Todos os Direitos Reservados<br />CNPJ: 50.278.011/0001-06</p>
           </div>
 
           <nav>
@@ -37,8 +38,10 @@ const Footer = () => {
               <h2>Links úteis</h2>
 
               <ul>
-                <a target='_blank' href="https://instagram.com/lokinhoskins"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Instagram</li></a>
-                <a target='_blank' href="https://api.whatsapp.com/send?phone=5586981088012"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Whatsapp</li></a>
+                <Link target='_blank' href="https://instagram.com/lokinhoskins"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Instagram</li></Link>
+                <Link target='_blank' href="https://api.whatsapp.com/send?phone=5586981088012"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Whatsapp</li></Link>
+                <Link target='_blank' href="termosdeprivacidade"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Termos de privacidade</li></Link>
+                <Link target='_blank' href="/termosdeservico"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Termos de uso</li></Link>
               </ul>
             </div>
             <div className="ContactInfo">

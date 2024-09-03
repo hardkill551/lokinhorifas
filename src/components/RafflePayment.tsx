@@ -1,26 +1,29 @@
 import { useUserStateContext } from "contexts/UserContext";
-import { raffleItem, rafflePayment, UserInfoType } from "utils/interfaces";
+import { raffleItem, rafflePayment, UserContextType } from "utils/interfaces";
 import Currency from '../assets/currency.svg'
 import Image from "next/image";
 
-const RafflePayment = ({props}: {props: {rafflesData: raffleItem[], setValueDiff: React.Dispatch<React.SetStateAction<number>>}}) => {
+const RafflePayment = ({props}: {props: {rafflesData: raffleItem[]}}) => {
 
-  const { userInfo } = useUserStateContext() as { userInfo: UserInfoType }
+  const { userInfo, setValueDiff, setQrcode64 } = useUserStateContext() as UserContextType
 
-  const { rafflesData, setValueDiff } = props
+  const { rafflesData } = props
 
   let value = 0
   let selectedItems: rafflePayment[] = []
 
   rafflesData.map(raffle => {
     if(raffle.isSelected) {
-       value = value += (raffle.value * raffle.quantity)
+        value = value += (raffle.value * raffle.quantity)
 
       selectedItems.push({key: selectedItems.length, name: raffle.name, quantity: raffle.quantity, value: raffle.value})
     }
   })
 
-  userInfo.saldo < value && setValueDiff((userInfo.saldo - value) * -1)
+  if(userInfo.saldo < value) {
+    setValueDiff((userInfo.saldo - value) * -1)
+    setQrcode64('')
+  }
 
 
   function formatDate() {
