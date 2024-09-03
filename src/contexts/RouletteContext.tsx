@@ -422,12 +422,14 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
         (sum, skin) => sum + skin.skinValue,
         0
       );
+      let choosenSkinBanner;
+      if(raffleSkins.length > 0) {
+        choosenSkinBanner = raffleSkins.reduce((max, skin) => {
+          return skin.skinValue >= max.skinValue ? skin : max;
+        }).skinPicture;
+      }
 
-      const choosenSkinBanner = raffleSkins.reduce((max, skin) => {
-        return skin.skinValue >= max.skinValue ? skin : max;
-      }).skinPicture;
-
-      const bannerSkin: string = `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${choosenSkinBanner}`;
+      const bannerSkin: string = `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${choosenSkinBanner || "default"}`;
 
       const tempObject: raffleItem = {
         id,
