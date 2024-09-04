@@ -8,6 +8,7 @@ import { TextContextType } from "utils/interfaces";
 const Twitch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [ videoWidth, setVideoWidth ] = useState(0)
+  const [ videoHeight, setVideoHeight ] = useState(0)
   const { textInfo, setTextInfo } = useContext(TextContext) as TextContextType;
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const Twitch = () => {
     
     const handleResize = () => {
       setVideoWidth(Number(window.innerWidth - 200))
+      setVideoHeight(Number(window.innerHeight - 500))
       setIsLoading(true);
     };
 
@@ -39,7 +41,7 @@ const Twitch = () => {
       <div className={style.liveWrapper}>
         <h1>{isLoading && textInfo.text}</h1>
         <div className={style.liveFeed}>
-          <TwitchEmbed channel="evandro_vidal" width={videoWidth} height={700} />
+          <TwitchEmbed channel="evandro_vidal" width={videoWidth} height={videoHeight} />
         </div>
       </div>
     </div>

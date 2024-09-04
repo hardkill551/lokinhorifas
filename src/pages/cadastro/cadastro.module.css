@@ -499,3 +499,63 @@
 
   translate: 0 0;
 }
+
+@media only screen and (max-width: 1200px) {
+  .SignUp, .SignUpWrapper {
+    height: fit-content;
+
+    margin: 0;
+  }
+
+  .SignUpWrapper {
+    margin-top: 90px;
+  }
+
+  .SignUpWrapper .col1 {
+    display: none;
+  }
+
+  .SignUpWrapper .col2, .SignUpWrapper form {
+    width: 100%;
+
+    padding-inline: 20px;
+  }
+
+  .SignUp .steps {
+    width: 100vw;
+  }
+
+  .SignUp form {
+    align-items: center;
+  }
+
+  .SignUp form .LinkGroup {
+    padding-inline: 20px;
+  }
+
+  .SignUp .stepsWrapper {
+    gap: 0;
+  }
+
+  .SignUp .stepsWrapper > .step-1,
+  .SignUp .stepsWrapper > .step-2,
+  .SignUp .stepsWrapper > .step-3,
+  .SignUp .stepsWrapper > .step-4 {
+    width: 100vw;
+
+    padding-inline: 20px;
+  }
+
+  .SignUpWrapper form > button {
+    width: 94%;
+  }
+
+
+  .SignUp .stepsWrapper.steps-3 {
+    translate: -100vw;
+  }
+
+  .SignUp .stepsWrapper.steps-4 {
+    translate: -200vw;
+  }
+}

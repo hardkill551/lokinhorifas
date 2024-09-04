@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSidebarState } from "../contexts/SidebarContext";
 
 import { useRouter } from "next/router";
@@ -6,10 +6,16 @@ import { useUserStateContext } from "contexts/UserContext";
 import axios from "axios";
 import HeaderProfileMobile from "./HeaderProfileMobile";
 import { SidebarContextType, UserContextType } from "utils/interfaces";
+import Image from "next/image";
+
+import logo from "../images/Logo.png";
+import Instagram from "../assets/instagram.svg"
+import Whatsapp from "../assets/Whatsapp.svg"
 
 const Sidebar = () => {
   const { sidebarView, toggleSidebar } = useSidebarState() as SidebarContextType
   const { userInfo, setUserInfo } = useUserStateContext() as UserContextType;
+  const [ showSettings, setShowSettings ] = useState<boolean>(false)
 
   const router = useRouter();
 
@@ -71,10 +77,16 @@ const Sidebar = () => {
   return (
     <section
       className={
-        sidebarView ? "Sidebar mobile tablet visible" : "Sidebar mobile tablet"
+        sidebarView ? `Sidebar mobile tablet visible ${showSettings ? 'scrollOff' : ''}` : "Sidebar mobile tablet"
       }
     >
       <div className="SidebarWrapper">
+        <div
+          className="LogoBox"
+          onClick={() => router.push("/")}
+        >
+            <Image className="Logo" src={logo} alt="Logo de Lokinho Rifas" />
+        </div>
         <ul className="MainNavigation">
           <li onClick={() => handleRedirectBtn("/#Home")}>Home</li>
           <li onClick={() => handleRedirectBtn("/roleta")}>Sorteio</li>
@@ -90,7 +102,7 @@ const Sidebar = () => {
           </button>
         ) : (
           <div className="mobile">
-            <HeaderProfileMobile />
+            <HeaderProfileMobile props={{showSettings, setShowSettings}} />
           </div>
         )}
         <ul className="Socials">
@@ -99,12 +111,12 @@ const Sidebar = () => {
               target="_blank"
               href="https://api.whatsapp.com/send?phone=5586981088012"
             >
-              Whatsapp
+              <Image src={Whatsapp} width={35} alt="Link para Whatsapp"/>
             </a>
           </li>
           <li>
             <a target="_blank" href="https://instagram.com/lokinhoskins">
-              Instagram
+              <Image src={Instagram} width={40} alt="Link para Instagram"/>
             </a>
           </li>
         </ul>

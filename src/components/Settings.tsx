@@ -149,6 +149,10 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
     }
   }
 
+  const halves = userInfo && userInfo.tradeLink.split('?')[1].split('&')
+
+  const tradelink = halves && `${halves[0]} ${halves[1]}`
+
   return (
     <div className="config">
       <div className="statusWrapper">
@@ -177,7 +181,7 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
               <h3>Alterar Trade Link</h3>
               <label>
                 Trade Link Atual:
-                <p className='important'>{userData.tradeLink.split('?')[1] || 'Sem trade links registrados!'}</p>
+                <p className='important'>{userData.tradeLink ? tradelink : 'Sem trade links registrados!'}</p>
               </label>
               <label>
                 Novo Trade Link:

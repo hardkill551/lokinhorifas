@@ -9,10 +9,10 @@ import { useRouter } from "next/router";
 import Budget from "./Budget";
 import { useSidebarState } from "contexts/SidebarContext";
 
-const HeaderProfileMobile = () => {
+const HeaderProfileMobile = ({ props }: { props: { showSettings: boolean, setShowSettings: React.Dispatch<React.SetStateAction<boolean>> } }) => {
   const { userInfo, setUserInfo, setShowBudget } = useUserStateContext() as { userInfo: UserInfoType, setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>, setShowBudget: Dispatch<React.SetStateAction<boolean>>  }
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
-  const [ showSettings, setShowSettings ] = useState<boolean>(false)
+  const { showSettings, setShowSettings } = props
   const [ image, setImage ] = useState<File | null>(null)
   const {toggleSidebar } = useSidebarState() as SidebarContextType
   

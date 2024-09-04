@@ -700,18 +700,6 @@
   left: 101%;
 }
 
-/* .ServicesRaffles .background-3 {
-  position: absolute;
-  top: -25%;
-  left: 0;
-
-  ! Removido por causar problemas
-
-  opacity: .5;
-
-  z-index: -1;
-} */
-
 .ServicesRaffles h2 {
   font-size: 30px;
 }
@@ -1139,7 +1127,8 @@
   }
 
   .Hero .col1 h1 {
-    font-size: 48px;
+    /* !PADRÃO PARA HEADER */
+    font-size: min(12vmin, 48px);
 
     white-space: nowrap;
   }
@@ -1148,7 +1137,8 @@
     width: 100%;
     line-height: 120%;
 
-    font-size: 20px;
+    /* !PADRÃO PARA TEXTO */
+    font-size: min(6vmin, 20px);
     font-weight: 400;
   }
 
@@ -1224,6 +1214,10 @@
     padding: 20px;
   }
 
+  .Services h2 {
+    font-size: min(9vmin, 48px);
+  }
+
   .ServicesWrapper {
     padding: 0;
   }
@@ -1237,6 +1231,18 @@
     align-items: center;
 
     width: 100%;
+  }
+
+  .Services .Card {
+    width: min(100%, 301px);
+  }
+
+  .Services .Card h3 {
+    font-size: min(8vmin, 20px);
+  }
+
+  .Services .Card p {
+    font-size: min(4vmin, 14px);
   }
 
   .ServicesDisplay {
@@ -1294,6 +1300,8 @@
     height: fit-content;
 
     padding: 40px;
+
+    width: min(90%, 537px);
   }
 
   .ServicesDisplayWrapper ul {
@@ -1307,13 +1315,22 @@
   }
 
   .ServicesDisplayWrapper li h3 {
-    font-size: 25px;
+    font-size: min(5vmin, 25px);
 
     width: fit-content;
   }
 
+  .ServicesDisplay .col2 img {
+    height: min(5vmin, 25px);
+
+    margin-right: 5px;
+  }
+
   .ServicesDisplayWrapper li p {
-    font-size: 12px;
+    font-size: min(4vmin, 12px);
+    font-weight: 400;
+
+    padding-left: 30px;
 
     width: fit-content;
   }
@@ -1373,6 +1390,7 @@
 
   .ServicesRafflesWrapper h2 {
     margin-top: 100px;
+    font-size: min(12vmin, 30px);
   }
 
   .ServicesRaffles .CardGroup {
@@ -1380,7 +1398,9 @@
 
     justify-content: center;
 
-    padding: 0 52px;
+    padding: 0;
+
+    width: 100%;
 
     margin-top: 0;
     
@@ -1388,33 +1408,47 @@
   }
 
   .ServicesRaffles .BackgroundRaffle {
-    width: 330px;
-    height: auto;
+    width: min(330px, 100%);
+    height: min(390px, 100%);
   }
 
   .ServicesRaffles .Card .RaffleLogo {
-    width: 280px;
+    width: min(280px, 100%);
     height: auto;
 
     margin-bottom: 5px;
   }
 
   .ServicesRaffles .Card {
-    width: 330px;
-    height: 390px;
+    width: min(330px, 100%);
+    height: min(390px, 100%);
   }
 
   .ServicesRaffles .Card .RaffleContent {
-    gap: 5px;
+    gap: 10px;
   }
 
   .ServicesRaffles .Card h3 {
-    font-size: 20px;
+    font-size: min(6vmin, 20px);
   }
 
   .ServicesRaffles .Card p {
     font-size: 10px;
-    line-height: 12px;
+    font-size: min(3vmin, 12px);
+
+    height: fit-content;
+    margin-bottom: 3px;
+
+    text-align: justify;
+
+    line-height: min(3.3vmin, 12px);
+  }
+
+  .ServicesRaffles .Card button {
+    width: fit-content;
+    height: fit-content;
+
+    font-size: min(5vmin, 20px);
   }
 
   .ServicesRaffles .background {
@@ -1461,7 +1495,7 @@
   }
 
   .History .background-0 {
-    top: 0;
+    top: 10px;
 
     translate: 20% -30px;
 
@@ -1506,8 +1540,13 @@
   }
 
   .History .col2 h2 {
-    font-size: 30px;
-    white-space: nowrap;
+    font-size: min(6.5vmin, 30px);
+  }
+
+  .History .col2 p {
+    font-size: min(4vmin, 18px);
+
+    text-align: justify;
   }
 
   .History .background {
@@ -1536,6 +1575,41 @@
 
   .desktop, .tablet {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 530px) {
+  .ServicesRaffles .Card .RaffleLogo {
+    width: min(280px, 100%);
+    height: auto;
+
+    margin-top: 24px;
+    margin-bottom: 5px;
+  }
+
+  .ServicesRaffles .Card {
+    width: min(330px, 100%);
+    height: min(390px, 100%);
+
+    padding: 0 min(24px, 5%);
+  }
+
+
+  .ServicesRaffles .Card button {
+    width: fit-content;
+    height: fit-content;
+
+    padding: 5px;
+    margin-bottom: 24px;
+
+    font-size: min(5vmin, 20px);
+  }
+
+  .History .background-0 {
+    top: 20px;
+    width: 200%;
+
+    translate: -5% -30px;
   }
 }
 /** MOBILE */

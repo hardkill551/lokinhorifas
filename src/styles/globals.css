@@ -375,7 +375,8 @@ header {
 
   height: 600px;
 
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
   
   position: relative;
 }
@@ -840,7 +841,7 @@ header {
 }
 
 .brick .step-2 {
-  padding: 30px;
+  padding: 0 30px;
 }
 
 .brick a {
@@ -1871,10 +1872,14 @@ footer nav div {
   flex-direction: column;
 
   gap: 10px;
+
+  padding-block: 30px;
 }
 
 .PopupBuy .raffleBuyQuantity .cartItem {
   display: flex;
+
+  justify-content: center;
   
   width: 100%;
   height: 140px;
@@ -2497,15 +2502,8 @@ footer nav div {
     transition: all 400ms ease-out;
   }
 
-  header .LogoBox {
-    transition: all 400ms ease-out 0ms;
-  }
-
   header .LogoBox.SidebarOn {
-    translate: calc(50% + 20px) calc(50% + 100px);
-    scale: 3;
-
-    transition: all 400ms ease-out 400ms;
+    display: none;
   }
 
   button.mobile {
@@ -2547,6 +2545,17 @@ footer nav div {
     transition: 400ms ease-out 400ms;
 
     z-index: 9;
+
+    overflow: auto;
+  }
+
+  .Sidebar .LogoBox {
+    width: 100%;
+  }
+
+  .Sidebar .LogoBox img {
+    width: min(270px, 100%);
+    height: auto;
   }
 
   .Sidebar.visible {
@@ -2704,6 +2713,10 @@ footer nav div {
     border-top: none;
   }
 
+  .Sidebar .Profile .Dropdown button {
+    font-weight: 700;
+  }
+
   .Sidebar .Socials {
     justify-content: center;
     flex-wrap: wrap;
@@ -2772,6 +2785,8 @@ footer nav div {
 
   .Credits p {
     white-space: nowrap;
+
+    font-size: min(4vmin, 16px);
   }
 
   .budget {
@@ -2794,11 +2809,12 @@ footer nav div {
 
   .budgetWrapper .tableWrapper {
     width: 100%;
-    height: fit-content;
+    height: 300px;
   }
 
   .budget .currentBudget h1 {
     white-space: nowrap;
+    font-size: min(18vmin, 68px);
   }
 
   .budget table th {
@@ -2808,7 +2824,13 @@ footer nav div {
 
     text-align: center;
 
-    font-size: 2.5vmin;
+    font-size: min(3vmin, 18px);
+  }
+
+  .budget .status button {
+    font-size: min(3vmin, 18px);
+
+    padding: 2px 5px;
   }
 
   .budget .price {
@@ -2831,7 +2853,7 @@ footer nav div {
     animation: 300ms ease-out 0s 1 forwards showUp;
   }
 
-  .brick .step-1, .brick .step-2, .brick .step-3 {
+  .brick .step-1, .brick .step-2, .brick .step-3, .brick .step-4 {
     width: 100vw;
   }
 
@@ -2863,12 +2885,18 @@ footer nav div {
   }
 
   .brick .step-2 a {
-    font-size: 5vmin;
+    font-size: min(5vmin, 18px);
+
+    margin-bottom: 30px;
   }
 
-  .brick .step-3 img {
-    width: 70%;
+  .brick .step-3 > img {
+    width: min(70%, 250px);
     height: auto;
+  }
+
+  .brick .qrcodecopy {
+    width: min(100%, 250px);
   }
 
   .brick .step-3 h2 {
@@ -2876,22 +2904,59 @@ footer nav div {
   }
 
   .brick .step-3 p {
-    font-size: 4vmin;
+    font-size: min(4vmin, 16px);
 
     margin-bottom: 20px;
   }
 
   .brick .step-3 button {
-    font-size: 4.5vmin;
+    font-size: min(5vmin, 18px);
     width: fit-content;
+
+    margin-top: 20px;
+  }
+
+  .brick .step-4 img {
+    width: 150px;
+    height: auto;
+  }
+
+  .brick .step-4 h2 {
+    font-size: min(8vmin, 1.5em);
+    text-align: center;
+  }
+
+  .brick .step-4 p {
+    font-size: min(6vmin, 14px);
+    text-align: center;
+  }
+
+  .brick .step-4 button {
+    padding: 5px 10px;
+    font-size: min(8vmin, 1.5em);
   }
 
   .Profile .config {
+    top: auto;
+    bottom: 0%;
+
+    height: 200vh;
+
+    padding-bottom: 160px;
     align-items: flex-end;
   }
 
-  .Profile .configWrapperContent {
+  .Profile .configWrapper {
     border-radius: 20px 20px 0 0;
+  }
+
+  .Profile .config .box .important {
+    width: fit-content;
+    text-align: center;
+  }
+
+  .Profile .configWrapperContent {
+    border-radius: 0;
     width: 100%;
 
     border: none;
@@ -2928,7 +2993,7 @@ footer nav div {
     width: 100%;
   }
 
-  .Profile .config .box button {
+  .Profile .config .box > button {
     width: 100%;
   }
 
@@ -2980,11 +3045,11 @@ footer nav div {
   }
 
   .PopupBuyContent .sessionInfo h2 {
-    font-size: 9vmin;
+    font-size: min(9vmin, 48px);
   }
 
   .PopupBuyContent .sessionInfo p {
-    font-size: 5vmin;
+    font-size: min(5vmin, 18px);
   }
 
   .PopupBuyContent .raffleSelect .cardGroup {
@@ -2999,8 +3064,14 @@ footer nav div {
     width: 100%;
   }
 
+  .raffleSelect .cardGroupWrapper {
+    height: fit-content;
+
+    justify-content: center;
+  }
+
   .raffleSelect .cardGroupWrapper .card {
-    width: 100%;
+    width: min(49%, 340px);
   }
 
   .raffleSelect .cardGroupWrapper .card .skin {
@@ -3017,14 +3088,10 @@ footer nav div {
     width: 80%;
   }
 
-  .PopupBuy .details {
-    align-items: flex-end;
-  }
-
   .PopupBuy .detailsWrapper {
-    width: 100%;
+    width: fit-content;
 
-    border-radius: 20px 20px 0 0;
+    border-radius: 20px;
 
     border-top: 1px solid grey;
 
@@ -3043,6 +3110,19 @@ footer nav div {
 
   .PopupBuy .detailsWrapper .contentGroup h2 {
     text-align: center;
+    font-size: min(9vmin, 24px);
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup > p {
+    font-size: min(14px, 6vmin);
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup .included h3 {
+    font-size: min(5vmin, 1.17em);
+  }
+
+  .PopupBuy .detailsWrapper .contentGroup .included li {
+    font-size: min(5vmin, 1em);
   }
 
   .PopupBuy .detailsWrapper .contentGroup button {
@@ -3059,7 +3139,7 @@ footer nav div {
   }
 
   .PopupBuy .bottomSection .totalValue h3 {
-    font-size: 8vmin;
+    font-size: min(8vmin, 32px);
     width: 100%;
 
     text-align: center;
@@ -3067,7 +3147,7 @@ footer nav div {
 
   .PopupBuy .bottomSection button,
   .PopupBuy .bottomSection a {
-    font-size: 5vmin;
+    font-size: min(5vmin, 18px);
 
     white-space: nowrap;
   }
@@ -3093,11 +3173,11 @@ footer nav div {
   }
 
   .PopupBuy .raffleBuyQuantity .raffleMetaData {
-    width: 100%;
+    width: min(100%, 470px);
   }
 
   .PopupBuy .raffleBuyQuantity .raffleMetaData .raffleQuantity h3 {
-    font-size: 6vmin;
+    font-size: min(7vmin, 24px);
   }
 
   .PopupBuy .rafflePayment {
@@ -3117,7 +3197,7 @@ footer nav div {
   }
 
   .PopupBuy .rafflePayment .userBudget h3 {
-    font-size: 5vmin;
+    font-size: min(5vmin, 24px);
   }
 
   .rafflePaymentWrapper {
@@ -3132,7 +3212,7 @@ footer nav div {
 
     background-color: #ddd;
 
-    padding-block: 10px;
+    padding-block: 30px;
 
     overflow: auto;
 
@@ -3141,11 +3221,11 @@ footer nav div {
   }
 
   .PopupBuy .itemTable .header {
-    font-size: 4.5vmin;
+    font-size: min(4.5vmin, 20px);
   }
 
   .PopupBuy .itemTable .item {
-    font-size: 4vmin;
+    font-size: min(4vmin, 18px);
   }
 
   .PopupBuy .itemTable .item h3 {
@@ -3168,11 +3248,25 @@ footer nav div {
   }
 
   .PopupBuy .account h3, .PopupBuy .dateOfPurchase h3 {
-    font-size: 5vmin;
+    font-size: min(5vmin, 24px);
   }
 
   .PopupBuy .account p, .PopupBuy .dateOfPurchase p {
-    font-size: 4vmin;
+    font-size: min(4vmin, 18px);
+  }
+
+  .PopupBuy .prompt .promptWrapper {
+    width: 90%;
+  }
+
+  .PopupBuy .prompt .promptWrapper h2 {
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .PopupBuy .prompt .promptWrapper .buttonGroup {
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .PopupBuy .raffleConfirmation img {
@@ -3181,9 +3275,9 @@ footer nav div {
   }
 
   .PopupBuy .raffleConfirmation p {
-    font-size: 5vmin;
+    font-size: min(5vmin, 18px);
 
-    width: 80%;
+    width: min(80%, 480px);
 
     margin-bottom: 95px;
   }
@@ -3209,6 +3303,54 @@ footer nav div {
 
   .desktop {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  footer ul, footer h2 {
+    text-align: center;
+    align-items: center;
+  }
+
+  .PopupBuy .details {
+    align-items: flex-end;
+  }
+
+  .PopupBuy .detailsWrapper {
+    width: 100%;
+
+    border-radius: 20px 20px 0 0;
+  }
+
+  .raffleSelect .cardGroupWrapper .card {
+    width: 100%;
+  }
+
+  .Profile .config .box > button {
+    width: 100%;
+
+    text-align: center;
+    padding-inline: 0;
+  }
+
+  .brick .step-2 .paymentWrapper {
+    width: 150%;
+    height: 100%;
+  
+    scale: .9;
+  
+    overflow-y: auto;
+  }
+
+  .Profile .config label {
+    display: flex;
+
+    width: fit-content;
+
+    flex-direction: column;
+    text-align: center;
+
+    justify-content: center;
   }
 }
 

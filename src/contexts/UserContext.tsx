@@ -30,7 +30,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   })
 
   const [ showBudget, setShowBudget ] = useState<boolean>(false)
-  const [ showPayment, setShowPayment ] = useState<boolean>(true)
+  const [ showPayment, setShowPayment ] = useState<boolean>(false)
   const [ lastestTransactions, setLatestTransactions ] = useState<LastPayment[]>([])
   const [ qrcode64, setQrcode64 ] = useState<string>('')
   const [ valueDiff, setValueDiff ] = useState(0)

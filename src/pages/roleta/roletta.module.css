@@ -1284,6 +1284,7 @@
 
   .RewardsAdContent button {
     font-size: 18px;
+    font-weight: 500;
   }
 
   .RewardsArray {
@@ -1369,5 +1370,27 @@
 
   .desktop {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .Roleta .ButtonGroup {
+    width: 90vw;
+  }
+
+  .Roleta .ButtonGroup button {
+    width: 100%;
+  }
+
+  .LastPrizes .title {
+    width: 90vw;
+  }
+
+  .LastPrizes .title h2 {
+    font-size: min(30px, 8vmin);
+  }
+
+  .LastPrizes .title img {
+    height: min(30px, 8vmin);
   }
 }

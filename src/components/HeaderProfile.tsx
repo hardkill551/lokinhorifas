@@ -8,7 +8,7 @@ import Settings from "./Settings";
 import { useRouter } from "next/router";
 
 const HeaderProfile = () => {
-  const { userInfo, setUserInfo, setShowBudget, logOut } = useUserStateContext() as UserContextType
+  const { userInfo, setShowBudget, logOut } = useUserStateContext() as UserContextType
   const [ showDropdown, setShowDropdow ] = useState<boolean>(false)
   const [ showSettings, setShowSettings ] = useState<boolean>(false)
   const [ image, setImage ] = useState<File | null>(null)
