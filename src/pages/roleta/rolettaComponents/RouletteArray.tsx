@@ -18,7 +18,6 @@ const RouletteArray = () => {
   useEffect(() => {
     setTimeout(() => {
       const winner = document.getElementById('winner')
-      console.log('ativado', winner)
 
       if(!winner) return
   

@@ -9,7 +9,7 @@ const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dis
 
   const { setDetailsVisible, setRaffleDetails } = moreDetails
   const { raffle } = props
-  const [ imgSrc, setImgSrc ] = useState<string | StaticImageData>(raffle.bannerSkin)
+  const [ imgSrc, setImgSrc ] = useState<string | StaticImageData>(defaultGunPic)
 
   useEffect(() => {
     setImgSrc(raffle.bannerSkin)
@@ -22,7 +22,10 @@ const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dis
 
   return (
     <div className="card" onClick={() => handleCardClick()}>
-      <Image className='skin' width={165} height={135} src={imgSrc} alt='Skin principal padrão' onError={error => console.log(error)}/> 
+      <Image className='skin' width={165} height={135} src={imgSrc} alt='Skin principal padrão' onError={error => {
+        error.preventDefault()
+        setImgSrc(defaultGunPic)
+        }}/> 
       <Image className='shine' src={shine} alt='Skin principal'/>
 
       {raffle.isSelected && <div className="selectCheck">

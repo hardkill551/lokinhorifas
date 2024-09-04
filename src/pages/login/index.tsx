@@ -3,22 +3,23 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { useUserStateContext } from "contexts/UserContext";
 import style from "./login.module.css";
 import cn from "classnames";
+
+import Eye from '../../assets/eye.svg'
+import EyeSlashed from '../../assets/eye-slash.svg'
 
 import SingUpBG from "../../images/Cadastro/CADASTROBG.png";
 import Lines from "../../images/Cadastro/Lines.png";
 import Image from "next/image";
-import { UserContextType } from "utils/interfaces";
 
 const Login = () => {
-  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType;
   const { query, push } = useRouter();
   const { email } = query;
   const router = useRouter();
 
   const [step, setStep] = useState(0);
+  const [ passwordVisible, setPasswordVisible ] = useState(false)
 
   const addStep = () => {
     setStep((oldValue) => oldValue + 1);
@@ -82,6 +83,11 @@ const Login = () => {
     return tempBool;
   };
 
+  const keyDownHandler = (key: string) => {
+    if(key != 'Enter') return
+    validateLogIn()
+  }
+
   const validateLogIn = async () => {
     setError("");
     const { email, password } = formDataValue;
@@ -139,6 +145,10 @@ const Login = () => {
     }
   };
 
+  const toggleStatePassword = () => {
+    setPasswordVisible(oldPassword => !oldPassword)
+  }
+
   return (
     <>
       <div className={style.LogIn}>
@@ -166,23 +176,31 @@ const Login = () => {
                           return { ...oldValue, email: e.target.value };
                         })
                       }
+                      onKeyDown={e => keyDownHandler(e.key)}
                       required
                     />
                   </label>
                   <label>
                     Senha:
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      value={formDataValue.password}
-                      onChange={(e) =>
-                        setFormDataValue((oldValue) => {
-                          return { ...oldValue, password: e.target.value };
-                        })
-                      }
-                      required
-                    />
+                    <div className={style.inputWrapper}>
+                      <input
+                        type={passwordVisible ? 'text' : 'password'}
+                        name="password"
+                        id="password"
+                        value={formDataValue.password}
+                        onChange={(e) =>
+                          setFormDataValue((oldValue) => {
+                            return { ...oldValue, password: e.target.value };
+                          })
+                        }
+                        onKeyDown={e => keyDownHandler(e.key)}
+                        required
+                      />
+                      <button onClick={toggleStatePassword}>
+                        {passwordVisible ?
+                         <Image src={EyeSlashed} alt="Hide password"/> : <Image src={Eye} alt="Show password"/>}
+                      </button>
+                    </div>
                   </label>
                   <Link href={"/recoverPassword"}>Esqueceu a senha?</Link>
                 </div>

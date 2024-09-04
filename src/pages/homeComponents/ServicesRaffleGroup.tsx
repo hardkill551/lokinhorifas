@@ -30,7 +30,7 @@ const ServicesRafflesGroup = () => {
 
         <div className={style.RaffleContent}>
           <h3>Grupo Gold</h3>
-          <p>Entre no nosso grupo de RIFAS GOLDEN e teremos prazer em recebê-lo, aqui você vai encontrar as mais diversas skins sendo rifadas do CSGO. Rifas com skins de preços medianos a altos com floats baixíssimo e promoções diferenciadas.</p>
+          <p>Entre no nosso grupo de RIFAS GOLDEN e teremos prazer em recebê-lo. Aqui temos rifas com skins de preços medianos a altos com floats baixíssimo e promoções diferenciadas.</p>
           <a target='_blank' href="https://chat.whatsapp.com/I6z9eUyNp33EpLAxLWmOId"><button><Image src={ExternalLink} alt="" />Entrar</button></a>
         </div>
       </div>

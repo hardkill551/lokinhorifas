@@ -15,7 +15,6 @@ const Homepage = () => {
   const { userInfo, setUserInfo, showPayment, setShowPayment } = useUserStateContext() as UserContextType;
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [ valueDiff, setValueDiff ] = useState<number>(0)
 
   useEffect(() => {
     const htmlElement = document.querySelector("html");
@@ -98,16 +97,13 @@ const Homepage = () => {
   return (
     <>
       {isVisible && <RouletteProvider>
-        <PopupBuy props={{ isVisible, setIsVisible, setShowPayment, setValueDiff }} />
+        <PopupBuy props={{ isVisible, setIsVisible, setShowPayment }} />
       </RouletteProvider>}
       <Hero props={{ isVisible, setIsVisible }} />
       <Services />
       <ServicesDisplay />
       <ServiceRaffle />
       <History />
-      {showPayment && <RouletteProvider>
-        <PaymentBrick props={{setShowPayment, valueDiff}}/>
-      </RouletteProvider>}
     </>
   );
 };

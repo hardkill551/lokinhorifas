@@ -29,7 +29,7 @@ const ServicesDisplay = () => {
               <Image src={Colaboração} alt="Grupo de Rifas" />
               Compramos suas Skins
             </h3>
-            <p>As melhores Rifas de CSGO, Entre e ganhe!</p>
+            <p>As melhores Rifas de CSGO, entre e ganhe!</p>
           </li>
           <li>
             <h3>

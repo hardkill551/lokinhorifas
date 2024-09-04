@@ -30,8 +30,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   })
 
   const [ showBudget, setShowBudget ] = useState<boolean>(false)
-  const [ showPayment, setShowPayment ] = useState<boolean>(false)
+  const [ showPayment, setShowPayment ] = useState<boolean>(true)
   const [ lastestTransactions, setLatestTransactions ] = useState<LastPayment[]>([])
+  const [ qrcode64, setQrcode64 ] = useState<string>('')
+  const [ valueDiff, setValueDiff ] = useState(0)
 
   const cleanTransactions = (data: LastPaymentBack[]) => {
     const tempArray: LastPayment[] = []
@@ -101,7 +103,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     showPayment, 
     setShowPayment,
     lastestTransactions,
-    getLatestTransactions
+    getLatestTransactions,
+    qrcode64, 
+    setQrcode64,
+    valueDiff,
+    setValueDiff,
   }
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

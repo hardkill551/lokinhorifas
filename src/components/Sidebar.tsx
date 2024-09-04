@@ -5,13 +5,10 @@ import { useRouter } from "next/router";
 import { useUserStateContext } from "contexts/UserContext";
 import axios from "axios";
 import HeaderProfileMobile from "./HeaderProfileMobile";
-import { UserContextType } from "utils/interfaces";
+import { SidebarContextType, UserContextType } from "utils/interfaces";
 
 const Sidebar = () => {
-  const { sidebarView, toggleSidebar } = useSidebarState() as {
-    sidebarView: boolean;
-    toggleSidebar: Function;
-  };
+  const { sidebarView, toggleSidebar } = useSidebarState() as SidebarContextType
   const { userInfo, setUserInfo } = useUserStateContext() as UserContextType;
 
   const router = useRouter();

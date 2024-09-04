@@ -9,13 +9,17 @@ import { UserInfoType } from "../utils/interfaces";
 import HeaderProfile from "./HeaderProfile";
 import axios from "axios";
 import Budget from "./Budget";
+import { RouletteProvider } from "contexts/RouletteContext";
+import PaymentBrick from "./PaymentSteps";
 
 const Header = () => {
   const { sidebarView, toggleSidebar }: any = useSidebarState();
-  const { userInfo, setUserInfo, showBudget } = useUserStateContext() as {
+  const { userInfo, setUserInfo, showBudget, showPayment, setShowPayment } = useUserStateContext() as {
     userInfo: UserInfoType;
     setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>;
     showBudget: boolean;
+    showPayment: boolean;
+    setShowPayment: Dispatch<React.SetStateAction<boolean>>;
   };
 
   useEffect(() => {
@@ -112,6 +116,9 @@ const Header = () => {
         </button>
       </div>
       {showBudget && <Budget />}
+      {showPayment && <RouletteProvider>
+        <PaymentBrick props={{setShowPayment}}/>
+      </RouletteProvider>}
     </header>
   );
 };
