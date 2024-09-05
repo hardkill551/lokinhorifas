@@ -467,11 +467,27 @@ Card das Skins do cadastro                                                      
   cursor: pointer;
 }
 
+.DivDeliteCard{
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
 
+.RemoveButton{
+  background-color: #980106;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  cursor: pointer;
+}
 
 /* 
 ####################################################################################################
-Texto da Live                                                                                           #
+Texto da Live                                                                                      #
 ####################################################################################################
 */
 

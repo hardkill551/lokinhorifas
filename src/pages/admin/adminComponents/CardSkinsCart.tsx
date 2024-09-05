@@ -16,7 +16,9 @@ const CardSkinsCart: React.FC<CardSkinsCartProps> = ({ id, name, value, picture,
         <p>{name}</p>
         <p>R$: {value?.toFixed(2).replace('.', ',')}</p>
       </div>
-      <button onClick={() => onRemove(id)} className={style.RemoveButton}>Remover</button>
+      <div className={style.DivDeliteCard}>
+      <button onClick={() => onRemove(id)} className={style.RemoveButton}>x</button>
+      </div>
     </div>
   );
 }
