@@ -50,6 +50,7 @@ const RecoverPassword = () => {
 
   const [formDataValue, setFormDataValue] = useState({
     email: "",
+    token: "",
     password: "",
   });
 
@@ -64,27 +65,17 @@ const RecoverPassword = () => {
   const [error, setError] = useState("");
 
   const checkEmail = async () => {
-    let tempBool = await axios
-      .post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/users/verify", {
-        email: formDataValue.email,
-      })
-      .then((res) => {
-        push(`./cadastro?email=${formDataValue.email}`);
-        return false;
-      })
-      .catch((error) => {
-        if (error.response.data.name == "DuplicatedEmailError" && step == 0) {
-          addStep();
-        }
-        return true;
-      });
-
-    return tempBool;
+    axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/auth/forgot-password", {email: formDataValue.email}).then(res => {
+      addStep();
+    }).catch(err=>{
+      alert("Email não encontrado")
+    })
+          
   };
 
   const validateLogIn = async () => {
     setError("");
-    const { email, password } = formDataValue;
+    const { email, token, password } = formDataValue;
 
     if (step == 0) {
       if (!email) {

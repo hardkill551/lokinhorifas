@@ -460,8 +460,8 @@ const SignUp = () => {
                         <label className={style.checkboxLabel}>
                           <input type="checkbox" name="tos" id="tos" required />
                           <p>
-                            Declaro que li e aceito os{" "}
-                            <Link target="_blank" href={"/termosdeservico"}>termos de serviço</Link>
+                            Declaro que li e aceito os ‎ 
+                            <Link target="_blank" href={"/termosdeservico"}> termos de serviço</Link>
                           </p>
                         </label>
                       )}
@@ -475,7 +475,7 @@ const SignUp = () => {
                             required
                           />
                           <p>
-                            Declaro que li e aceito os{" "}
+                            Declaro que li e aceito os ‎ 
                             <Link target="_blank" href={"/termosdeprivacidade"}>termos de privacidade</Link>
                           </p>
                         </label>
