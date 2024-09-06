@@ -36,7 +36,7 @@ const RoletaWinner = () => {
       try {
         const response = await fetch(url, { method: "HEAD" });
         if (response.ok) {
-          setImgSrc(url);
+          setImgSrc(localWinner.prize.itemImageUrl);
         } else {
           setImgSrc(defaultGunPic);
         }

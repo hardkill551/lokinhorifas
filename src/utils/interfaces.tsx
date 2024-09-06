@@ -95,6 +95,8 @@ export type RewardItemType = {
 export type LastEarnedPrizeType = {
   itemImageUrl: string | StaticImport;
   TimeOfEarning: string;
+  unformattedTime: string;
+  raffleName: string;
   ChanceOfEarning: string;
   PoolType: string;
   ItemName: string;
@@ -171,6 +173,7 @@ export type LastEarnedWinnerType = {
 export type LastEarnedContextType = {
   lastEarnedList: LastEarnedPrizeType[],
   NewAdditions: (latestWinner: LastEarnedPrizeType) => void,
+  playerRank: playerRank[],
 }
 
 export type WinnerType = {
@@ -182,6 +185,12 @@ export type WinnerType = {
   tradeLink: string | null;
   isAdmin: boolean;
 };
+
+export type playerRank = {
+  name: string,
+  profilePicture: string,
+  winCount: number,
+}
 
 export type RaffleType = {
   id: number;

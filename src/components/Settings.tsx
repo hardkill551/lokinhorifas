@@ -2,7 +2,7 @@ import Image from 'next/image';
 import xmark from '../assets/xmark.svg';
 import editPencil from '../assets/editPencil.svg';
 import { UserContextType, UserSettingsType } from 'utils/interfaces';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useUserStateContext } from 'contexts/UserContext';
 import axios from 'axios';
 import MaskedInput from 'react-text-mask';
@@ -14,7 +14,7 @@ import EyeSlashed from '../assets/eye-slash.svg'
 const Settings = ({ props }: { props: UserSettingsType }) => {
   const { profile, setShowSettings, image, setImage } = props;
   const inputRef = useRef<HTMLInputElement>(null);
-  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType;
+  const { userInfo } = useUserStateContext() as UserContextType;
 
   const [userData, setUserData] = useState<any>({
     tradeLink: profile.tradeLink,
@@ -25,6 +25,8 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
     newPassword: "",
     picture: null
   });
+
+  const [ tradelink, setTradelink ] = useState(userInfo.tradeLink)
   
   const router = useRouter()
   const [error, setError] = useState('');
@@ -148,10 +150,11 @@ const Settings = ({ props }: { props: UserSettingsType }) => {
       setError(err.response?.data?.message || "Erro ao deletar a conta. Verifique se você está em alguma rifa ativa");
     }
   }
-
-  const halves = userInfo && userInfo.tradeLink.split('?')[1].split('&')
-
-  const tradelink = halves && `${halves[0]} ${halves[1]}`
+  
+  useEffect(() => {
+    const halves = userInfo.tradeLink ? userInfo.tradeLink != '' ? userInfo.tradeLink.split('?')[1].split('&') : '' : ''
+    setTradelink(`${halves[0]} ${halves[1]}`)
+  }, [userInfo])
 
   return (
     <div className="config">

@@ -1,4 +1,5 @@
 import axios from "axios";
+import RaffleCard from "components/RaffleCard";
 import {
   ReactNode,
   createContext,
@@ -6,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { LastEarnedPrizeType, LastEarnedWinnerType } from "utils/interfaces";
+import { LastEarnedPrizeType, LastEarnedWinnerType, playerRank } from "utils/interfaces";
 
 const LastEarnedContext = createContext({});
 
@@ -20,6 +21,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -32,6 +35,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -44,6 +49,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -56,6 +63,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -68,6 +77,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -80,6 +91,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -92,6 +105,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -104,6 +119,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     {
       itemImageUrl: "",
       TimeOfEarning: "21 horas",
+      unformattedTime: "21 horas",
+      raffleName: "unamed raffle",
       ChanceOfEarning: "25%",
       PoolType: "Silver",
       ItemName: "Nome da Skin",
@@ -116,6 +133,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
   ];
 
   const [lastEarnedList, setLastEarnedList] = useState<LastEarnedPrizeType[]>(items);
+
+  const [ playerRank, setPlayerRank ] = useState<playerRank[]>([])
 
   const NewAdditions = (latestWinner: LastEarnedPrizeType) => {
     const tempArray = [latestWinner]
@@ -131,7 +150,7 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     const filterPendingRaffles = dataArray.filter(item => item.raffle.is_active != 'Em espera')
     
     filterPendingRaffles.map((item: LastEarnedWinnerType) => {
-      const { updatedAt, skinsWithWinners } = item.raffle;
+      const { updatedAt, skinsWithWinners, name } = item.raffle;
 
       // * alterar imagem do item
 
@@ -159,6 +178,8 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
         const newItem = {
           itemImageUrl: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${skin.skinPicture}`,
           TimeOfEarning: time,
+          unformattedTime: updatedAt,
+          raffleName: name,
           ChanceOfEarning: chance,
           PoolType: skin.skinValue >= 1000 ? "Gold" : "Silver",
           ItemName: skin.skinName,
@@ -182,7 +203,7 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     axios
       .get(
         process.env.NEXT_PUBLIC_REACT_NEXT_APP +
-          `/users/winners?page=${1}&itemsPerPage=${8}`
+          `/users/winners?page=${1}&itemsPerPage=${20}`
       )
       .then((res: any) => {
         setNewLastEarnedList(res.data);
@@ -190,9 +211,33 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
       .catch((err: any) => console.error(err));
   }, []);
 
+  useEffect(() => {
+    if(!lastEarnedList) return
+    
+    const tempArray: string[] = []
+    const finalArray: { name: string, profilePicture: string, winCount: number }[] = []
+
+    lastEarnedList.map(item => {
+      if(!(tempArray.join('').includes(item.WinnerName))) {
+        tempArray.push(item.WinnerName)
+        finalArray.push({name: item.WinnerName, profilePicture: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${item.WinnerPicture}` , winCount: 1})
+      }
+      else {
+        finalArray[finalArray.findIndex(obj => obj.name == item.WinnerName)].winCount += 1
+      }
+    })
+
+    setPlayerRank(finalArray.sort((a, b) => {
+      if(a.winCount > b.winCount) return -1
+      else if(a.winCount < b.winCount) return 1
+      else return 0
+    }))
+  }, [lastEarnedList])
+
   const value = {
     lastEarnedList,
     NewAdditions,
+    playerRank
   };
 
   // ! PARA DEBUGGING

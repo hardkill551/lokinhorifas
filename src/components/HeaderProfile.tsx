@@ -22,7 +22,7 @@ const HeaderProfile = () => {
 
   const { name, email, picture, tradeLink, phoneNumber, saldo } = userInfo
 
-  const saldoString = saldo.toString()
+  const saldoString = saldo ? saldo.toString() : '0'
 
   const profile = {
     name: name != '' ? name : 'notloggedinuser',

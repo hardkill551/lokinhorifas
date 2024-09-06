@@ -95,7 +95,7 @@ const Header = () => {
               <li onClick={() => router.push("/#Home")}>Home</li>
               <li onClick={() => router.push("/roleta")}>Sorteio</li>
               <li onClick={() => router.push("/live")}>Live</li>
-              <li onClick={() => router.push("/ultimosganhadores")}>
+              <li onClick={() => router.push("/latestWinners")}>
                 Últimos Ganhadores
               </li>
               <li onClick={() => router.push("/#SobreNos")}>Sobre Nós</li>
