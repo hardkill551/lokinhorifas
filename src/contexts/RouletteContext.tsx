@@ -234,12 +234,14 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     NewAdditions({
       itemImageUrl: rewards[0].itemImageUrl,
       TimeOfEarning: time,
+      unformattedTime: date.toString(),
       ChanceOfEarning: ((1 / participants.length) * 100).toFixed(2) + '%',
       PoolType: rewards[0].type,
       ItemName: rewards[0].itemName,
       ItemType: rewards[0].itemType,
       ItemValue: rewards[0].itemValue,
       WinnerID: participantWinner.id,
+      raffleName: raffle.name,
       WinnerName: participantWinner.personName,
       WinnerPicture: participantWinner.profilePicture,
     })

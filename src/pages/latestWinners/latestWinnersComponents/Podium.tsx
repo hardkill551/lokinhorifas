@@ -7,6 +7,7 @@ import defaultProfilePic from '../../../assets/defaultProfilePic2.svg'
 import React from 'react';
 
 const Podium = ({ props }: { props: {openTab: string, setOpenTab: React.Dispatch<React.SetStateAction<string>>} }) => {
+  if(!props) return <h1>Erro nos props do Podium.tsx</h1>
   const { openTab, setOpenTab } = props
   const { playerRank = [] } = useLastEarnedState() as LastEarnedContextType
 

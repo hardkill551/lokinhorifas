@@ -4,9 +4,9 @@ import { LastEarnedContextType } from 'utils/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 
 
-const LatestWinnersTable = ({ props }: { props: { formatarDataHora: (date: string) => string } }) => {
+const LatestWinnersTable = ({ props }: { props: {formatarDataHora: (date: string) => string} }) => {
+  if(!props) return <h1>Erro nos props do LatestWinnersTable.tsx</h1>
   const { formatarDataHora } = props
-
   const { lastEarnedList } = useLastEarnedState() as LastEarnedContextType
 
   return (

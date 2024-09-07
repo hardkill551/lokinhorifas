@@ -471,8 +471,8 @@ Card das Skins do cadastro                                                      
   height: 48px;
   width: 100%;
   display: flex;
-  justify-content: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .RemoveButton{
