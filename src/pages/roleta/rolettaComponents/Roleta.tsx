@@ -8,6 +8,7 @@ import LINES from '../../../images/Roleta/Hero/Lines.png';
 import { RouletteContext, UserContextType } from 'utils/interfaces';
 import { useRouletteContext } from 'contexts/RouletteContext';
 import { useUserStateContext } from 'contexts/UserContext';
+import NumberSorter from './NumberSorter';
 
 
 const Hero = () => {
@@ -16,7 +17,7 @@ const Hero = () => {
     manageMockWinner, 
     isButtonActive, 
     participants = [], 
-    rewards = [] 
+    rewards = []
   } = useRouletteContext() as RouletteContext
 
   const {
@@ -29,7 +30,8 @@ const Hero = () => {
         <div className={style.HeroFrontImage}>
         </div>
         <RewardList />
-        <Roulette />
+        {/* <Roulette /> */}
+        <NumberSorter />
 
         <div className={style.ButtonGroup}>
           <button disabled={!isButtonActive || participants.length === 0 || rewards.length === 0} onClick={() => manageMockWinner()} >Giro Teste</button>

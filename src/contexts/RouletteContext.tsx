@@ -314,12 +314,12 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   // * Sanitize Participants
   const shuffleArray = (array: Participant[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+    return array.sort((a, b) => {
+      if(!a.isWinner && b.isWinner) return -1
+      else if(a.isWinner && !b.isWinner) return 1
+  
+      return 0
+    })
   };
   const loadUniqueWinners = (participantsArray: Participant[]) => {
     if (!participantsArray) return;
