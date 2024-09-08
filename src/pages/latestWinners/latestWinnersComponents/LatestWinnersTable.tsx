@@ -25,7 +25,7 @@ const LatestWinnersTable = ({ props }: { props: {formatarDataHora: (date: string
           </thead>
           <tbody>
             {lastEarnedList.map(user =>
-              <tr key={uuidv4()} className={Number(user.ItemValue) > 50 ? style.Gold : style.Silver}>
+              <tr key={uuidv4()} className={Number(user.ItemValue) > 1000 ? style.Gold : style.Silver}>
                 <th>{user.WinnerName}</th>
                 <th>{user.ItemName}</th>
                 <th>{user.ItemType}</th>

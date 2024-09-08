@@ -13,7 +13,7 @@ const RaffleCard = ({moreDetails, props}: { moreDetails: {setDetailsVisible: Dis
 
   useEffect(() => {
     setImgSrc(raffle.bannerSkin)
-  }, [raffle])
+  }, [raffle.id])
 
   const handleCardClick = () => {
     setDetailsVisible(true)

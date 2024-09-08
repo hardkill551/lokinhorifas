@@ -3,7 +3,11 @@ import defaultGunPic from '../images/Roleta/Prizes/DefaultGunPic.png'
 import { Dispatch } from 'react';
 import { raffleItem } from 'utils/interfaces';
 
-const RaffleDetails = ({moreDetails}: { moreDetails: {setDetailsVisible: Dispatch<React.SetStateAction<boolean>>, rafflesData: raffleItem, toggleSelection: Function} }) => {
+const RaffleDetails = ({moreDetails}: { moreDetails: {
+  setDetailsVisible: Dispatch<React.SetStateAction<boolean>>, 
+  rafflesData: raffleItem, 
+  toggleSelection: Function
+} }) => {
   const { setDetailsVisible, rafflesData, toggleSelection } = moreDetails
 
   const handleSelection = () => {

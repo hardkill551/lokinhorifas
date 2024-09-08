@@ -199,6 +199,23 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     setLastEarnedList(tempArray);
   };
 
+  // * Sanitize Rank
+  const sanitizeLatestWinners = (rankArray: any[]) => {
+    const finalArray: playerRank[] = []
+
+    rankArray.map(item => {
+        finalArray.push({
+          name: item.user.name, 
+          profilePicture: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${item.user.picture}`, 
+          winCount: item.totalWins, 
+          participations: item.participations
+        })
+    })
+
+    setPlayerRank(finalArray)
+  }
+  // * Sanitize Rank
+
   useEffect(() => {
     axios
       .get(
@@ -209,30 +226,10 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
         setNewLastEarnedList(res.data);
       })
       .catch((err: any) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    if(!lastEarnedList) return
     
-    const tempArray: string[] = []
-    const finalArray: { name: string, profilePicture: string, winCount: number }[] = []
-
-    lastEarnedList.map(item => {
-      if(!(tempArray.join('').includes(item.WinnerName))) {
-        tempArray.push(item.WinnerName)
-        finalArray.push({name: item.WinnerName, profilePicture: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${item.WinnerPicture}` , winCount: 1})
-      }
-      else {
-        finalArray[finalArray.findIndex(obj => obj.name == item.WinnerName)].winCount += 1
-      }
-    })
-
-    setPlayerRank(finalArray.sort((a, b) => {
-      if(a.winCount > b.winCount) return -1
-      else if(a.winCount < b.winCount) return 1
-      else return 0
-    }))
-  }, [lastEarnedList])
+    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/users/rank?page=${1}&itemsPerPage=${20}`).then(res => sanitizeLatestWinners(res.data))
+    .catch(err => console.log(err))
+  }, []);
 
   const value = {
     lastEarnedList,

@@ -1,9 +1,9 @@
 import { useUserStateContext } from "contexts/UserContext";
-import { UserContextType, UserInfoType }  from '../utils/interfaces'
+import { UserContextType }  from '../utils/interfaces'
 import Image from "next/image";
 
 import defaultProfilePicture from '../assets/defaultProfilePic.svg'
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Settings from "./Settings";
 import { useRouter } from "next/router";
 
@@ -13,6 +13,8 @@ const HeaderProfile = () => {
   const [ showSettings, setShowSettings ] = useState<boolean>(false)
   const [ image, setImage ] = useState<File | null>(null)
 
+  const router = useRouter()
+
   useEffect(() => {
     const html = document.querySelector('html')
 
@@ -20,7 +22,7 @@ const HeaderProfile = () => {
     html?.classList.toggle('scrollOff', showSettings)
   }, [showSettings])
 
-  const { name, email, picture, tradeLink, phoneNumber, saldo } = userInfo
+  const { name, email, picture, tradeLink, phoneNumber, saldo, isAdmin } = userInfo
 
   const saldoString = saldo ? saldo.toString() : '0'
 
@@ -83,6 +85,7 @@ const HeaderProfile = () => {
         <input type="text" id="headerDropdownInput" onBlur={() => toggleOffDropdownVisibility()}/>
         <ul>
           <li onClick={() => openConfig()}>Configurações</li>
+          {isAdmin && <li onClick={() => router.push('/admin')}>Painel</li>}
           <li onClick={() => handleLogout()}>Sair</li>
           <button onClick={() => openBudgetPayment()}>Saldo: R$<span className="Value">{profile.budget}</span></button>
         </ul>

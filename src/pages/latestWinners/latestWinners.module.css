@@ -137,6 +137,10 @@
   height: 100%;
 }
 
+.latestWinners .podium > div > img {
+  border-radius: 50%;
+}
+
 .latestWinners .podium .bronzeMedal .podiumBlock {
   width: 100%;
   height: calc(100% / 3);

@@ -2,28 +2,31 @@ import { useUserStateContext } from "contexts/UserContext";
 import { raffleItem, rafflePayment, UserContextType } from "utils/interfaces";
 import Currency from '../assets/currency.svg'
 import Image from "next/image";
+import { useEffect } from "react";
 
-const RafflePayment = ({props}: {props: {rafflesData: raffleItem[]}}) => {
+const RafflePayment = ({props}: {props: {
+  selectedItems: raffleItem[],
+  step: number,
+}}) => {
 
   const { userInfo, setValueDiff, setQrcode64 } = useUserStateContext() as UserContextType
 
-  const { rafflesData } = props
+  const { step, selectedItems = [] } = props
 
   let value = 0
-  let selectedItems: rafflePayment[] = []
+  selectedItems.map(item => value = value + (item.value * item.quantity))
 
-  rafflesData.map(raffle => {
-    if(raffle.isSelected) {
-        value = value += (raffle.value * raffle.quantity)
-
-      selectedItems.push({key: selectedItems.length, name: raffle.name, quantity: raffle.quantity, value: raffle.value})
+  useEffect(() => {
+    if(userInfo.saldo < value) {
+      setValueDiff((userInfo.saldo - value) * -1)
+      setQrcode64('')
     }
-  })
+  }, [step])
 
-  if(userInfo.saldo < value) {
-    setValueDiff((userInfo.saldo - value) * -1)
-    setQrcode64('')
-  }
+  useEffect(() => {
+    console.log(value)
+  }, [value])
+
 
 
   function formatDate() {
@@ -61,9 +64,9 @@ const RafflePayment = ({props}: {props: {rafflesData: raffleItem[]}}) => {
             <h3>Custo</h3>
           </div>
           {selectedItems && selectedItems.map(item =>
-          <div className="item" key={item.key}>
+          <div className="item" key={item.id}>
             <h3><span className="name">{item.name}</span> <div className="quantity">x {item.quantity}</div></h3>
-            <h3>R$ {(item.value * item.quantity).toFixed(2).toString().replace('.', ',')}</h3>
+            <h3>R$ {item.value.toString().includes('.') ? `${item.value.toString().split('.')[0]},${item.value.toString().split('.')[1][0]}${item.value.toString().split('.')[1][1] ? item.value.toString().split('.')[1][1] : '0'}` : `${item.value.toString()},00`}</h3>
           </div>)}
         </div>
         <div className="purchaseDetails">

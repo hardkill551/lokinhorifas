@@ -50,7 +50,7 @@ const RoletaWinner = () => {
     } else {
       setImgSrc(defaultGunPic);
     }
-  }, [localWinner]);
+  }, [localWinner.id]);
 
   useEffect(() => {
     if(!winnerProperties) return
@@ -67,7 +67,7 @@ const RoletaWinner = () => {
           type: Number(rewards[0].itemValue) >= 1000 ? 'Gold' : 'Silver',
         }
       })
-  }, [winnerProperties]);
+  }, [winnerProperties.id]);
 
   return (
     <div

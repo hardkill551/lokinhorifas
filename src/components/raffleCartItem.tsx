@@ -6,10 +6,12 @@ import { raffleItem } from "utils/interfaces";
 
 const RaffleCartItem = ({props}: {props: { 
   item: raffleItem,
-  handleChangeQuantity: Function} }) => {
+  handleChangeQuantity: Function,
+  setUpdateQuantity: React.Dispatch<React.SetStateAction<boolean>>
+} }) => {
 
   const { id, quantity, value, name, maxQuantity, skins, bannerSkin, bundleValue } = props.item
-  const { handleChangeQuantity } = props
+  const { handleChangeQuantity, setUpdateQuantity } = props
 
   const [ defaultValue, setDefaultValue ] = useState(quantity)
 
@@ -21,6 +23,7 @@ const RaffleCartItem = ({props}: {props: {
 
   useEffect(() => {
     handleChangeQuantity(id, defaultValue)
+    setUpdateQuantity(prev => !prev)
   }, [defaultValue])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

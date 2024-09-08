@@ -16,7 +16,7 @@ const WinnersRank = () => {
               <th>Rank</th>
               <th>User</th>
               <th>Vitórias</th>
-              {/* <th>Rifas participadas</th> */}
+              <th>Rifas participadas</th>
             </tr>
           </thead>
           <tbody>
@@ -25,7 +25,7 @@ const WinnersRank = () => {
               <th>{index + 1}</th>
               <th>{rank.name}</th>
               <th>{rank.winCount}</th>
-              {/* <th>200000</th> */}
+              <th>{rank.participations}</th>
             </tr>)}
           </tbody>
         </table>

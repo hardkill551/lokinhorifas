@@ -15,6 +15,7 @@ const RouletteArray = () => {
     setIsButtonActive,
   } = useRouletteContext() as RouletteContext;
 
+  
   useEffect(() => {
     setTimeout(() => {
       const winner = document.getElementById('winner')
@@ -25,7 +26,7 @@ const RouletteArray = () => {
       setIsButtonActive(true)
     }, 400);
     // TODO!: Debug slower computers delay
-  }, [raffle, participants]);
+  }, [raffle.id, participants.length]);
   
 
   return (

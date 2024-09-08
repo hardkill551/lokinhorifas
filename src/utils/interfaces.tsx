@@ -190,6 +190,7 @@ export type playerRank = {
   name: string,
   profilePicture: string,
   winCount: number,
+  participations: number,
 }
 
 export type RaffleType = {

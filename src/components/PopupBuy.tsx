@@ -1,5 +1,5 @@
-import { Dispatch, useState } from "react";
-import { RouletteContext, UserInfoType } from "utils/interfaces";
+import { useEffect, useState } from "react";
+import { raffleItem, RouletteContext, UserContextType } from "utils/interfaces";
 import Link from "next/link";
 
 import leftarrow from '../assets/arrowleft.svg'
@@ -25,19 +25,19 @@ const PopupBuy = ({
     setShowPayment: React.Dispatch<React.SetStateAction<boolean>>;
   };
 }) => {
+
   const {
     purchasableRaffles = [],
     toggleSelection,
     handleChangeQuantity,
   } = useRouletteContext() as RouletteContext;
+
   const router = useRouter();
 
   const { isVisible, setIsVisible, setShowPayment } = props;
-  const { userInfo, setUserInfo } = useUserStateContext() as {
-    userInfo: UserInfoType;
-    setUserInfo: Dispatch<React.SetStateAction<UserInfoType>>;
-  };
+  const { userInfo, setUserInfo } = useUserStateContext() as UserContextType
   const [detailsVisible, setDetailsVisible] = useState(false);
+  const [ selectedItems, setSelectedItems ] = useState<raffleItem[]>(purchasableRaffles.filter(raffle => raffle.isSelected))
   const [raffleDetails, setRaffleDetails] = useState(0);
   const [step, setStep] = useState(1);
   const [total, setTotal] = useState(0);
@@ -46,6 +46,15 @@ const PopupBuy = ({
   const addStep = () => {
     setStep((oldValue) => (oldValue += 1));
   };
+
+  useEffect(() => {
+    setSelectedItems(purchasableRaffles.filter(raffle => raffle.isSelected))
+  }, [step])
+
+  useEffect(() => {
+    if(selectedItems.length == 0) return
+    console.log(selectedItems)
+  }, [selectedItems.length])
 
   const removeStep = () => {
     setStep((oldValue) => (oldValue -= 1));
@@ -140,14 +149,14 @@ const PopupBuy = ({
               setQuantity={{
                 setTotal,
                 rafflesData: purchasableRaffles,
-                handleChangeQuantity,
+                handleChangeQuantity
               }}
             />
 
             {/* Raffle select quantity é a segunda, aqui ele poderá adicionar mais números referentes as rifas selecionadas na etapa anterior */}
 
             <RafflePayment
-              props={{ rafflesData: purchasableRaffles }}
+              props={{ selectedItems, step }}
             />
 
             {/* Raffle payment lidará com o pagamento através do saldo na conta, essa escolha foi feita pra evitar o possível assincronismo entre a pessoa ter ou não o valor em mãos, algo que à prontifica melhor */}
