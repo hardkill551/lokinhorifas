@@ -2,6 +2,7 @@ import style from "../roletta.module.css";
 import Image, { StaticImageData } from "next/image";
 
 import defaultGunPic from "../../../images/Roleta/Prizes/DefaultGunPic.png";
+import defaultUserPic from "../../../assets/defaultProfilePic2.svg"
 import shine from "../../../images/Roleta/WinnerPopup/shine.png";
 
 import { RouletteContext } from "utils/interfaces";
@@ -14,29 +15,27 @@ const RoletaWinner = () => {
     winnerPopupVisible,
     manageCloseResult,
     isMockWin,
-    winnerProperties,
+    winnerProperties = {
+      number: 0,
+      id: 0,
+      user: {
+          id: 0,
+          name: '',
+          picture: '',
+      }
+    },
   } = useRouletteContext() as RouletteContext;
 
-  const [localWinner, setLocalWinner] = useState({
-    id: 1,
-    isWinner: true,
-    nickName: "user123#123",
-    prize: {
-      itemImageUrl: "",
-      itemName: "Skin0",
-      itemType: "Skin0",
-      itemValue: "61",
-      type: "Gold",
-    },
-  });
   const [imgSrc, setImgSrc] = useState<string | StaticImageData>(defaultGunPic);
+  const [userImgSrc, setUserImgSrc] = useState<string | StaticImageData>(defaultUserPic);
 
   useEffect(() => {
+    if(!rewards[0]) return
     const checkImageExists = async (url: string) => {
       try {
         const response = await fetch(url, { method: "HEAD" });
         if (response.ok) {
-          setImgSrc(localWinner.prize.itemImageUrl);
+          setImgSrc(rewards[0].itemImageUrl);
         } else {
           setImgSrc(defaultGunPic);
         }
@@ -45,28 +44,33 @@ const RoletaWinner = () => {
       }
     };
 
-    if (localWinner.prize.itemImageUrl && !localWinner.prize.itemImageUrl.includes('default')) {
-      checkImageExists(localWinner.prize.itemImageUrl);
+    if (rewards[0].itemImageUrl && !rewards[0].itemImageUrl.includes('default')) {
+      checkImageExists(rewards[0].itemImageUrl);
     } else {
       setImgSrc(defaultGunPic);
     }
-  }, [localWinner.id]);
+  }, [winnerProperties.id]);
 
   useEffect(() => {
     if(!winnerProperties) return
-
-    if(rewards.length != 0) setLocalWinner({
-        id: winnerProperties.id,
-        isWinner: true,
-        nickName: winnerProperties.nickName,
-        prize: {
-          itemImageUrl: rewards[0].itemImageUrl,
-          itemName: rewards[0].itemName,
-          itemType: rewards[0].itemType,
-          itemValue: rewards[0].itemValue,
-          type: Number(rewards[0].itemValue) >= 1000 ? 'Gold' : 'Silver',
+    const checkImageExists = async (url: string) => {
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        if (response.ok) {
+          setUserImgSrc(winnerProperties.user.picture);
+        } else {
+          setUserImgSrc(defaultUserPic);
         }
-      })
+      } catch (error) {
+        setUserImgSrc(defaultUserPic);
+      }
+    };
+
+    if (winnerProperties.user.picture && !winnerProperties.user.picture.includes('default')) {
+      checkImageExists(winnerProperties.user.picture);
+    } else {
+      setImgSrc(defaultGunPic);
+    }
   }, [winnerProperties.id]);
 
   return (
@@ -76,21 +80,24 @@ const RoletaWinner = () => {
     >
       <div className={style.WinnerPopupWrapper}>
         <div className={style.SkinImageBox}>
-          <Image
+          {rewards[0] && <Image
             width={775}
             height={637}
             src={imgSrc}
-            alt={`Imagem de ${localWinner.prize.itemName}`}
+            alt={`Imagem de ${rewards[0].itemName}`}
             onError={(e) => {
               e.preventDefault();
               setImgSrc(defaultGunPic);
             }}
-          />
+          />}
           <Image src={shine} alt="Brilho de fundo" />
         </div>
         <h2>Parabéns!</h2>
-        <h3 className={style.userNickname}>@{localWinner.nickName}</h3>
-        <p>Ganhador da {localWinner.prize.itemName}</p>
+        <div className={style.UserSkinImageBox}>
+            <Image src={userImgSrc} alt="Foto de usuário"/>
+        </div>
+        {winnerProperties && <h3 className={style.userNickname}>@{winnerProperties.user.name + '#' + winnerProperties.number}</h3>}
+        {rewards[0] && <p>Ganhador da {rewards[0].itemName}</p>}
 
         <button onClick={() => manageCloseResult(isMockWin)}>
           Próximo Sorteio

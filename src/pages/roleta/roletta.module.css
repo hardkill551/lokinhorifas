@@ -485,7 +485,6 @@
 
   position: absolute;
 
-  /* background: linear-gradient(180deg, transparent, #15A7D5); */
   opacity: .5;
 }
 
@@ -595,6 +594,115 @@
   white-space: nowrap;
 }
 
+.NumberSorter {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 300px;
+}
+
+.NumberSorterWrapper {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 230px;
+  height: 100%;
+
+  outline: 2px solid white;
+  background-color: black;
+
+  border-radius: 4px;
+}
+
+.NumberSorterWrapper h2 {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  width: 100%;
+  max-height: 242px;
+
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.NumberSorterWrapper h2 span {
+  display: block;
+  color: black; /* Makes the text color transparent */
+
+  text-shadow:
+    1px 1px 0 white,   /* Shadow to the right and down */
+   -1px -1px 0 white,  /* Shadow to the left and up */
+    1px -1px 0 white,  /* Shadow to the right and up */
+   -1px 1px 0 white,   /* Shadow to the left and down */
+    2px 2px 0 white,   /* Thicker shadow for a more pronounced stroke */
+   -2px -2px 0 white,  /* Thicker shadow for a more pronounced stroke */
+    2px -2px 0 white,  /* Thicker shadow for a more pronounced stroke */
+   -2px 2px 0 white;   /* Thicker shadow for a more pronounced stroke */
+
+  font-size: 104px;
+  font-family: monospace;
+  font-style: italic;
+  font-weight: 500;
+
+  text-align: center;
+}
+
+.NumberSorterWrapper h2.scroll span {
+  animation: 16s linear infinite scroll;
+}
+
+@keyframes scroll {
+  0% {
+    translate: 0 0;
+  }
+  25% {
+    translate: 0 -25px;
+  }
+  50% {
+    translate: 0 0;
+  }
+  75% {
+    translate: 0 25px;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+.NumberSorterWrapper p {
+  max-width: 100%;
+
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.NumberSorterWrapper p .mainName {
+  display: block;
+
+  max-width: 150px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.NumberSorterWrapper p .number {
+  opacity: .5;
+
+  font-family: monospace;
+}
+
 .WinnerPopup {
   display: flex;
 
@@ -615,7 +723,7 @@
 
   opacity: 0;
 
-  animation: 800ms ease-out 0s
+  animation: 800ms ease-out 5s
   1 forwards fadeIn;
 }
 
@@ -627,7 +735,27 @@
 
   flex-direction: column;
 
+  position: relative;
+
   color: white;
+}
+
+.UserSkinImageBox {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  height: fit-content;
+
+  background-color: white;
+  outline: 2px solid black;
+
+  padding: 2px;
+  border-radius: 50%;
+
+  margin-block: 20px;
 }
 
 .WinnerPopup .SkinImageBox {
@@ -884,34 +1012,6 @@
   z-index: 3;
 }
 
-.Roulette .raffleSelector {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  margin: 30px 30px 0 0;
-  padding: 15px 30px;
-
-  border: none;
-  border-radius: 10px;
-
-  z-index: 10;
-
-  opacity: 0;
-
-  cursor: pointer;
-
-  transition: opacity 200ms ease-in-out;
-}
-
-.Roulette:hover .raffleSelector {
-  opacity: .1;
-}
-
-.Roulette .raffleSelector:hover {
-  opacity: 1;
-}
-
 .Roulette .pin img {
 
   width: 21px;
@@ -928,6 +1028,27 @@
   translate: 5px 5px;
 
   box-shadow: 0 0 50px red;
+}
+
+.Roleta .raffleSelector {
+  padding: 15px 30px;
+
+  border: none;
+  border-radius: 10px;
+
+  width: 145px;
+
+  z-index: 10;
+
+  opacity: .5;
+
+  cursor: pointer;
+
+  transition: opacity 200ms ease-in-out;
+}
+
+.Roleta .raffleSelector:hover {
+  opacity: 1;
 }
 
 .LastPrizes {
@@ -1360,6 +1481,19 @@
 
   .WinnerPopup .SkinImageBox {
     width: 100%;
+  }
+
+  .WinnerPopup .SkinImageBox img:first-of-type {
+    width: calc(100% - 100px);
+  }
+
+  .WinnerPopup .SkinImageBox img:last-of-type {
+    width: calc(300% - 100px);
+    height: auto;
+  }
+
+  .WinnerPopup button {
+    width: calc(100% - 100px);
   }
 
 

@@ -47,164 +47,205 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // ? Init variables
 
   // ? Necessary variables
-  const [participants, setParticipants] = useState<Participant[]>([]);
-  const [fillerParticipants, setFillerParticipants] = useState<Participant[]>(
-    []
-  );
-  const [winnerProperties, setWinnerProperties] = useState<WinnerProperties>({
-    id: 0,
-    profilePicture: "",
-    personName: "",
-    nickName: "",
+  const [participants, setParticipants] = useState<RaffleParticipant[]>([]);
+  const [winners, setWinners] = useState<RaffleParticipant[]>([])
+  // const [fillerParticipants, setFillerParticipants] = useState<Participant[]>(
+  //   []
+  // );
+  const [winnerProperties, setWinnerProperties] = useState<RaffleParticipant>({
     number: 0,
-    isWinner: true,
-    distanceFromCenter: 0,
+    id: 0,
+    user: {
+        id: 0,
+        name: '',
+        picture: '',
+    }
   });
+  // TODO! Setar algum canto para as propriedades serem atualizadas
   const [rewards, setRewards] = useState<RaffleReward[]>([]);
 
-  const [animationState, setAnimationState] = useState<Animation>();
+  // const [animationState, setAnimationState] = useState<Animation>();
   const [isMockWin, setIsMockWin] = useState<boolean>(false);
   // ? Necessary variables
 
   // ? Component variables
-  const [winner, setWinner] = useState<number>();
+  // const [winner, setWinner] = useState<number>();
   const [winnerPopupVisible, setWinnerPopupVisible] = useState<boolean>(false);
-  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(true);
+  const [isConfettiActive, setIsConfettiActive] = useState<boolean>(false);
   // ? Component variables
 
   // ? Functions
   const toggleIsButtonActive = () => setIsButtonActive((oldValue) => !oldValue);
-  const toggleWinnerPopupVisibility = () =>
-    setWinnerPopupVisible((oldValue) => !oldValue);
+  const toggleWinnerPopupVisibility = () => setWinnerPopupVisible((oldValue) => !oldValue);
 
-  const loadFillerCards = () => {
-    const winnerlessCards = participants.map((item) => ({
-      ...item,
-      isWinner: false,
-    }));
+  // const loadFillerCards = () => {
+  //   const winnerlessCards = participants.map((item) => ({
+  //     ...item,
+  //     isWinner: false,
+  //   }));
 
-    let tempArray: Participant[] = [];
+  //   let tempArray: Participant[] = [];
 
-    if (winnerlessCards.length != Infinity && winnerlessCards.length > 0) {
-      while (tempArray.length < 600) {
-        tempArray = tempArray.concat(winnerlessCards);
-      }
-    }
+  //   if (winnerlessCards.length != Infinity && winnerlessCards.length > 0) {
+  //     while (tempArray.length < 600) {
+  //       tempArray = tempArray.concat(winnerlessCards);
+  //     }
+  //   }
 
-    setFillerParticipants(tempArray);
-  };
+  //   setFillerParticipants(tempArray);
+  // };
 
-  const playAnimation = () => {
-    if (!winnerProperties) return;
+  // const playAnimation = () => {
+  //   // if (!winnerProperties) return;
+
+  //   toggleIsButtonActive();
+
+  //   const roulette = document.getElementById("Roulette");
+
+  //   const timing = 30000;
+
+  //   const randomSide = Math.floor(Math.random() * 2) == 1 ? -1 : 1;
+
+  //   setTimeout(() => {
+  //     toggleIsButtonActive();
+  //     toggleWinnerPopupVisibility();
+  //   }, timing);
+
+  //   if (randomSide == -1) {
+  //     // * Variável que segura animação
+  //     const random = Math.floor(Math.random() * 105);
+
+  //     const spinAnimation = new Animation(
+  //       new KeyframeEffect(
+  //         roulette,
+  //         [
+  //           { transform: `translateX(0px)`, offset: 0 },
+  //           { transform: `translateX(80px)`, offset: 0.009 },
+  //           {
+  //             transform: `translateX(-${
+  //               winnerProperties.distanceFromCenter + random
+  //             }px)`,
+  //             offset: 1,
+  //           },
+  //         ],
+  //         {
+  //           duration: timing,
+  //           easing: "cubic-bezier(.04,.81,.48,1)",
+  //           fill: "forwards",
+  //         }
+  //       ),
+  //       document.timeline
+  //     );
+
+  //     // * Função que roda a animação
+  //     spinAnimation.play();
+
+  //     return spinAnimation;
+  //   } else {
+  //     // * Variável que segura animação
+  //     const random = Math.floor(Math.random() * 110);
+
+  //     const spinAnimation = new Animation(
+  //       new KeyframeEffect(
+  //         roulette,
+  //         [
+  //           { transform: `translateX(0px)`, offset: 0 },
+  //           { transform: `translateX(80px)`, offset: 0.009 },
+  //           {
+  //             transform: `translateX(-${
+  //               winnerProperties.distanceFromCenter - random
+  //             }px)`,
+  //             offset: 1,
+  //           },
+  //         ],
+  //         {
+  //           duration: timing,
+  //           easing: "cubic-bezier(.04,.81,.48,1)",
+  //           fill: "forwards",
+  //         }
+  //       ),
+  //       document.timeline
+  //     );
+
+  //     // * Função que roda a animação
+  //     spinAnimation.play();
+
+  //     return spinAnimation;
+  //   }
+  // };
+  
+  const handleRolling = () => {
+    if(!participants) return
+    if(participants.length == 0) return
+    
+    const timer = 30000
 
     toggleIsButtonActive();
+    
+    setTimeout(() => {
+      toggleWinnerPopupVisibility();
+      setIsConfettiActive(true)
 
-    const roulette = document.getElementById("Roulette");
+      setTimeout(() => {
+        toggleIsButtonActive();
+      }, 5000);
+    }, timer);
 
-    const timing = 30000;
-
-    const randomSide = Math.floor(Math.random() * 2) == 1 ? -1 : 1;
+    const interval = setInterval(() => {
+      setWinnerProperties(participants[Math.floor(Math.random() * (participants.length - 1))])
+    }, 100);
 
     setTimeout(() => {
-      toggleIsButtonActive();
-      toggleWinnerPopupVisibility();
-    }, timing);
+      clearInterval(interval)
 
-    if (randomSide == -1) {
-      // * Variável que segura animação
-      const random = Math.floor(Math.random() * 105);
+      const interval2 = setInterval(() => {
+        setWinnerProperties(participants[Math.floor(Math.random() * (participants.length - 1))])
+      }, 200);
+      
+      setTimeout(() => {
+        clearInterval(interval2)
 
-      const spinAnimation = new Animation(
-        new KeyframeEffect(
-          roulette,
-          [
-            { transform: `translateX(0px)`, offset: 0 },
-            { transform: `translateX(80px)`, offset: 0.009 },
-            {
-              transform: `translateX(-${
-                winnerProperties.distanceFromCenter + random
-              }px)`,
-              offset: 1,
-            },
-          ],
-          {
-            duration: timing,
-            easing: "cubic-bezier(.04,.81,.48,1)",
-            fill: "forwards",
-          }
-        ),
-        document.timeline
-      );
+        const interval3 = setInterval(() => {
+          setWinnerProperties(participants[Math.floor(Math.random() * (participants.length - 1))])
+        }, 400);
+        
+        setTimeout(() => {
+          clearInterval(interval3)
 
-      // * Função que roda a animação
-      spinAnimation.play();
+          const interval4 = setInterval(() => {
+            setWinnerProperties(participants[Math.floor(Math.random() * (participants.length - 1))])
+          }, 800);
 
-      return spinAnimation;
-    } else {
-      // * Variável que segura animação
-      const random = Math.floor(Math.random() * 110);
-
-      const spinAnimation = new Animation(
-        new KeyframeEffect(
-          roulette,
-          [
-            { transform: `translateX(0px)`, offset: 0 },
-            { transform: `translateX(80px)`, offset: 0.009 },
-            {
-              transform: `translateX(-${
-                winnerProperties.distanceFromCenter - random
-              }px)`,
-              offset: 1,
-            },
-          ],
-          {
-            duration: timing,
-            easing: "cubic-bezier(.04,.81,.48,1)",
-            fill: "forwards",
-          }
-        ),
-        document.timeline
-      );
-
-      // * Função que roda a animação
-      spinAnimation.play();
-
-      return spinAnimation;
-    }
-  };
+          setTimeout(() => {
+            clearInterval(interval4)
+            setWinnerProperties(winners[Math.floor(Math.random() * (winners.length - 1))])
+          }, timer / 6);
+        }, timer / 6);
+      }, timer / 3);
+    }, timer / 3);
+  }
 
   const manageWinner = () => {
-    if (!winner) return;
-
     setIsMockWin(false);
 
-    setAnimationState(playAnimation());
+    handleRolling()
   };
 
   const manageMockWinner = () => {
-    if (!winner) return;
 
     setIsMockWin(true);
 
-    setAnimationState(playAnimation());
+    handleRolling()
   };
 
   const manageCloseResult = () => {
-    if (!winner) return;
-    if (!animationState) return;
-
-    animationState.cancel();
-
     toggleWinnerPopupVisibility();
+    setIsConfettiActive(false)
 
     if (isMockWin) return;
-    setIsButtonActive(false);
 
     addLatestWinnerToTable();
-
-    setTimeout(() => {
-      setIsButtonActive(true);
-    }, 600);
   };
 
   const selectRaffle = (id: number) => {
@@ -235,11 +276,11 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // * Setting new winner
   const addLatestWinnerToTable = async () => {
     if (!participants) return;
-    if (!winner) return;
+    if (!winnerProperties) return;
     if (!raffle) return;
 
     const participantWinner = participants.filter(
-      (item) => item.number == winner
+      (item) => item.number == winnerProperties.number
     )[0];
 
     const date = Date.now();
@@ -270,8 +311,8 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
       ItemValue: rewards[0].itemValue,
       WinnerID: participantWinner.id,
       raffleName: raffle.name,
-      WinnerName: participantWinner.personName,
-      WinnerPicture: participantWinner.profilePicture,
+      WinnerName: participantWinner.user.name,
+      WinnerPicture: participantWinner.user.picture,
     });
 
     const token = localStorage.getItem("token");
@@ -298,14 +339,14 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   };
   const removeWinnerAndRaffleFromRoulette = () => {
     if (!participants) return;
-    if (!winner) return;
+    if (!winnerProperties) return;
     if (!rewards) return;
 
-    setParticipants((oldParticipants) => {
+    setWinners((oldParticipants) => {
       const updatedParticipants = oldParticipants.filter(
-        (item) => item.number != winner
+        (item) => item.number != winnerProperties.number
       );
-      loadUniqueWinners(updatedParticipants);
+      
       return updatedParticipants;
     });
     setRewards(rewards.filter((reward) => reward != rewards[0]));
@@ -313,55 +354,42 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   // * Setting new winner
 
   // * Sanitize Participants
-  const shuffleArray = (array: Participant[]) => {
-    return array.sort((a, b) => {
-      if(!a.isWinner && b.isWinner) return -1
-      else if(a.isWinner && !b.isWinner) return 1
+  // const shuffleArray = (array: Participant[]) => {
+  //   return array.sort((a, b) => {
+  //     if(!a.isWinner && b.isWinner) return -1
+  //     else if(a.isWinner && !b.isWinner) return 1
   
-      return 0
-    })
-  };
-  const loadUniqueWinners = (participantsArray: Participant[]) => {
-    if (!participantsArray) return;
-    if (participantsArray.length == 0) return setParticipants([]);
+  //     return 0
+  //   })
+  // };
+  // const loadUniqueWinners = (participantsArray: Participant[]) => {
+  //   if (!participantsArray) return;
+  //   if (participantsArray.length == 0) return setParticipants([]);
 
-    const randomId =
-      participantsArray[
-        Math.floor(
-          Math.random() *
-            (participantsArray.length > 400 ? 400 : participantsArray.length)
-        )
-      ].id;
+  //   const randomId =
+  //     participantsArray[
+  //       Math.floor(
+  //         Math.random() *
+  //           (participantsArray.length > 400 ? 400 : participantsArray.length)
+  //       )
+  //     ].id;
 
-    const finalArray = participantsArray.map((item) => {
-      return item.id == randomId
-        ? { ...item, isWinner: true }
-        : { ...item, isWinner: false };
-    });
+  //   const finalArray = participantsArray.map((item) => {
+  //     return item.id == randomId
+  //       ? { ...item, isWinner: true }
+  //       : { ...item, isWinner: false };
+  //   });
 
-    setParticipants(shuffleArray(finalArray));
-  };
-  const setNewParticipants = (newParticipantsArray: RaffleParticipant[]) => {
+  //   setParticipants(shuffleArray(finalArray));
+  // };
+  const setNewWinners = (newParticipantsArray: RaffleParticipant[]) => {
     if (!newParticipantsArray) return;
 
-    const tempArray: Participant[] = [];
+    const oldWinnersId = raffle.raffleSkins.filter(item => item.winner_id).map(item => '#' + item.winner_id)
+    const possibleWinners = raffle.participants.filter(item => !(oldWinnersId.join().includes('#' + item.id)))
 
-    // ? Defaults every new entry object-like structure to the one used within the site
-    newParticipantsArray.map((item) => {
-      const { number, user, id } = item;
-
-      // ? Dados do usuário
-      tempArray.push({
-        id,
-        isWinner: false,
-        profilePicture: `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${user.picture}`,
-        personName: user.name,
-        nickName: user.name.toLowerCase() + "#" + number,
-        number: number,
-      });
-    });
-
-    loadUniqueWinners(tempArray);
+    setWinners(possibleWinners);
+    setWinnerProperties(possibleWinners[0]);
   };
   // * Sanitize Participants
 
@@ -392,30 +420,37 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   };
   // * Sanitize Rewards
 
-  // * Sanitize raffles origin
-  const SanitizeRaffles = (raffle: Raffle) => {
-    // ? Locate winners and separate already raffled skins from others
-    const raffledSkinsId: number[] | null[] = raffle.raffleSkins
-      .filter((skin) => skin.winner_id)
-      .map((hasWinner) => hasWinner.winner_id);
-    const nonRaffledSkins: RaffleSkin[] = raffle.raffleSkins.filter(
-      (skin) => !skin.winner_id
-    );
+  // ! Sanitize raffles origin
+  // const SanitizeRaffles = (raffle: Raffle) => {
+  //   // ? Locate winners and separate already raffled skins from others
+  //   console.log(raffle.raffleSkins
+  //     .filter((skin) => skin.winner_id)
+  //     .map((hasWinner) => hasWinner.winner_id))
 
-    if (raffledSkinsId.length > 0) {
-      // ? New participants (not including winners)
-      const nonWinners = raffledSkinsId.map((id) =>
-        raffle.participants.filter((participant) => participant.id != id)
-      )[0];
+  //   console.log(raffle.participants)
+      
+  //   const raffledSkinsId: number[] | null[] = raffle.raffleSkins
+  //     .filter((skin) => skin.winner_id)
+  //     .map((hasWinner) => hasWinner.winner_id);
 
-      return (raffle = {
-        ...raffle,
-        participants: nonWinners,
-        raffleSkins: nonRaffledSkins,
-      });
-    } else return raffle;
-  };
-  // * Sanitize raffles origin
+  //   const nonRaffledSkins: RaffleSkin[] = raffle.raffleSkins.filter(
+  //     (skin) => !skin.winner_id
+  //   );
+
+  //   if (raffledSkinsId.length > 0) {
+  //     // ? New participants (not including winners)
+  //     const nonWinners = raffledSkinsId.map((id) =>
+  //       raffle.participants.filter((participant) => participant.id != id)
+  //     )[0];
+
+  //     return (raffle = {
+  //       ...raffle,
+  //       participants: nonWinners,
+  //       raffleSkins: nonRaffledSkins,
+  //     });
+  //   } else return raffle;
+  // };
+  // ! Sanitize raffles origin
 
   // * Available for purchase raffles
   const handleBigNames = (raffles: raffleItem[]) => {
@@ -502,32 +537,32 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   };
   // * Available for purchase raffles
 
-  // * Only works on /roleta page
-  const getWinner = (winnerParam: HTMLElement) => {
-    if (!winnerParam) return;
+  // ! Only works on /roleta page
+  // const getWinner = (winnerParam: HTMLElement) => {
+  //   if (!winnerParam) return;
 
-    setWinner(Number(winnerParam.dataset.number));
-    const winnerStats = participants.filter(
-      (winnerArray) => winnerArray.number == Number(winnerParam.dataset.number)
-    )[0];
+  //   setWinner(Number(winnerParam.dataset.number));
+  //   const winnerStats = participants.filter(
+  //     (winnerArray) => winnerArray.number == Number(winnerParam.dataset.number)
+  //   )[0];
 
-    const winnerCardCenter =
-      (Math.round(winnerParam.getBoundingClientRect().right) -
-        Math.round(winnerParam.getBoundingClientRect().left)) /
-        2 +
-      Math.round(winnerParam.getBoundingClientRect().left) -
-      window.innerWidth / 2;
+  //   const winnerCardCenter =
+  //     (Math.round(winnerParam.getBoundingClientRect().right) -
+  //       Math.round(winnerParam.getBoundingClientRect().left)) /
+  //       2 +
+  //     Math.round(winnerParam.getBoundingClientRect().left) -
+  //     window.innerWidth / 2;
 
-    const centerOfCard =
-      winnerCardCenter < 0 ? winnerCardCenter * -1 : winnerCardCenter;
+  //   const centerOfCard =
+  //     winnerCardCenter < 0 ? winnerCardCenter * -1 : winnerCardCenter;
 
-    setWinnerProperties({
-      ...winnerStats,
-      isWinner: true,
-      distanceFromCenter: centerOfCard,
-    });
-  };
-  // * Only works on /roleta page
+  //   setWinnerProperties({
+  //     ...winnerStats,
+  //     isWinner: true,
+  //     distanceFromCenter: centerOfCard,
+  //   });
+  // };
+  // ! Only works on /roleta page
 
   // * INIT
   const getRaffleList = () => {
@@ -535,12 +570,15 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
     axios
       .get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + "/raffle", {})
       .then((res) => {
-        const filteredResult = res.data.map((raffle: Raffle) =>
-          SanitizeRaffles(raffle)
-        );
-        setAvailableRaffles(filteredResult);
+        // ! Retirado para debugging
+        // const filteredResult = res.data.map((raffle: Raffle) =>
+        //   SanitizeRaffles(raffle)
+        // );
+        setAvailableRaffles(res.data.filter(
+          (result: Raffle) => result.raffleSkins.length > 0
+        ));
         setRaffle(
-          filteredResult.filter(
+          res.data.filter(
             (result: Raffle) => result.raffleSkins.length > 0
           )[0]
         );
@@ -555,16 +593,19 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   // ? Alter participants when raffle changes
   useEffect(() => {
-    setNewParticipants(raffle?.participants);
-    setNewRewards(raffle?.raffleSkins);
+    if(!raffle) return
+    
+    setParticipants(raffle.participants);
+    setNewWinners(raffle.participants)
+    setNewRewards(raffle.raffleSkins);
     filterPurchasableRaffles();
-  }, [raffle?.id]);
+  }, [raffle ? raffle.id : raffle]);
 
-  useEffect(() => {
-    if (!participants) return;
+  // useEffect(() => {
+  //   if (!participants) return;
 
-    loadFillerCards();
-  }, [participants.join()]);
+  //   loadFillerCards();
+  // }, [participants.join()]);
 
   // useEffect(() => {
   //   if(!winnerProperties) return
@@ -573,25 +614,27 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
   const value = {
     availableRaffles,
     purchasableRaffles,
-    fillerParticipants,
+    isConfettiActive,
+    // fillerParticipants,
     raffle,
     winnerPopupVisible,
     winnerProperties,
+    winners,
     isButtonActive,
     isMockWin,
-    winner,
+    // winner,
     participants,
     rewards,
     setIsButtonActive,
     toggleSelection,
     handleChangeQuantity,
-    setWinner,
-    loadFillerCards,
+    // setWinner,
+    // loadFillerCards,
     manageWinner,
     manageMockWinner,
     manageCloseResult,
     selectRaffle,
-    getWinner,
+    // getWinner,
   };
 
   return (

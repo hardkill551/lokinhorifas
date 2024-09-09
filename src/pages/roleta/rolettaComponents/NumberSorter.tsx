@@ -1,54 +1,53 @@
 import { useRouletteContext } from 'contexts/RouletteContext';
 import style from '../roletta.module.css'
-import { Participant, RouletteContext } from 'utils/interfaces';
-import { useEffect, useState } from 'react';
-import RouletteItem from './RouletteItem';
-
-type SimplifiedParticipants = {
-  name: string,
-  number: string
-}
+import { RouletteContext } from 'utils/interfaces';
+import { Fragment, ReactNode, useEffect, useState } from 'react';
+import { BsTypeH2 } from 'react-icons/bs';
 
 const NumberSorter = () => {
-  const { participants = [] } = useRouletteContext() as RouletteContext
+  const { participants = [], raffle, winnerProperties } = useRouletteContext() as RouletteContext
 
-  const [ cleanedParticipants, setCleanedParticipants ] = useState<SimplifiedParticipants[]>([])
-  const [ focusedParticipant, setFocusedParticipant ] = useState<SimplifiedParticipants>({name: 'Carlos', number: '0'})
+  // window.innerWidth
+  // window.innerHeight
 
   const [ zeroAmount, setZeroAmount ] = useState(4)
-
-  const handleRolling = () => {
-    if(!cleanedParticipants) return
-    if(cleanedParticipants.length == 0) return
-
-    const interval = setInterval(() => {
-      setFocusedParticipant(cleanedParticipants[Math.floor(Math.random() * (cleanedParticipants.length - 1))])
-    }, 100);
-    setTimeout(() => {
-      clearInterval(interval)
-      setFocusedParticipant(cleanedParticipants[cleanedParticipants.length - 1])
-    }, 30000);
-  }
 
   useEffect(() => {
     if(!participants) return
     if(participants.length == 0) return
 
-    setZeroAmount(participants.reduce((max, current) => {
+    setZeroAmount(prev => {
+      const zeroesAmount = Number(participants.reduce((max, current) => {
       if(max.number > current.number) return max
       else if(max.number < current.number) return current
       else return max
     }).number.toString().length)
 
-    const simplifiedArray = participants.map(item => ({ name:item.personName, number: item.number.toString()}))
+    if(zeroesAmount % 2 !== 0) return zeroesAmount + 1
+    else return zeroesAmount
+    })
+  }, [raffle ? raffle.id : raffle])
 
-    setCleanedParticipants(simplifiedArray)
-    setFocusedParticipant(simplifiedArray[Math.floor(Math.random() * simplifiedArray.length - 1)])
-  }, [participants.length])
+  const handleNumber = (number: number): ReactNode[] => {
+    const tempString = number.toString().padStart(zeroAmount, '0')
+    const tempArray: React.ReactNode[] = [];
+
+    for(let i = 2; i <= zeroAmount; i += 2) {
+      tempArray.push(
+      <Fragment key={i}>
+        <span
+        style={{ "--dynamic-margin": `${i/2}` } as React.CSSProperties}
+        >
+          {tempString[i - 2]}{tempString[i - 1]}
+          {i < zeroAmount && <br />}
+        </span>
+      </Fragment>)
+    }
+
+    return tempArray
+  }
 
   // 3 Mostrar "card" com número vencedor
-
-  // 4 Mostrar popup de vencedor
 
   // 5 Remover número vencedor
   
@@ -56,11 +55,13 @@ const NumberSorter = () => {
   return (
     <div className={style.NumberSorter}>
       <div className={style.NumberSorterWrapper}>
-        <h2>{focusedParticipant.number.padStart(zeroAmount, '0')}</h2>
-        <p>{focusedParticipant.name}</p>
-        {participants[participants.length - 1] != undefined && <RouletteItem props={participants[participants.length - 1]}/>}
+        {winnerProperties ? 
+        <>
+          <h2 className={zeroAmount > 4 ? style.scroll : ''}>{handleNumber(winnerProperties.number)}</h2>
+          <p><span className={style.mainName}>{winnerProperties.user.name}</span><span className={style.number}>#{winnerProperties.number.toString().padStart(zeroAmount, '0')}</span></p> 
+        </>
+        : <h2>Sem participantes</h2>}
       </div>
-      <button disabled={cleanedParticipants.length == 0} onClick={handleRolling}>Rodar</button>
     </div>
   );
 }

@@ -353,25 +353,22 @@ export type SidebarContextType = {
 export type RouletteContext = {
   availableRaffles: Raffle[];
   purchasableRaffles: raffleItem[];
-  fillerParticipants: Participant[];
+  isConfettiActive: boolean;
   raffle: Raffle;
   winnerPopupVisible: boolean;
-  winnerProperties: WinnerProperties;
+  winnerProperties: RaffleParticipant;
+  winners: RaffleParticipant[];
   isButtonActive: boolean;
   isMockWin: boolean;
-  winner: number;
-  participants: Participant[];
+  participants: RaffleParticipant[];
   rewards: RaffleReward[];
   setIsButtonActive: React.Dispatch<React.SetStateAction<boolean>>
   toggleSelection: (id: number) => void;
   handleChangeQuantity: (id: number, newQuantity: number) => void;
-  setWinner: Dispatch<React.SetStateAction<HTMLElement>>;
-  loadFillerCards: (position: number) => JSX.Element[] | undefined;
   manageWinner: Function;
   manageMockWinner: Function;
   manageCloseResult: Function;
   selectRaffle: (id: number) => void;
-  getWinner: (winner: HTMLElement) => void;
 };
 
 export interface LastPayment {
