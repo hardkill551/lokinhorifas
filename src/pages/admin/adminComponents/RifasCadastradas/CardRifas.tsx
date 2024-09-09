@@ -30,7 +30,7 @@ export default function CardRifas({ rifa }: any) {
                     <p className={style.TitleRaffle}>{rifa?.name}</p>
                 </div>
                 <div className={style.DivType}>
-                    <p>{rifa?.type || "Unknown type"}</p> 
+                    <p>{rifa?.is_active || "Erro no status"}</p> 
                 </div>
             </div>
         </>

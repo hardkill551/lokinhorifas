@@ -268,7 +268,7 @@ export interface UsersProps {
   image: string;
   name: string;
   email:string;
-  tradLink: string;
+  tradeLink: string;
   charge: string;
   context: string;
   onChargeChange: (id: number, newCharge: string) => void;

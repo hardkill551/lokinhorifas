@@ -555,10 +555,10 @@ export const RouletteProvider = ({ children }: { children: ReactNode }) => {
 
   // ? Alter participants when raffle changes
   useEffect(() => {
-    setNewParticipants(raffle.participants);
-    setNewRewards(raffle.raffleSkins);
+    setNewParticipants(raffle?.participants);
+    setNewRewards(raffle?.raffleSkins);
     filterPurchasableRaffles();
-  }, [raffle.id]);
+  }, [raffle?.id]);
 
   useEffect(() => {
     if (!participants) return;
