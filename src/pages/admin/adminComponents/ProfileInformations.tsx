@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 import style from '../admin.module.css';
 import { useState } from 'react';
 import axios from 'axios';
-import { skinDataType } from 'utils/interfaces';
+import { skinDataType, ProfileInformationsProps } from 'utils/interfaces';
 
-interface ProfileInformationsProps {
-  reloadSkins: () => void;
-}
+
 
 export default function ProfileInformations({ reloadSkins }: ProfileInformationsProps) {
     const router = useRouter();
@@ -59,7 +57,7 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
         return true;
     };
 
-    function convertToFloat(value: any) {
+    function convertToFloat(value: string): number {
         let numericValue = value.replace(/[R$\s.]/g, '').replace(',', '.');
         let floatValue = Number(parseFloat(numericValue).toFixed(2));
         return floatValue;
@@ -75,7 +73,7 @@ export default function ProfileInformations({ reloadSkins }: ProfileInformations
         const pictureFile = selectedFile;
 
         const skinData = { ...skin };
-        skinData.value = convertToFloat(skin.value);
+        skinData.value = convertToFloat(skin.value.toString());
 
         if (!pictureFile) {
             skinData.picture = "default";

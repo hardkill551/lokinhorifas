@@ -4,6 +4,7 @@ import { IoSearch } from "react-icons/io5";
 import Users from "../users/Users";
 import axios from "axios";
 import defaultProfilePicture from '../../../../assets/defaultProfilePic.svg';
+import Loading from "./Loading";
 
 interface User {
     id: number;
@@ -26,49 +27,61 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
     const [page, setPage] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState("");
+    const [hasMore, setHasMore] = useState<boolean>(true);
+
     useEffect(() => {
-        fetchUsers();
-    }, [page, searchQuery, addUser, usersRegisterRaffle, setUsersRegisterRaffle]);
+        // Zera o array de usuários e reseta a página ao mudar addUser
+        setUsersRegisterRaffle([]);
+        setPage(1);
+        setHasMore(true); // Resetar o hasMore ao mudar o contexto de busca
+        fetchUsers(); // True indica que está iniciando uma nova busca
+    }, [addUser]);
 
-    const fetchUsers = async (): Promise<void> => {
-        setLoading(true);
-        try {
-            if (!addUser) {
-                axios.get<{ users: User[] }>(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users`, {
-                    params: {
-                        page,
-                        search: undefined
-                    },
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                }
-                ).then(res => {
-                    setUsersRegisterRaffle(res.data.users);
-                }).catch(err => {
-                    setError(err.response.data);
-                })
-
-            } else {
-                axios.get<User[]>(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/roulette/participants/${raffleId}`, {
-                    params: {
-                        page,
-                    },
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-                }
-                ).then((res: any) => {
-                    setUsersRegisterRaffle(res.data);
-                }).catch(err => {
-                    setError(err.response.data);
-                })
-            }
-        } catch (error) {
-            console.error("Erro ao buscar usuários:", error);
+    useEffect(() => {
+        if (page > 1) {
+            fetchUsers();
         }
+    }, [page]);
+    
+    const fetchUsers = async (): Promise<void> => {
+        if (loading || !hasMore) return; // Evitar múltiplas requisições simultâneas e parar se não houver mais usuários
+        
+        setLoading(true);
+
+        try {
+            const url = addUser 
+                ? `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/roulette/participants/${raffleId}` 
+                : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users`;
+
+            const params = {
+                page,
+                search: undefined,
+            };
+
+            const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+
+            const response = await axios.get<{ users: User[] }>(url, { params, headers });
+
+            const newUsers = response.data.users || response.data; // Adaptar para ambos os endpoints
+
+            setUsersRegisterRaffle((prevUsers) => [...prevUsers, ...newUsers]);
+
+            // Se o número de usuários retornados for menor que o esperado (ex: 20 por página), não há mais para carregar
+            if (newUsers.length === 0) {
+                setHasMore(false);
+            }
+        } catch (err) {
+            console.error("Erro ao buscar usuários:", err);
+            setError("Erro ao buscar usuários.");
+        }
+
         setLoading(false);
     };
-
     const handleScroll = (e: React.UIEvent<HTMLDivElement>): void => {
-        if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight && !loading) {
-            setPage(prev => prev + 1);
+        const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+
+        if (scrollHeight - scrollTop <= clientHeight + 1 && !loading && hasMore) {
+            setPage((prevPage) => prevPage + 1);
         }
     };
 
@@ -91,16 +104,16 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
         }
     };
 
-    const handleDeleteUserRaffle = async (userId: number): Promise<void> => {
+    const handleDeleteUserRaffle = async (number: string): Promise<void> => {
         try {
             const response = await axios.delete(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/raffle/remove-user`, {
-                data: { raffleId: raffleId, userId: userId },
+                data: { raffleId: raffleId, number: number },
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
 
             if (response.status === 200) {
                 alert('Usuário removido da rifa com sucesso!');
-                setUsersRegisterRaffle(prev => prev.filter(user => user.id !== userId));
+                setUsersRegisterRaffle(prev => prev.filter(user => user.number !== number));
             }
         } catch (error) {
             console.error('Erro ao remover usuário da rifa:', error);
@@ -112,7 +125,16 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
         e.preventDefault()
         setSearchQuery(e.target.value);
         setPage(1);
-        if(e.target.value.length > 3){
+        setLoading(true);
+
+        if (e.target.value.length <= 3) {
+            // Se o campo de busca for apagado, restaurar o estado padrão de busca
+            setUsersRegisterRaffle([]);
+            setHasMore(true)
+            fetchUsers(); // Executa a busca padrão
+            setLoading(false);
+        }
+        else{
             if (!addUser) {
                 axios.get<{ users: User[] }>(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users`, {
                     params: {
@@ -123,10 +145,14 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
                 }
                 ).then(res => {
                     setUsersRegisterRaffle([]);
+                    setLoading(false);
+
                     setUsersRegisterRaffle(res.data.users);
                     console.log("oi", res.data.users, usersRegisterRaffle)
 
                 }).catch(err => {
+                    setLoading(false);
+
                     setError(err.response.data);
                 })
     
@@ -140,13 +166,16 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
                 }
                 ).then(res => {
                     setUsersRegisterRaffle(res.data);
+                    setLoading(false);
+
                     console.log("oi2", res.data, usersRegisterRaffle)
                 }).catch(err => {
+                    setLoading(false);
+
                     setError(err.response.data);
                 })
             }
         }
-        
     }
 
     return (
@@ -167,40 +196,40 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
                                 onChange={(e) =>searchText(e)}
                                 
                             />
-                            <div className={style.ButtonAddMember} onClick={() => setAddUser(!addUser)
+                            <div className={style.ButtonAddMember} onClick={() => {setSearchQuery("");setAddUser(!addUser)}
                             }>
                                 {addUser ? "+" : "-"}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className={style.Data} onScroll={handleScroll}>
-                    <div className={style.LineMember}></div>
-                    <div className={style.ContentUsersPopUp}>
-                        {usersRegisterRaffle.map((person: User) => (
-                            <Users
-                                image={person.picture === "default" ? defaultProfilePicture :
-                                    (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
-                                        person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
-                                name={person.name}
-                                email={person.email}
-                                tradeLink={person.tradeLink}
-                                onnumberChange={() => { }}
-                                onDeleteUserRaffle={() => handleDeleteUserRaffle(person.id)}
-                                onAddUser={() => handleAddUser(person.id)}
-                                onDeleteUser={() => { }}
-                                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"}
-                                id={0}
-                                charge={""}
-                                onChargeChange={function (id: number, newCharge: string): void {
-                                    throw new Error("Function not implemented.");
-                                }}
-                                number={""}
-                            />
-                        ))}
-                        {loading && <p>Carregando...</p>}
-                    </div>
-                </div>
+                <div className={style.Data}>
+    <div className={style.LineMember}></div>
+    <div className={style.ContentUsersPopUp} onScroll={handleScroll}>
+        {usersRegisterRaffle.map((person: User) => (
+            <Users
+                image={person.picture === "default" ? defaultProfilePicture :
+                    (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
+                        person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
+                name={person.name}
+                email={person.email}
+                tradeLink={person.tradeLink}
+                onnumberChange={() => { }}
+                onDeleteUserRaffle={() => handleDeleteUserRaffle(person.number)}
+                onAddUser={() => handleAddUser(person.id)}
+                onDeleteUser={() => { }}
+                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"}
+                id={0}
+                charge={""}
+                onChargeChange={function (id: number, newCharge: string): void {
+                    throw new Error("Function not implemented.");
+                }}
+                number={""}
+            />
+        ))}
+        {loading && <Loading />}
+    </div>
+</div>
             </div>
         </div>
     );

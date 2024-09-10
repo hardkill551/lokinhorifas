@@ -243,6 +243,15 @@ export interface skinDataType {
   picture: null | File | string;
 }
 
+export interface ProfileInformationsProps {
+  reloadSkins: () => void;
+}
+
+export interface RegisterRaffleProps {
+  skinsCard: RegisterRifa[];
+  setSkinsCard: React.Dispatch<React.SetStateAction<RegisterRifa[]>>;
+}
+
 export type raffleItem = {
   id: number;
   skins: string[];
@@ -403,3 +412,4 @@ export type rafflePayment = {
   quantity: number;
   value: number;
 };
+

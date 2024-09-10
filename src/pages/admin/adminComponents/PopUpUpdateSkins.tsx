@@ -68,7 +68,7 @@ export default function PopUpUpdateSkins({ setPopUpSkins, name, type, picture, i
         return true;
     };
 
-    const sendForm = async (e: any) => {
+    const sendForm = async (e:any) => {
         e.preventDefault();
 
         setError("");
@@ -100,10 +100,9 @@ export default function PopUpUpdateSkins({ setPopUpSkins, name, type, picture, i
                 }
             );
             setPopUpSkins(false);
-            console.log(reloadSkins())
             reloadSkins();
+            alert("Skin atualizada")
         } catch (error: any) {
-            console.log(error)
             setError(error.response.data.message);
         }
     };

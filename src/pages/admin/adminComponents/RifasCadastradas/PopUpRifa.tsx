@@ -20,8 +20,8 @@ export default function PopUpRifa({
         axios.post(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/raffle/active?id=${id}`, {}, 
         {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
         .then((res) => {
-            console.log(res)
             alert("Rifa Ativada!")
+            setPopUpRifaRifa(false)
         })
         .catch((err) => {
             console.log(err)
@@ -29,14 +29,14 @@ export default function PopUpRifa({
     }
 
     function DeleteRifa() {
-        axios.delete(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/raffle/${id}`, 
+        axios.delete(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/raffle/remove-raffle/${id}`, 
         {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
         .then((res) => {
-            console.log(res)
             alert("Rifa Deletada!")
+            setPopUpRifaRifa(false)
         })
         .catch((err) => {
-            console.log(err)
+            alert("Rifa não foi deletada!")
         })
     }
 

@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import style from '../admin.module.css';
 import CardSkinsCart from './CardSkinsCart';
-import { RegisterRifa } from 'utils/interfaces';
+import { RegisterRaffleProps} from 'utils/interfaces';
 import axios from 'axios';
 
-interface RegisterRaffleProps {
-  skinsCard: RegisterRifa[];
-  setSkinsCard: React.Dispatch<React.SetStateAction<RegisterRifa[]>>;
-}
+
 
 const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard }) => {
   const [raffleName, setRaffleName] = useState('');
@@ -33,7 +30,7 @@ const RegisterRaffle: React.FC<RegisterRaffleProps> = ({ skinsCard, setSkinsCard
       });
       setRaffleName('');
       setNumberOfTickets(1);
-      setSkinsCard([]);
+      setSkinsCard([]); 
     } catch (error) {
       console.error('Error creating raffle:', error);
     }
