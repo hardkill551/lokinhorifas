@@ -84,6 +84,11 @@
 .latestWinnersWrapper tbody th {
   font-size: 16px;
   font-weight: 400;
+
+  max-width: 100px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .latestWinnersWrapper .col1 tbody tr th:nth-of-type(4) {
@@ -116,11 +121,25 @@
 
 .latestWinners .podium h3 {
   font-weight: 500;
+
+  max-width: 175px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding-inline: 10px;
 }
 
 .latestWinners .podium p {
   font-weight: 500;
   font-size: 24px;
+
+  max-width: 175px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding-inline: 10px;
 }
 
 .latestWinners .podium > * {
@@ -403,7 +422,7 @@
 
   .latestWinners .col1 th,
   .latestWinners .col2.bottom th {
-    font-size: min(16px, 3.5vmin);
+    font-size: min(16px, 2.5vmin);
   }
 
   .latestWinners .col2.bottom {
@@ -464,6 +483,40 @@
     transition: 200ms ease-out;
   }
 
+  .latestWinnersWrapper tbody th {
+    font-size: 16px;
+    font-weight: 400;
+  
+    max-width: 94px;
+  
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+  .latestWinners .podium h3 {
+    font-weight: 500;
+
+    max-width: 100%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    padding-inline: 10px;
+  }
+
+  .latestWinners .podium p {
+    font-weight: 500;
+    font-size: 24px;
+
+    max-width: 100%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    padding-inline: 10px;
+  }
+
   .buttonGroup button.active {
     filter: grayscale(0%);
   }
@@ -481,6 +534,16 @@
   .background img:nth-of-type(2) {
     width: 190%;
     height: auto;
+  }
+
+  .latestWinnersWrapper tbody th {
+    font-size: 16px;
+    font-weight: 400;
+  
+    max-width: 40px;
+  
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 }

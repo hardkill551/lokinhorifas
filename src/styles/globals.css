@@ -1175,7 +1175,7 @@ footer .ExternalArrow {
 footer nav {
   display: flex;
 
-  gap: 90px;
+  gap: 50px;
 }
 
 footer h2 {

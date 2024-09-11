@@ -71,8 +71,8 @@ const RewardItem = ({
             }}
           />
           <div className={style.RewardDescription}>
-            <h2>{itemName}</h2>
-            <p>{itemType}</p>
+            <h2>{itemName}{itemName}{itemName}{itemName}{itemName}{itemName}{itemName}</h2>
+            <p>{itemType}{itemType}{itemType}{itemType}{itemType}{itemType}{itemType}</p>
           </div>
         </div>
         <div className={style.RewardValue}>

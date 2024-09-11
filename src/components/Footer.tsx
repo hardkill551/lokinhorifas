@@ -40,8 +40,8 @@ const Footer = () => {
               <ul>
                 <Link target='_blank' href="https://instagram.com/lokinhoskins"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Instagram</li></Link>
                 <Link target='_blank' href="https://api.whatsapp.com/send?phone=5586981088012"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Whatsapp</li></Link>
-                <Link target='_blank' href="termosdeprivacidade"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Termos de privacidade</li></Link>
-                <Link target='_blank' href="/termosdeservico"><li><Image className='ExternalArrow' src={ExternalLink} alt="Seta para link" />Termos de uso</li></Link>
+                <Link target='_blank' href="termosdeprivacidade"><li>Termos de privacidade</li></Link>
+                <Link target='_blank' href="/termosdeservico"><li>Termos de uso</li></Link>
               </ul>
             </div>
             <div className="ContactInfo">
