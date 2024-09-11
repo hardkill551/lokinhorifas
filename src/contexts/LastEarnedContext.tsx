@@ -220,14 +220,14 @@ export const LastEarnedContextProvider = ({ children }: { children: ReactNode; }
     axios
       .get(
         process.env.NEXT_PUBLIC_REACT_NEXT_APP +
-          `/users/winners?page=${1}&itemsPerPage=${20}`
+          `/users/winners?page=${1}&itemsPerPage=${50}`
       )
       .then((res: any) => {
         setNewLastEarnedList(res.data);
       })
       .catch((err: any) => console.error(err));
     
-    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/users/rank?page=${1}&itemsPerPage=${20}`).then(res => sanitizeLatestWinners(res.data))
+    axios.get(process.env.NEXT_PUBLIC_REACT_NEXT_APP + `/users/rank?page=${1}&itemsPerPage=${50}`).then(res => sanitizeLatestWinners(res.data))
     .catch(err => console.log(err))
   }, []);
 
