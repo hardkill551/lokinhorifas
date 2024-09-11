@@ -325,7 +325,9 @@
 .Reward .RewardContent {
   display: grid;
 
-  grid-template-columns: 103px 1fr;
+  grid-template-columns: 103px 122px;
+
+  width: 100%;
 
   gap: 14px;
 
@@ -353,8 +355,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
-  outline: 2px solid red;
-
   white-space: nowrap;
 }
 
@@ -365,8 +365,6 @@
 
   overflow: hidden;
   text-overflow: ellipsis;
-
-  outline: 2px solid red;
 
   opacity: .5;
 }
@@ -1048,7 +1046,36 @@
   box-shadow: 0 0 50px red;
 }
 
-.Roleta .raffleSelector {
+.Roulette .raffleSelector {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  margin: 30px 30px 0 0;
+  padding: 15px 30px;
+
+  border: none;
+  border-radius: 10px;
+
+  z-index: 10;
+
+  opacity: 0;
+
+  cursor: pointer;
+
+  transition: opacity 200ms ease-in-out;
+}
+
+.Roulette:hover .raffleSelector {
+  opacity: .1;
+}
+
+.Roulette .raffleSelector:hover {
+  opacity: 1;
+}
+
+
+.Roleta .buttonGroup .raffleSelector {
   padding: 15px 30px;
 
   border: none;
@@ -1065,7 +1092,7 @@
   transition: opacity 200ms ease-in-out;
 }
 
-.Roleta .raffleSelector:hover {
+.Roleta .buttonGroup .raffleSelector:hover {
   opacity: 1;
 }
 
@@ -1340,10 +1367,20 @@
 
 .EarnedPrizeItem .ItemContent h2 {
   font-size: 16px;
+
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .EarnedPrizeItem .ItemContent p {
   font-size: 12px;
+
+  max-width: 100%;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   opacity: .5;
 }
@@ -1468,10 +1505,6 @@
     width: 100vw;
 
     flex-wrap: wrap;
-  }
-
-  .Roleta > .background::after {
-    right: 30%;
   }
 
   .Roulette {

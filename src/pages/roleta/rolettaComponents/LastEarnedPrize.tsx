@@ -22,12 +22,12 @@ const LastEarnedPrizes = ({
 
   const {
     itemImageUrl,
-    TimeOfEarning = "há pouco", // Default value for TimeOfEarning
-    ChanceOfEarning = "0%", // Default value for ChanceOfEarning
-    PoolType = "Silver", // Default to 'Silver' if PoolType is not provided
-    ItemName = "Item Desconhecido", // Default item name
-    ItemType = "Tipo Desconhecido", // Default item type
-    ItemValue = "0.00", // Default item value
+    TimeOfEarning = "há pouco",
+    ChanceOfEarning = "0%",
+    PoolType = "Silver",
+    ItemName = "Item Desconhecido",
+    ItemType = "Tipo Desconhecido",
+    ItemValue = "0.00",
   } = props.item;
 
   const [imgSrc, setImgSrc] = useState<string | StaticImageData>(defaultGunPic);

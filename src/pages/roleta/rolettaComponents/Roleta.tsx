@@ -10,6 +10,7 @@ import { useUserStateContext } from 'contexts/UserContext';
 import NumberSorter from './NumberSorter';
 import Confetti from 'react-confetti'
 import { useEffect, useState } from 'react';
+import Roulette from './Roulette';
 
 
 const Hero = () => {
@@ -17,7 +18,7 @@ const Hero = () => {
     manageWinner, 
     manageMockWinner, 
     isButtonActive, 
-    participants = [], 
+    participants = [],
     rewards = [],
     availableRaffles = [],
     selectRaffle,
@@ -33,10 +34,10 @@ const Hero = () => {
   const handleResize = (e: Event) => {
     const target = e.target as Window
     
-    setWindowParams({
+    setWindowParams(prev => ({
       width: target.innerWidth,
-      height: target.innerHeight
-    })
+      height: prev.height
+    }))
   }
 
   
@@ -57,12 +58,14 @@ const Hero = () => {
         <div className={style.HeroFrontImage}>
         </div>
         <RewardList />
-        {/* <Roulette /> */}
-        <NumberSorter />
+        {participants.length >= 100 ? 
+          <NumberSorter /> :
+          <Roulette />
+        }
 
         <div className={style.ButtonGroup}>
           <button disabled={!isButtonActive || participants.length === 0 || rewards.length === 0} onClick={() => manageMockWinner()} >Giro Teste</button>
-          {availableRaffles.length > 0 && <select disabled={!isButtonActive} className={style.raffleSelector} onChange={(e) => selectRaffle(Number(e.target.value))}>
+          {(availableRaffles.length > 0 && participants.length >= 100) && <select disabled={!isButtonActive} className={style.raffleSelector} onChange={(e) => selectRaffle(Number(e.target.value))}>
             {availableRaffles.filter(raffle => raffle.raffleSkins.length > 0).map((raffle) => <option key={raffle.id} value={raffle.id}>{raffle.name}</option>)}
           </select>}
           <button disabled={!isButtonActive || !userInfo.isAdmin || rewards.length === 0 || participants.length === 0} onClick={() => manageWinner()} >Girar Roleta</button>

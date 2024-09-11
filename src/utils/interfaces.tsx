@@ -84,6 +84,18 @@ export type CardItemType = {
   number: number;
 };
 
+// export type RaffleParticipant = {
+//   number: number;
+//   id: number;
+//   user: {
+//     id: number;
+//     name: string;
+//     picture: string;
+//   };
+// };
+
+// Sem isWinner
+
 export type RewardItemType = {
   type: string;
   itemImageUrl: string;
@@ -339,6 +351,8 @@ export type RaffleSkin = {
 export type RaffleParticipant = {
   number: number;
   id: number;
+  isWinner?: boolean;
+  distanceFromCenter?: number;
   user: {
     id: number;
     name: string;
@@ -363,6 +377,7 @@ export type RouletteContext = {
   availableRaffles: Raffle[];
   purchasableRaffles: raffleItem[];
   isConfettiActive: boolean;
+  fillerParticipants: RaffleParticipant[];
   raffle: Raffle;
   winnerPopupVisible: boolean;
   winnerProperties: RaffleParticipant;
@@ -378,6 +393,7 @@ export type RouletteContext = {
   manageMockWinner: Function;
   manageCloseResult: Function;
   selectRaffle: (id: number) => void;
+  getWinner: (winnerParam: HTMLElement) => void;
 };
 
 export interface LastPayment {
