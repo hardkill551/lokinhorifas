@@ -250,7 +250,28 @@ PopUp update rifa                                                               
 .ButtonAddMember:hover{
     background-color: #00bfff;
 }
+.ButtonAddMember2{
+    background-color: #32CCFF;
+    width: 250px;
+    height: 50px;
+    font-size: 25px;
+    font-weight: 700;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
+.ButtonAddMember2:hover{
+    background-color: #00bfff;
+}
 .searchIconMember {
     position: absolute;
     right: 60px; 

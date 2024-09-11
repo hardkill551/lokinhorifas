@@ -27,30 +27,32 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
     const [page, setPage] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState("");
+    const [count, setCount] = useState(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
 
     useEffect(() => {
-        // Zera o array de usuários e reseta a página ao mudar addUser
-        setUsersRegisterRaffle([]);
-        setPage(1);
-        setHasMore(true); // Resetar o hasMore ao mudar o contexto de busca
-        fetchUsers(); // True indica que está iniciando uma nova busca
+        if (count !== 0) {
+            setHasMore(true); // Resetar o hasMore ao mudar o contexto de busca
+            console.log(hasMore)
+            setUsersRegisterRaffle([]);
+            setPage(1);
+            fetchUsers(true);
+        }// True indica que está iniciando uma nova busca
     }, [addUser]);
 
     useEffect(() => {
-        if (page > 1) {
-            fetchUsers();
-        }
+        if (count !== 0) {
+            fetchUsers(hasMore);
+        } // Agora você só chama fetchUsers quando a página muda ou o `addUser` muda
     }, [page]);
-    
-    const fetchUsers = async (): Promise<void> => {
-        if (loading || !hasMore) return; // Evitar múltiplas requisições simultâneas e parar se não houver mais usuários
-        
-        setLoading(true);
 
+
+    const fetchUsers = async (shouldFetchMore: boolean = true): Promise<void> => {
+        if (loading || !shouldFetchMore) return; // Verifica se deve continuar a busca
+        setLoading(true);
         try {
-            const url = addUser 
-                ? `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/roulette/participants/${raffleId}` 
+            const url = addUser
+                ? `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/roulette/participants/${raffleId}`
                 : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users`;
 
             const params = {
@@ -131,10 +133,10 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
             // Se o campo de busca for apagado, restaurar o estado padrão de busca
             setUsersRegisterRaffle([]);
             setHasMore(true)
-            fetchUsers(); // Executa a busca padrão
+            fetchUsers(true); // Executa a busca padrão
             setLoading(false);
         }
-        else{
+        else {
             if (!addUser) {
                 axios.get<{ users: User[] }>(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/users`, {
                     params: {
@@ -155,9 +157,9 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
 
                     setError(err.response.data);
                 })
-    
+
             } else {
-                axios.get< User[] >(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/roulette/participants/raffle/${raffleId}`, {
+                axios.get<User[]>(`${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/roulette/participants/raffle/${raffleId}`, {
                     params: {
                         page,
                         name: e.target.value
@@ -193,10 +195,10 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
                                 className={style.inputNavBarMember}
                                 placeholder="Pesquisar por nome"
                                 value={searchQuery}
-                                onChange={(e) =>searchText(e)}
-                                
+                                onChange={(e) => searchText(e)}
+
                             />
-                            <div className={style.ButtonAddMember} onClick={() => {setSearchQuery("");setAddUser(!addUser)}
+                            <div className={style.ButtonAddMember} onClick={() => { setSearchQuery(""); setAddUser(!addUser) }
                             }>
                                 {addUser ? "+" : "-"}
                             </div>
@@ -204,32 +206,42 @@ export default function PopUpUpdateRifa({ setPopUpUpdateRaffle, raffleId }: PopU
                     </div>
                 </div>
                 <div className={style.Data}>
-    <div className={style.LineMember}></div>
-    <div className={style.ContentUsersPopUp} onScroll={handleScroll}>
-        {usersRegisterRaffle.map((person: User) => (
-            <Users
-                image={person.picture === "default" ? defaultProfilePicture :
-                    (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
-                        person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
-                name={person.name}
-                email={person.email}
-                tradeLink={person.tradeLink}
-                onnumberChange={() => { }}
-                onDeleteUserRaffle={() => handleDeleteUserRaffle(person.number)}
-                onAddUser={() => handleAddUser(person.id)}
-                onDeleteUser={() => { }}
-                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"}
-                id={0}
-                charge={""}
-                onChargeChange={function (id: number, newCharge: string): void {
-                    throw new Error("Function not implemented.");
-                }}
-                number={""}
-            />
-        ))}
-        {loading && <Loading />}
-    </div>
-</div>
+                    <div className={style.LineMember}></div>
+                    <div className={style.ContentUsersPopUp} onScroll={handleScroll}>
+                        {usersRegisterRaffle.length === 0 && !loading && count !== 0 && (
+                            <p>Nenhum participante encontrado.</p>  // Fallback quando o array estiver vazio
+                        )}
+                        {count == 0 && (
+                            <div className={style.ButtonAddMember2} onClick={() => { setSearchQuery(""); setAddUser(!addUser); setCount(1)  }
+                            }>
+                                {addUser && "Mostrar Usuários"}
+                            </div>
+                        )}
+                        {usersRegisterRaffle.map((person: User) => (
+                            <Users
+                                key={person.id}  // Adicionar key para melhorar a performance do React
+                                image={person.picture === "default" ? defaultProfilePicture :
+                                    (person.picture).startsWith('https://static-cdn.jtvnw.net') ?
+                                        person.picture : `${process.env.NEXT_PUBLIC_REACT_NEXT_APP}/uploads/${person.picture}`}
+                                name={person.name}
+                                email={person.email}
+                                tradeLink={person.tradeLink}
+                                onnumberChange={() => { }}
+                                onDeleteUserRaffle={() => handleDeleteUserRaffle(person.number)}
+                                onAddUser={() => handleAddUser(person.id)}
+                                onDeleteUser={() => { }}
+                                context={addUser ? "ParticipantsRafle" : "addParticipantsRaflle"}
+                                id={0}
+                                charge={""}
+                                onChargeChange={function (id: number, newCharge: string): void {
+                                    throw new Error("Function not implemented.");
+                                }}
+                                number={""}
+                            />
+                        ))}
+                        {loading && <Loading />}
+                    </div>
+                </div>
             </div>
         </div>
     );
