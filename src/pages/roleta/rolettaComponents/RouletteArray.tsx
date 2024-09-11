@@ -25,7 +25,7 @@ const RouletteArray = () => {
       setIsButtonActive(true)
     }, 400);
     // TODO!: Debug slower computers delay
-  }, [raffle.id, winners.length]);
+  }, [raffle ? raffle.id : raffle, winners.length]);
   
 
   return (
